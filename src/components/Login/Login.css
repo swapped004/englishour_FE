@@ -1,0 +1,172 @@
+*
+{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Sora', sans-serif;
+}
+
+.login-container
+{
+    width: 100%;
+    height: 89vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url("../../images/bg.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+input, button
+{
+    appearance: none;
+    background: none;
+    border: none;
+    outline: none;
+    font-size: 18px;
+}
+
+form
+{
+    display: block;
+    position: relative;
+}
+
+form::after
+{
+    content: "";
+    display: block;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    right: -5px;
+    bottom: -5px;
+    z-index: 1;
+    background-image: linear-gradient(to bottom right, #FFCE00, #FE4880);
+}
+
+form .form-inner{
+    position: relative;
+    display: block;
+    background-color: white;
+    padding: 30px;
+    z-index: 2;
+}
+
+form .form-inner h2{
+    color: orangered;
+    font-size: 28px;
+    font-weight: Bold;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+form .form-inner p
+{
+    color: #8c8c8c;
+    font-size: 18px;
+    margin-bottom: 30px;
+    text-align: center;
+    margin-top: 10px;
+}
+
+form .form-inner .form-group
+{
+    display: block;
+    width: 300px;
+    margin-bottom: 15px;
+}
+
+.form-inner .form-group label
+{
+    display: block;
+    color: #666;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 5px;
+    transition: 0.4s;
+}
+
+.form-inner .form-group:focus-within label
+{
+    color: #FE4880;
+}
+
+form .form-inner .form-group input
+{
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    background-color: #f8f8f8;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    transition: 0.4s;
+}
+
+form .form-inner .form-group input:focus
+{
+    box-shadow: 0px 0px 3px rgba(0,0,0,0.2);
+}
+
+
+form .form-inner input[type="submit"]
+{
+    display: inline-block;
+    
+    padding: 10px 15px;
+    border-radius: 8px;
+    background-image: linear-gradient(to right, #FFCE00 50%, #FFCE00 50%, #FE4880);
+    background-size: 200%;
+    background-position: 0%;
+    transition: 0.4s;
+    font-size: 18px;
+    color: woodenchestnut;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+form .form-inner input[type="submit"]:hover
+{
+    background-position: 100% 0%;
+}
+
+.error
+{
+    color: red;
+    font-size: 16px;
+    text-align: center;
+    padding-top: 5px;
+    margin:auto;
+}
+
+.register-link
+{
+    color: navy;
+    font-size: 18px;
+}
+
+.register-link:hover
+{
+    color: red;
+}
+
+.forgotpass-link
+{
+    color: red;
+    font-size: 14px;
+    padding-left: 5px;
+}
+
+.forgotpass-link:hover
+{
+    color: orange;
+}
+
+.google-link
+{
+    padding-left: 176px;
+}
+
+
+
