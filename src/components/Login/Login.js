@@ -2,6 +2,7 @@ import React from 'react';
 import "./Login.css";
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import "./button.css";
 
 const Login = ({Login_func, error}) => {
 
@@ -27,11 +28,13 @@ const Login = ({Login_func, error}) => {
               <input type="password" name="password" id="password" onChange={e => setDetails({...details, password: e.target.value})} value={details.password}/>
             </div>
 
-            <input type="submit" value="Login" />
+            {/* <input type="submit" value="Login" /> */}
+            <br/>
+            <Link to="/exercise" style={{ textDecoration: 'none'}} className="button-40">Login</Link>
 
             {(error !== "") ? <div className="error">{error}</div> : ""}
-
             <Link to="/forgot_password" className="forgotpass-link">Forgot Password?</Link>
+            <p></p>
             <p>Don't have an account?    <Link to="/register" className="register-link">Create new account</Link></p>
 
             <div className="social-login">

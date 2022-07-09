@@ -1,9 +1,16 @@
-import './App.css';
+// import './App.css';
+import './index.css';
+import './styles/global.css';
 import NavBar from './components/Navbar/index';
 import Login from './components/Login/Login';
+import Exercise from './components/Exercise/exercise';
+import SentenceShuffling from './components/SentenceShuffling/sentenceshuffling';
 import Register from './components/Register/Register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
+import React from 'react';
+
+import "bootstrap/dist/css/bootstrap.min.css";
 
 
 function App() {
@@ -60,6 +67,8 @@ function App() {
           <Route path="/register" element={< Register />} />
           <Route path="/help" element={< Register />} />
           <Route path="/about" element={< Register />} />
+          <Route path="/exercise" element={< Exercise />} />
+          <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />
         </Routes>
       </>
     </Router>
