@@ -8,7 +8,7 @@
     width: 50%;
     float: left;
     padding: 20px;
-    border: 2px solid red;
+    border: 2px solid rgba(31, 3, 190, 0.322);
 }  
 .float-child2 {
     width: 50%;

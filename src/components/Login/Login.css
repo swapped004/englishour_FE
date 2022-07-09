@@ -33,7 +33,7 @@ form
     position: relative;
 }
 
-form::after
+/* form::after
 {
     content: "";
     display: block;
@@ -43,8 +43,8 @@ form::after
     right: -5px;
     bottom: -5px;
     z-index: 1;
-    background-image: linear-gradient(to bottom right, #FFCE00, #FE4880);
-}
+    background-image: linear-gradient(to bottom right, #FFCE00, #b7d821);
+} */
 
 form .form-inner{
     position: relative;
