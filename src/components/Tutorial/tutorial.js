@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'reactjs-dropdown-component';
 import { Link } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
 import "./button.css";
 
-
-class Exercise extends Component {
+class Tutorial extends Component {
   constructor() {
     super();
     this.state = {
@@ -17,32 +15,6 @@ class Exercise extends Component {
         {
           label: 'Grammer',
           value: 'grammer',
-        },
-      ],
-      Level: [
-        {
-          label: '1',
-          value: 'one',
-        },
-        {
-          label: '2',
-          value: 'two',
-        },
-        {
-            label: '3',
-            value: 'three',
-        },
-        {
-            label: '4',
-            value: 'four',
-        },
-        {
-            label: '5',
-            value: 'five',
-        },
-        {
-            label: '6',
-            value: 'six',
         },
       ],
       Topic: [
@@ -71,24 +43,6 @@ class Exercise extends Component {
             value: 'sentence2',
         },
       ],
-      Type: [
-        {
-            label: 'Table Completion',
-            value: 'tablecompletion',
-        },
-        {
-            label: 'Change Letter',
-            value: 'changeletter',
-        },
-        {
-            label: 'Categorize Words',
-            value: 'categorizewords',
-        },
-        {
-            label: 'Sentence Shuffling',
-            value: 'sentenceshuffling',
-        },
-      ],
     };
   }
 
@@ -114,12 +68,12 @@ class Exercise extends Component {
   onChange = (item, name) => { console.log(item, name); }
 
   render() {
-    const { Category, Level, Topic, Type } = this.state;
+    const { Category,Topic } = this.state;
 
     return (
       <div className="Content">
 
-        <h1>Choose Category and Level</h1>
+        <h1>Choose Category and Topic</h1>
         <br /><br />
         <div className="wrapper">
           <Dropdown
@@ -131,30 +85,11 @@ class Exercise extends Component {
           />
 
           <Dropdown
-            name="Level"
-            title="Level"
-            list={Level}
-            onChange={this.onChange}
-          />
-        </div>
-        <br /><br />
-        <h1>Search Topic and Type</h1>
-        <br /><br />
-        <div className="wrapper">
-          <Dropdown
             name="Topic"
             searchable={['Search for Topic', 'No matching Topic']}
             titleSingular="Topic"
             title="Topic"
             list={Topic}
-            onChange={this.onChange}
-          />
-
-          <Dropdown
-            name="Type"
-            searchable={['Search for Type', 'No matching Type']}
-            title="Type"
-            list={Type}
             onChange={this.onChange}
           />
         </div>
@@ -167,4 +102,4 @@ class Exercise extends Component {
   }
 }
 
-export default Exercise;
+export default Tutorial;

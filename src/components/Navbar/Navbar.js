@@ -2,14 +2,10 @@ import React from 'react';
 import "./Navbar.css";
 import { Link } from 'react-router-dom';
 
-import {
-    Nav,
-    NavDropdown,
-  } from "react-bootstrap";
 
-
-const Navbar = (props) => {
+const NavBar = ({logged_in, Logout_func}) => {
   return (
+
     <div className="navbar-container">
 
         <div className="navbar-logo">
@@ -20,6 +16,8 @@ const Navbar = (props) => {
 
         <div className="hamburger">
         </div>
+        <div className="hamburger">
+        </div>
 
         <div className="navbar-menu">
             <ul>
@@ -28,7 +26,7 @@ const Navbar = (props) => {
                 </li> */}
                
                 <li>
-                    <Link to="/profile" className="navbar-link">Profile</Link>
+                    <Link to="/profile" className={logged_in ? "hidden" :"navbar-link" }>Profile</Link>
                 </li>
 
                 <li>
@@ -36,17 +34,21 @@ const Navbar = (props) => {
                 </li>
 
                 <li>
-                    <Link to="/login" className={props.logged_in ? "hidden" :"navbar-link" }>Sign In</Link>
+                    <Link to="/login" className={logged_in ? "hidden" :"navbar-link" }>Sign In</Link>
                 </li>
-                {/* <li>
-                <Link to="/login" className={props.logged_in ? "hidden" : "navbar-btn"}>Sign Up</Link>
-                </li> */}
+                <li>
+                    <Link to="/exercise" className={logged_in ? "navbar-link" :"hidden" }>Exercise</Link>
+                </li>
+                <li>
+                    <Link to="/tutorial" className={logged_in ? "navbar-link" :"hidden" }>Tutorial</Link>
+                </li>
+                <li>
+                    <Link to="/" className={logged_in ? "navbar-btn" : "hidden"} onClick={Logout_func}>Logout</Link>
+                </li>
             </ul>
-           
         </div>
-
     </div>
   );
 };
 
-export default Navbar;
+export default NavBar;

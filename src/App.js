@@ -7,6 +7,7 @@ import Exercise from './components/Exercise/exercise';
 import SentenceShuffling from './components/SentenceShuffling/sentenceshuffling';
 import LandingPage from './components/LandingPage/landingpage';
 import Profile from './components/Profile/profile';
+import Tutorial from './components/Tutorial/tutorial';
 // import Register from './components/Register/Register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
@@ -33,7 +34,7 @@ function App() {
       setUser({username: details.username, email: "admin@google.com", logged_in: true});	
       console.log("Login Successful");
       //redirect to home page
-      window.location.href = "/";
+      //window.location.href = "/";
     }
 
     else if(details.username === "" || details.password === ""){
@@ -54,6 +55,7 @@ function App() {
 
 
   const Logout = () => {   
+    setUser({username: "", email: "", logged_in: false});
     console.log("Logout");
   }
 
@@ -61,7 +63,7 @@ function App() {
     <div>
     <Router>
       <>
-        <NavBar logged_in={user.logged_in}/>
+        <NavBar logged_in={user.logged_in} Logout_func={Logout}/>
         {/* <LandingPage logged_in={user.logged_in}/> */}
         <Routes>
           <Route path="/" element={< LandingPage />} />
@@ -70,6 +72,7 @@ function App() {
           <Route path="/help" element={< Register />} />
           <Route path="/about" element={< Register />} />
           <Route path="/exercise" element={< Exercise />} />
+          <Route path="/tutorial" element={< Tutorial />} />
           <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />
           <Route exact path="/profile" element={< Profile />} />
         </Routes>

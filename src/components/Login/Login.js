@@ -1,18 +1,21 @@
 import React from 'react';
 import "./Login.css";
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import "./button.css";
 
 const Login = ({Login_func, error}) => {
 
   const [details, setDetails] = useState({username: "", password: ""});	// Initialise state
 
+  const navigate = useNavigate();
+
   const submitHandler = (e) => {
     e.preventDefault();
     Login_func(details);
-    console.log(details.username);
+    navigate("/");
   }
+
 
   return (
     <div className="login-container">
@@ -29,10 +32,11 @@ const Login = ({Login_func, error}) => {
               <input type="password" name="password" id="password" onChange={e => setDetails({...details, password: e.target.value})} value={details.password}/>
             </div>
 
-            {/* <input type="submit" value="Login" /> */}
-            <br/>
-            <Link to="/exercise" style={{ textDecoration: 'none'}} className="button-40">Login</Link>
-
+            <button type="Submit" className="button-40">
+              Login
+            </button>
+            {(error !== "") ? <div className="error">{error}</div> : ""}
+          
             {(error !== "") ? <div className="error">{error}</div> : ""}
             <Link to="/forgot_password" className="forgotpass-link">Forgot Password?</Link>
             <p></p>
@@ -46,10 +50,7 @@ const Login = ({Login_func, error}) => {
                 </Link>
               </div>
             </div>
-          
-            
-            
-
+    
             </div>
 
         </form>
