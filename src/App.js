@@ -1,11 +1,12 @@
 import './App.css';
 //import './index.css';
 import './styles/global.css';
-import NavBar from './components/Navbar/index';
+import NavBar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
 import Exercise from './components/Exercise/exercise';
 import SentenceShuffling from './components/SentenceShuffling/sentenceshuffling';
 import LandingPage from './components/LandingPage/landingpage';
+import Profile from './components/Profile/profile';
 // import Register from './components/Register/Register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
@@ -70,6 +71,7 @@ function App() {
           <Route path="/about" element={< Register />} />
           <Route path="/exercise" element={< Exercise />} />
           <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />
+          <Route exact path="/profile" element={< Profile />} />
         </Routes>
       </>
     </Router>

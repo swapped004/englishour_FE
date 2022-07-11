@@ -1,0 +1,23 @@
+{!props.logged_in ? (
+                    <>
+                    {/* <Nav.Link href="/profile">Profile                         </Nav.Link> */}
+                    <Nav.Link href="/tutorials">Tutorials</Nav.Link>
+                    <NavDropdown
+                        // title={`${userInfo.name}`}
+                        title="Moderator"
+                        id="collasible-nav-dropdown"
+                    >
+                    <NavDropdown.Item href="/profile">
+                    My Profile
+                    </NavDropdown.Item>
+
+                    <NavDropdown.Divider />
+                    {/* <NavDropdown.Item onClick={logoutHandler}> */}
+                    <NavDropdown.Item>
+                        Logout
+                     </NavDropdown.Item>
+                    </NavDropdown>
+                    </>
+                    ) : (
+                    <Nav.Link href="/login">Login</Nav.Link>
+                    )}

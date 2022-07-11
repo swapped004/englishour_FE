@@ -2,6 +2,11 @@ import React from 'react';
 import "./Navbar.css";
 import { Link } from 'react-router-dom';
 
+import {
+    Nav,
+    NavDropdown,
+  } from "react-bootstrap";
+
 
 const Navbar = (props) => {
   return (
@@ -18,24 +23,24 @@ const Navbar = (props) => {
 
         <div className="navbar-menu">
             <ul>
-                <li>
+                {/* <li>
                     <Link to="/" className="navbar-link">Home</Link>
-                </li>
+                </li> */}
                
                 <li>
-                    <Link to="/help" className="navbar-link">Help</Link>
+                    <Link to="/profile" className="navbar-link">Profile</Link>
                 </li>
 
                 <li>
-                    <Link to="/about" className="navbar-link">About</Link>
+                    <Link to="/About" className="navbar-link">About</Link>
                 </li>
 
                 <li>
                     <Link to="/login" className={props.logged_in ? "hidden" :"navbar-link" }>Sign In</Link>
                 </li>
-                <li>
+                {/* <li>
                 <Link to="/login" className={props.logged_in ? "hidden" : "navbar-btn"}>Sign Up</Link>
-                </li>
+                </li> */}
             </ul>
            
         </div>
