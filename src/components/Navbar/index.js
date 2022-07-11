@@ -3,7 +3,7 @@ import "./Navbar.css";
 import { Link } from 'react-router-dom';
 
 
-const Navbar = (props) => {
+const Navbar = ({logged_in, Logout_func}) => {
   return (
     <div className="navbar-container">
 
@@ -31,10 +31,14 @@ const Navbar = (props) => {
                 </li>
 
                 <li>
-                    <Link to="/login" className={props.logged_in ? "hidden" :"navbar-link" }>Sign In</Link>
+                    <Link to="/login" className={logged_in ? "hidden" :"navbar-link" }>Sign In</Link>
                 </li>
                 <li>
-                <Link to="/login" className={props.logged_in ? "hidden" : "navbar-btn"}>Sign Up</Link>
+                    <Link to="/register" className={logged_in ? "hidden" : "navbar-btn"}>Sign Up</Link>
+                </li>
+
+                <li>
+                    <Link to="/login" className={logged_in ? "navbar-btn" : "hidden"} onClick={Logout_func}>Logout</Link>
                 </li>
             </ul>
            

@@ -24,7 +24,7 @@ function App() {
       setUser({username: details.username, email: "admin@google.com", logged_in: true});	
       console.log("Login Successful");
       //redirect to home page
-      window.location.href = "/";
+      //window.location.href = "/";
     }
 
     else if(details.username === "" || details.password === ""){
@@ -45,6 +45,7 @@ function App() {
 
 
   const Logout = () => {   
+    setUser({username: "", email: "", logged_in: false});
     console.log("Logout");
   }
 
@@ -54,8 +55,9 @@ function App() {
   return (
     <Router>
       <>	
-        <NavBar logged_in={user.logged_in}/>
+        <NavBar logged_in={user.logged_in} Logout_func={Logout}/>
         <Routes>
+          <Route path="/" element={< Register />} />
           <Route path="/login" element={< Login Login_func={Login_func} error={error}/>} />
           <Route path="/register" element={< Register />} />
           <Route path="/help" element={< Register />} />
