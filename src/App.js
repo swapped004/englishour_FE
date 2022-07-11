@@ -8,6 +8,7 @@ import SentenceShuffling from './components/SentenceShuffling/sentenceshuffling'
 import LandingPage from './components/LandingPage/landingpage';
 import Profile from './components/Profile/profile';
 import Tutorial from './components/Tutorial/tutorial';
+import Home from './components/HomePage/homepage';
 // import Register from './components/Register/Register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
@@ -67,6 +68,7 @@ function App() {
         {/* <LandingPage logged_in={user.logged_in}/> */}
         <Routes>
           <Route path="/" element={< LandingPage />} />
+          <Route path="/homepage" element={< Home />} />
           <Route path="/login" element={< Login Login_func={Login_func} error={error}/>} />
           <Route path="/register" element={< Register />} />
           <Route path="/help" element={< Register />} />

@@ -9,7 +9,7 @@ const NavBar = ({logged_in, Logout_func}) => {
     <div className="navbar-container">
 
         <div className="navbar-logo">
-            <Link to="/">
+            <Link to={logged_in ? "/homepage" : "/"}>
             <img src={require('../../images/logo.png')} alt="logo" />
             </Link>
         </div>
@@ -26,7 +26,7 @@ const NavBar = ({logged_in, Logout_func}) => {
                 </li> */}
                
                 <li>
-                    <Link to="/profile" className={logged_in ? "hidden" :"navbar-link" }>Profile</Link>
+                    <Link to="/profile" className={logged_in ? "navbar-link" :"hidden" }>Profile</Link>
                 </li>
 
                 <li>

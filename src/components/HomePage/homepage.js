@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import "./landingpage.css";
+import "./homepage.css";
 
-function LandingPage({ history }) {
+function Home({ history }) {
 //   const userLogin = useSelector((state) => state.userLogin);
 //   const { userInfo } = userLogin;
 
@@ -23,11 +23,6 @@ function LandingPage({ history }) {
               <p className="subtitle">Learn English in a Fun Way</p>
             </div>
             <div className="buttonContainer">
-              <Link to="/login">
-                <Button size="lg" className="landingbutton">
-                  Get Started!
-                </Button>
-              </Link>
             </div>
           </div>
         </Row>
@@ -36,4 +31,4 @@ function LandingPage({ history }) {
   );
 }
 
-export default LandingPage;
+export default Home;

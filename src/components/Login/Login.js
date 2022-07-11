@@ -13,7 +13,7 @@ const Login = ({Login_func, error}) => {
   const submitHandler = (e) => {
     e.preventDefault();
     Login_func(details);
-    navigate("/");
+    navigate("/homepage");
   }
 
 
