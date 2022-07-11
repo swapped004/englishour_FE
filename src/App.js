@@ -1,11 +1,12 @@
-// import './App.css';
-import './index.css';
+import './App.css';
+//import './index.css';
 import './styles/global.css';
 import NavBar from './components/Navbar/index';
 import Login from './components/Login/Login';
 import Exercise from './components/Exercise/exercise';
 import SentenceShuffling from './components/SentenceShuffling/sentenceshuffling';
-import Register from './components/Register/Register';
+import LandingPage from './components/LandingPage/landingpage';
+// import Register from './components/Register/Register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
@@ -55,14 +56,14 @@ function App() {
     console.log("Logout");
   }
 
-
-
-
   return (
+    <div>
     <Router>
-      <>	
+      <>
         <NavBar logged_in={user.logged_in}/>
+        {/* <LandingPage logged_in={user.logged_in}/> */}
         <Routes>
+          <Route path="/" element={< LandingPage />} />
           <Route path="/login" element={< Login Login_func={Login_func} error={error}/>} />
           <Route path="/register" element={< Register />} />
           <Route path="/help" element={< Register />} />
@@ -72,6 +73,7 @@ function App() {
         </Routes>
       </>
     </Router>
+    </div>
   );
 }
 
