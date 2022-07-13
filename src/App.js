@@ -33,20 +33,30 @@ function App() {
     //check from backend here
     if(details.username === sample_user.username && details.password === sample_user.password){
       setUser({username: details.username, email: "admin@google.com", logged_in: true});	
+      setError("");
       console.log("Login Successful");
       //redirect to home page
       //window.location.href = "/";
     }
 
     else if(details.username === "" || details.password === ""){
-      console.log("Username or Password is empty");
       setError("Please enter both username and password");
+      console.log("Username or Password is empty");
+      
+      //alert("Username or Password is empty");
+      
+      
+      //window.location.reload(true);
     }
 
     else
     {
-      console.log("Login Failed");
       setError("Login Failed");
+      console.log("Login Failed");
+      
+      //alert("Login Failed");
+      
+      //window.location.reload(true);
     }
   }
 

@@ -6,14 +6,19 @@ import "./button.css";
 
 const Login = ({Login_func, error}) => {
 
-  const [details, setDetails] = useState({username: "", password: ""});	// Initialise state
+  const [details, setDetails] = useState({username: "", password: "", error:""});	// Initialise state
 
   const navigate = useNavigate();
 
   const submitHandler = (e) => {
     e.preventDefault();
     Login_func(details);
-    navigate("/homepage");
+    console.log("Error: "+error);
+    if(error === ""){
+      navigate("/homepage");
+    }
+    else
+      navigate("/login");
   }
 
 
@@ -35,9 +40,9 @@ const Login = ({Login_func, error}) => {
             <button type="Submit" className="button-40">
               Login
             </button>
-            {(error !== "") ? <div className="error">{error}</div> : ""}
+            {/* {(error !== "") ? <div className="error">{error}</div> : ""} */}
           
-            {(error !== "") ? <div className="error">{error}</div> : ""}
+            {/* {(error !== "") ? <div className="error">{error}</div> : ""} */}
             <Link to="/forgot_password" className="forgotpass-link">Forgot Password?</Link>
             <p></p>
             <p>Don't have an account?    <Link to="/register" className="register-link">Create new account</Link></p>

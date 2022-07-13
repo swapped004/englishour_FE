@@ -1,152 +1,127 @@
-import React from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
-// import MainScreen from "./MainScreen";
-import "./profile.css";
-// import { useDispatch, useSelector } from "react-redux";
-// import { updateProfile } from "../../actions/userActions";
-// import Loading from "./Loading";
-// import ErrorMessage from "./ErrorMessage";
+import React from 'react';
+import { Container,Row,Col,Form ,Button} from 'react-bootstrap';
+import {connect} from 'react-redux';
+import DefaultUserPic from "../../images/team-male.jpg";
+const axios = require('axios');
 
-const Profile = () => {
-//   const [name, setName] = useState("");
-//   const [email, setEmail] = useState("");
-//   const [pic, setPic] = useState();
-//   const [password, setPassword] = useState("");
-//   const [confirmPassword, setConfirmPassword] = useState("");
-//   const [picMessage, setPicMessage] = useState();
+class UserProfile extends React.Component {
+    constructor(props){
+        super(props);
+        // this.state={
+        //     user_id:this.props.user_id,
+        //     username:this.props.username,
+        //     email:this.props.email,
+        //     profileImage:this.props.profileImage,
+        //     msg:this.props.msg,
+        //     uploadedFile:null
+        // }
+    }
 
-//   const dispatch = useDispatch();
+    // fetchUserDetails=(user_id)=>{
+    //     //console.log(user_id);
+    //     axios.get("http://localhost:5000/userapi/getUserDetails/"+user_id,{
+    //         headers: {
+    //             "content-type": "application/json"
+    //           }
+    //     }).then(res=>{
+    //         console.log(res);
+    //         this.setState({email:res.data.results[0].email});
+    //         this.setState({profileImage:res.data.results[0].profileImage})
+    //     })
+    //     .catch(err=>console.log(err))
+    // }
 
-//   const userLogin = useSelector((state) => state.userLogin);
-//   const { userInfo } = userLogin;
+    changeProfileImage=(event)=>{
+       
+        // this.setState({uploadedFile:event.target.files[0]});
+    }
 
-//   const userUpdate = useSelector((state) => state.userUpdate);
-//   const { loading, error, success } = userUpdate;
+    UpdateProfileHandler=(e)=>{
+        e.preventDefault();
+        //create object of form data
+        // const formData=new FormData();
+        // formData.append("profileImage",this.state.uploadedFile);
+        // formData.append("user_id",this.state.user_id);
 
-//   useEffect(() => {
-//     if (!userInfo) {
-//       history.push("/");
-//     } else {
-//       setName(userInfo.name);
-//       setEmail(userInfo.email);
-//       setPic(userInfo.pic);
+        // //update-profile
+        // axios.post("http://localhost:5000/userapi/update-profile/",formData,{
+        //     headers: {
+        //         "content-type": "application/json"
+        //       }
+        // }).then(res=>{
+        //     console.log(res);
+        //    this.setState({msg:res.data.message});
+        //    this.setState({profileImage:res.data.results.profileImage});
+        // })
+        // .catch(err=>console.log(err))
+    }
+
+
+    componentDidMount(){
+    //  this.fetchUserDetails(this.state.user_id);
+    }
+
+render(){
+
+    if(this.state.profileImage){
+        // var imagestr=this.state.profileImage;
+        // imagestr = imagestr.replace("public/", "");
+        //var profilePic="http://localhost:5000/"+imagestr;
+        var profilePic=DefaultUserPic;
+    }else{
+         profilePic=DefaultUserPic;
+    }
+
+    return (
+        <Container>
+        <Row>
+       <Col>
+       <img src={profilePic} alt="profils pic" />
+       </Col>
+        <Col>
+            <h1>User Profile</h1>
+            <Form className="form">     
+    {/* <p>{this.state.msg}</p> */}
+    <p>Abol Tabol</p>
+  <Form.Group controlId="formCategory1">
+    <Form.Label>Username</Form.Label>
+    {/* <Form.Control type="text" defaultValue={this.state.username}/> */}
+    <Form.Control type="text" defaultValue="Admin"/>
+  
+  
+  </Form.Group>
+  <Form.Group controlId="formCategory2">
+    <Form.Label>Email</Form.Label>
+    {/* <Form.Control type="email" defaultValue={this.state.email} /> */}
+    <Form.Control type="email" defaultValue="admin@gmail.com" />
+  
+  </Form.Group>
+ 
+  <Form.Group controlId="formCategory4">
+    <Form.Label>Profile Image</Form.Label>
+    <Form.Control type="file" name="profileImage" onChange={this.changeProfileImage}/>
+    </Form.Group>
+  <Button variant="primary" onClick={this.UpdateProfileHandler}>Update Profile</Button>
+  </Form>
+   </Col>
+
+       </Row>
+        </Container>
+    )
+}
+}
+
+// const mapStatetoProps=(state)=>{
+//     return{
+//         user_id:state.user.userDetails.userid,
+//         username:state.user.userDetails.username,
+//        email:state.user.email,
+//        profileImage: state.user.profileImage,
+//        msg:state.user.msg
 //     }
-//   }, [history, userInfo]);
+//    }
+   
+   
 
-//   const postDetails = (pics) => {
-//     // setPicMessage(null);
-//     if (pics.type === "image/jpeg" || pics.type === "image/png") {
-//       const data = new FormData();
-//       data.append("file", pics);
-//       data.append("upload_preset", "notezipper");
-//       data.append("cloud_name", "piyushproj");
-//       fetch("https://api.cloudinary.com/v1_1/piyushproj/image/upload", {
-//         method: "post",
-//         body: data,
-//       })
-//         .then((res) => res.json())
-//         .then((data) => {
-//         //   setPic(data.url.toString());
-//         //   console.log(pic);
-//         })
-//         .catch((err) => {
-//           console.log(err);
-//         });
-//     } else {
-//     //   return setPicMessage("Please Select an Image");
-//     }
-//   };
-
-  const submitHandler = (e) => {
-    e.preventDefault();
-
-    //dispatch(updateProfile({ name, email, password, pic }));
-  };
-
-  return (
-    // <MainScreen title="EDIT PROFILE">
-      <div>
-        <Row className="profileContainer">
-          <Col md={6}>
-            <Form onSubmit={submitHandler}>
-              {/* {loading && <Loading />} */}
-              {/* {success && ( */}
-                {/* <ErrorMessage variant="success"> */}
-                  Updated Successfully
-                {/* </ErrorMessage> */}
-              {/* )} */}
-              {/* {error && <ErrorMessage variant="danger">{error}</ErrorMessage>} */}
-              <Form.Group controlId="name">
-                <Form.Label>Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Name"
-                  //value={name}
-                  value = "Admin"
-                //   onChange={(e) => setName(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group controlId="email">
-                <Form.Label>Email Address</Form.Label>
-                <Form.Control
-                  type="email"
-                  placeholder="Enter Email"
-                //   value={email}
-                  value = "admin@admin.com"
-                //   onChange={(e) => setEmail(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group controlId="password">
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Enter Password"
-                //   value={password}
-                  value = "admin"
-                //   onChange={(e) => setPassword(e.target.value)}
-                ></Form.Control>
-              </Form.Group>
-              <Form.Group controlId="confirmPassword">
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Confirm Password"
-                //   value={confirmPassword}
-                  value = "admin"
-                //   onChange={(e) => setConfirmPassword(e.target.value)}
-                ></Form.Control>
-              </Form.Group>{" "}
-              {/* {picMessage && ( */}
-                {/* // <ErrorMessage variant="danger">{picMessage}</ErrorMessage> */}
-              {/* )} */}
-              <Form.Group controlId="pic">
-                <Form.Label>Change Profile Picture</Form.Label>
-                <Form.File
-                //   onChange={(e) => postDetails(e.target.files[0])}
-                  id="custom-file"
-                  type="image/png"
-                  label="Upload Profile Picture"
-                  custom
-                />
-              </Form.Group>
-              <Button type="submit" varient="primary">
-                Update
-              </Button>
-            </Form>
-          </Col>
-          <Col
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            {/* <img src={pic} alt={name} className="profilePic" /> */}
-          </Col>
-        </Row>
-      </div>
-    // </MainScreen>
-  );
-};
-
-export default Profile;
+  //  export default connect(mapStatetoProps)(UserProfile);
+  export default UserProfile;
