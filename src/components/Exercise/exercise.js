@@ -159,7 +159,7 @@ class Exercise extends Component {
           />
         </div>
         <br /><br />
-        <Link to="/sentenceshuffling" style={{ textDecoration: 'none'}} className="button-54">
+        <Link to="/changeOneLetter" style={{ textDecoration: 'none'}} className="button-54">
         Proceed
         </Link>
       </div>

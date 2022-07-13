@@ -6,9 +6,11 @@ import Login from './components/Login/Login';
 import Exercise from './components/Exercise/exercise';
 import SentenceShuffling from './components/SentenceShuffling/sentenceshuffling';
 import LandingPage from './components/LandingPage/landingpage';
-import Profile from './components/Profile/profile';
+// import Profile from './components/Profile/profile';
 import Tutorial from './components/Tutorial/tutorial';
 import Home from './components/HomePage/homepage';
+import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
+import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
 // import Register from './components/Register/Register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
@@ -86,7 +88,11 @@ function App() {
           <Route path="/exercise" element={< Exercise />} />
           <Route path="/tutorial" element={< Tutorial />} />
           <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />
-          <Route exact path="/profile" element={< Profile />} />
+          <Route exact path="/changeOneLetter" element={< ChangeOneLetter />} />
+          <Route exact path="/profile" element={< ModeratorProfile />} />
+
+
+          {/* <Route exact path="/profile" element={< Profile />} /> */}
         </Routes>
       </>
     </Router>
