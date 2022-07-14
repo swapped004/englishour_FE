@@ -254,9 +254,6 @@ const ModeratorProfile = () => {
                   <div className="bio-row">
                       <p><span>Added Tutorial </span>: {formValues.tutorial_count}</p>
                   </div>
-                  <div className="bio-row">
-                      <p><span>Rating </span>: {this.state.rating}</p>
-                  </div>
               </div>
           </div>
       </div>
