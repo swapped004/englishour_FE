@@ -3,6 +3,7 @@ import { Col, Form, Row } from 'react-bootstrap'
 import "./Form.css"
 import "./sideByside.css"
 import "./button.css";
+import "./box_design.css"
 // import { useNavigate, useLocation } from "react-router-dom";
 
 // function useQuery() {
@@ -93,18 +94,19 @@ const ChangeOneLetter = () => {
         {formData.map((item, index) => (
           <>
             {/* <Container> */}
-              <Row className='mt-2'>
+              <Row className='rowHeader'>
                 <Col>
                     <h3>Question No: {index+1}</h3> 
                 </Col>
               </Row>
-              <Row className='mt-2' key={index}>
+              <Row className='mt-2 rowContainer' key={index}>
                 <Col>
                   <Form.Group>
                     <Form.Label>Enter Hint</Form.Label>
                     <Form.Control
                       type='text'
                       placeholder='Enter Hint'
+                      style={{width: "80%", margin: "auto"}}
                       name='hint'
                       onChange={(e) => handleinputchange(e, index)}
                     />
@@ -116,12 +118,16 @@ const ChangeOneLetter = () => {
                     <Form.Control
                       type='text'
                       placeholder='Enter Answer'
+                      style={{width: "80%", margin: "auto"}}
                       name='answer'
                       onChange={(e) => handleinputchange(e, index)}
                     />
                   </Form.Group>
                 </Col>
-                <Col>
+                
+              </Row>
+
+              <Col>
                   <div>
                     <span>
                       {/* {' '}
@@ -152,7 +158,6 @@ const ChangeOneLetter = () => {
                     </button>
                   )}
                 </Col>
-              </Row>
             {/* </Container> */}
           </>
         ))}

@@ -1,28 +1,95 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react'
+
 import "./moderatorProfileCss.css"
+import "./editProfileCss.css"
 import 'font-awesome/css/font-awesome.min.css'
 
 
-class ModeratorProfile extends Component {
-    state = { 
-        id: "",
-        firstName: "Camila",
-        lastName: "Smith",
-        email: "camilaSmith@gmail.com",
-        mobile: "01998801231",
-        date_of_birth: " 13 July 1983",
-        designation: "Lecturer",
-        join_date: "18 Aug 2021",
-        current_institute: "BUET",
-        req_date: "11 Aug 2021",
-        join_status: "accepted",
-        rating: "8/10",
-        profileImgUrl: "https://bootdey.com/img/Content/avatar/avatar3.png"
-
-     } 
-    render() { 
 
 
+
+
+
+
+const ModeratorProfile = () => {
+    // state = { 
+    //     id: "",
+    //     firstName: "Camila",
+    //     lastName: "Smith",
+    //     email: "camilaSmith@gmail.com",
+    //     mobile: "01998801231",
+    //     date_of_birth: " 13 July 1983",
+    //     designation: "Lecturer",
+    //     join_date: "18 Aug 2021",
+    //     current_institute: "BUET",
+    //     req_date: "11 Aug 2021",
+    //     join_status: "accepted",
+    //     rating: "8/10",
+    //     profileImgUrl: "https://bootdey.com/img/Content/avatar/avatar3.png"
+
+    //  } 
+
+        const id = "1";
+
+        const [formValues, setFormValues] = useState({ 
+            firstName: "Camila",
+            lastName: "Smith",
+            email: "camilaSmith@gmail.com",
+            mobile: "01998801231",
+            date_of_birth: " 13 July 1983",
+            designation: "Lecturer",
+            join_date: "18 Aug 2021",
+            current_institute: "BUET",
+            req_date: "11 Aug 2021",
+            join_status: "accepted",
+            rating: "8/10",
+            ex_count: 12,
+            tutorial_count: 15,
+            profileImgUrl: "https://bootdey.com/img/Content/avatar/avatar3.png"
+
+        
+        });
+
+        const handleChange = (e) => {
+
+            const item = e.target.name;
+            const updatedValue = {item:e.target.value};
+            setFormValues(formValues => ({
+                ...formValues,
+                ...updatedValue
+                }));
+
+            // const { name, value } = e.target
+            // const list = [...formValues]
+            // list[index][name] = value
+            // setFormValues(list)
+        }
+
+        // const removeFormFields = (index) => {
+
+
+        //     let copyOfObject = { ...formValues }
+        //     delete copyOfObject['propertyToRemove']
+            
+        //     setShopCart( shopCart => ({
+        //           ...copyOfObject
+        //         }));
+
+
+        //     console.log(index)
+        //     const list = [...formValues]
+        //     list.splice(index, 1)
+        //     setFormValues(list)
+        // }
+
+        const handleSubmit = () => {
+
+        }
+
+
+        const addFormFields = () => {
+            // location.href='#';
+        }
 
 
 
@@ -36,16 +103,91 @@ class ModeratorProfile extends Component {
       <div className="panel">
           <div className="user-heading round">
               <a href="#">
-                  <img src={this.state.profileImgUrl} alt=""/>
+                  <img src={formValues.profileImgUrl} alt=""/>
               </a>
-              <h1>{this.state.firstName} {this.state.lastName}</h1>
-              <p>{this.state.email}</p>
+              <h1>{formValues.firstName} {formValues.lastName}</h1>
+              <p>{formValues.email}</p>
           </div>
 
           <ul className="nav nav-pills nav-stacked">
               <li className="active"><a href="#"> <i className="fa fa-user"></i> Profile</a></li>
               <li><a href="#"> <i className="fa fa-calendar"></i> Recent Activity <span className="label label-warning pull-right r-activity">9</span></a></li>
-              <li><a href="#"> <i className="fa fa-edit"></i> Edit profile</a></li>
+              <li>
+                <a className="button" href="#popup"> <i className="fa fa-edit"></i> Edit profile</a>
+                <div className="popup" id="popup">
+                    <div className="popup-inner">
+                        <div className="popup-left">
+                            <div className="popup__photo">
+                                {/* <img src="https://images.unsplash.com/photo-1515224526905-51c7d77c7bb8?ixlib=rb-0.3.5&s=9980646201037d28700d826b1bd096c4&auto=format&fit=crop&w=700&q=80" alt=""/> */}
+                                <img src={formValues.profileImgUrl} alt=""/>
+                            </div>
+                        <div className="popup-img-btn"><button>CHANGE</button></div>
+                    </div>
+                    <div className="popup__text">
+                    <form onSubmit={handleSubmit}>
+                        {/* {formValues.map((element, index) => ( */}
+                            <div className="form-inline popup-text-content" key={id}>
+                            <label>First Name: </label>
+                            <input type="text" name="firstName" defaultValue={formValues.firstName || ""}  onChange={e => handleChange(e)} />
+                            <br/>
+                            <label>Last Name: </label>
+                            <input type="text" name="lastName" defaultValue={formValues.lastName || ""} onChange={e => handleChange(e)} />  
+                            <br/>
+                            <label>Email</label>
+                            <input type="text" name="email" defaultValue={formValues.email || ""} onChange={e => handleChange(e)} />
+                            <br/>
+
+                            <label>Mobile</label>
+                            <input type="text" name="mobile" defaultValue={formValues.mobile || ""} onChange={e => handleChange(e)} />
+                            <br/>
+
+                            <label>Date of Birth</label>
+                            <input type="text" name="date_of_birth" defaultValue={formValues.date_of_birth || ""} onChange={e => handleChange(e)} />
+                            <br/>
+
+                            <label>Designation</label>
+                            <input type="text" name="designation" defaultValue={formValues.designation || ""} onChange={e => handleChange(e)} />
+                            <br/>
+
+                            <label>Current Institute</label>
+                            <input type="text" name="current_institute" defaultValue={formValues.current_institute || ""} onChange={e => handleChange(e)} />
+                            <br/>
+
+                          
+
+                            <label>Current Institute</label>
+                            <input type="text" name="current_institute" defaultValue={formValues.current_institute || ""} onChange={e => handleChange(e)} />
+                            <br/>
+
+                            <label>Profile Image</label>
+                            <input type="text" name="profileImgUrl" defaultValue={formValues.profileImgUrl || ""} onChange={e => handleChange(e)} />
+                            <br/>
+                            
+                            
+                            {/* {
+                                index ? 
+                                <button type="button"  classNameName="button remove" onClick={() => removeFormFields(index)}>Remove</button> 
+                                : null
+                            } */}
+                            </div>
+                        {/* ))} */}
+                        <div className="button-section">
+                            <button className="button cancel-btn" type="button" onClick={() => addFormFields()}>Cancel
+
+                            </button>
+                            <button className="button update-btn" type="submit" onClick={() => handleSubmit()}>Update</button>
+                        </div>
+                    </form>
+
+
+                        {/* <label>Name:</label> */}
+                        {/* <h1>Lorem ipsum dolor sit amet</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer ex velit, viverra non vulputate vitae, blandit vitae nisl. Nullam fermentum orci et erat viverra bibendum. Aliquam sed varius nibh, vitae mattis purus. Mauris elementum sapien non ullamcorper vulputate. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Sed eget felis sit amet eros viverra pulvinar.</p> */}
+                    </div>
+                    <a className="popup__close" href="#">X</a>
+                    </div>
+                </div>
+            </li>
           </ul>
       </div>
   </div>
@@ -80,28 +222,37 @@ class ModeratorProfile extends Component {
               <h1>Bio Graph</h1>
               <div className="row">
                   <div className="bio-row">
-                      <p><span>First Name </span>: {this.state.firstName}</p>
+                      <p><span>First Name </span>: {formValues.firstName}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Last Name </span>: {this.state.lastName}</p>
+                      <p><span>Last Name </span>: {formValues.lastName}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Designation </span>: {this.state.designation}</p>
+                      <p><span>Designation </span>: {formValues.designation}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Date of Birth</span>: {this.state.date_of_birth}</p>
+                      <p><span>Date of Birth</span>: {formValues.date_of_birth}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Current Institute </span>: {this.state.current_institute}</p>
+                      <p><span>Current Institute </span>: {formValues.current_institute}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Email </span>: {this.state.email}</p>
+                      <p><span>Email </span>: {formValues.email}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Mobile </span>: (880) {this.state.mobile}</p>
+                      <p><span>Mobile </span>: (880) {formValues.mobile}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Joining Date </span>: {this.state.join_date}</p>
+                      <p><span>Joining Date </span>: {formValues.join_date}</p>
+                  </div>
+                  <div className="bio-row">
+                      <p><span>Rating </span>: {formValues.rating}</p>
+                  </div>
+                  <div className="bio-row">
+                      <p><span>Added Exercise </span>: {formValues.ex_count}</p>
+                  </div>
+                  <div className="bio-row">
+                      <p><span>Added Tutorial </span>: {formValues.tutorial_count}</p>
                   </div>
               </div>
           </div>
@@ -187,7 +338,6 @@ class ModeratorProfile extends Component {
             </React.Fragment>
 
         );
-    }
 }
  
 export default ModeratorProfile;

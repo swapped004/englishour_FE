@@ -4,7 +4,7 @@ body {
     font-family: 'Open Sans', sans-serif;
     padding: 0px !important;
     margin: 0px !important;
-    font-size: 13px;
+    font-size: 1.3rem;
     text-rendering: optimizeLegibility;
     -webkit-font-smoothing: antialiased;
     -moz-font-smoothing: antialiased;
@@ -38,13 +38,13 @@ body {
 }
 
 .profile-nav .user-heading h1 {
-    font-size: 22px;
+    font-size: 2.2rem;
     font-weight: 300;
     margin-bottom: 5px;
 }
 
 .profile-nav .user-heading p {
-    font-size: 12px;
+    font-size: 1.1rem;
 }
 
 .profile-nav ul {
@@ -80,14 +80,14 @@ body {
 }
 
 .profile-nav ul > li > a > i{
-    font-size: 16px;
+    font-size: 1.5rem;
     padding-right: 10px;
     color: #bcb3aa;
 }
 
 .r-activity {
     margin: 6px 0 0;
-    font-size: 12px;
+    font-size: 1.1rem;
 }
 
 
@@ -96,7 +96,7 @@ body {
     font-weight: 300;
     box-shadow: none;
     color: #c3c3c3;
-    font-size: 16px;
+    font-size: 1.5rem;
 }
 
 .profile-info .panel-footer {
@@ -116,7 +116,7 @@ body {
     padding: 40px 110px;
     border-radius: 4px 4px 0 0;
     -webkit-border-radius: 4px 4px 0 0;
-    font-size: 16px;
+    font-size: 1.5rem;
     font-weight: 300;
 }
 
@@ -125,7 +125,7 @@ body {
 }
 
 .bio-graph-info h1 {
-    font-size: 22px;
+    font-size: 2.2rem;
     font-weight: 300;
     margin: 0 0 20px;
 }
@@ -135,10 +135,14 @@ body {
     float: left;
     margin-bottom: 10px;
     padding:0 15px;
+    font-size: 1.2rem;
+}
+.bio-row p{
+    padding:0.5rem;
 }
 
 .bio-row p span {
-    width: 100px;
+    width: 150px;
     display: inline-block;
 }
 
@@ -155,7 +159,7 @@ body {
 }
 
 .bio-desk h4 {
-    font-size: 15px;
+    font-size: 1.1rem;
     font-weight:400;
 }
 
@@ -217,7 +221,7 @@ ul.summary-list > li {
 
 ul.summary-list > li > a > i {
     display:block;
-    font-size: 18px;
+    font-size: 1.7rem;
     padding-bottom: 5px;
 }
 
@@ -263,7 +267,7 @@ ul.summary-list > li:last-child  {
     background: #eee;
     text-align: center;
     color: #fff;
-    font-size: 16px;
+    font-size: 1.5rem;
 }
 
 .activity.terques span {
@@ -297,17 +301,17 @@ ul.summary-list > li:last-child  {
 
 .activity h4 {
     margin-top:0 ;
-    font-size: 16px;
+    font-size: 1.5rem;
 }
 
 .activity p {
     margin-bottom: 0;
-    font-size: 13px;
+    font-size: 1.2rem;
 }
 
 .activity .activity-desk i, .activity.alt .activity-desk i {
     float: left;
-    font-size: 18px;
+    font-size: 1.7rem;
     margin-right: 10px;
     color: #bebebe;
 }
