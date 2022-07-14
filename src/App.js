@@ -6,7 +6,7 @@ import Login from './components/Login/Login';
 import Exercise from './components/Exercise/exercise';
 import SentenceShuffling from './components/SentenceShuffling/sentenceshuffling';
 import LandingPage from './components/LandingPage/landingpage';
-import Profile from './components/Profile/profile';
+// import Profile from './components/Profile/profile';
 import Tutorial from './components/Tutorial/tutorial';
 import Home from './components/HomePage/homepage';
 import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
@@ -38,20 +38,30 @@ function App() {
     //check from backend here
     if(details.username === sample_user.username && details.password === sample_user.password){
       setUser({username: details.username, email: "admin@google.com", logged_in: true});	
+      setError("");
       console.log("Login Successful");
       //redirect to home page
       //window.location.href = "/";
     }
 
     else if(details.username === "" || details.password === ""){
-      console.log("Username or Password is empty");
       setError("Please enter both username and password");
+      console.log("Username or Password is empty");
+      
+      //alert("Username or Password is empty");
+      
+      
+      //window.location.reload(true);
     }
 
     else
     {
-      console.log("Login Failed");
       setError("Login Failed");
+      console.log("Login Failed");
+      
+      //alert("Login Failed");
+      
+      //window.location.reload(true);
     }
   }
 
@@ -87,7 +97,7 @@ function App() {
           <Route exact path="/edit_profile2" element={< EditProfile2 />} />
 
 
-          <Route exact path="/profile" element={< Profile />} />
+          {/* <Route exact path="/profile" element={< Profile />} /> */}
         </Routes>
       </>
     </Router>

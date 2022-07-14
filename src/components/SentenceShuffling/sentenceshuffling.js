@@ -1,10 +1,10 @@
 import React, { useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
+import { useNavigate } from 'react-router-dom';
 import "./Form.css"
 import "./sideByside.css"
 import "./button.css";
-// import { useNavigate, useLocation } from "react-router-dom";
-
+import axios from "axios";
 // function useQuery() {
 //   const { search } = useLocation();
 
@@ -15,6 +15,7 @@ const useStyles = () => ({})
 
 const SentenceShuffling = () => {
   const classes = useStyles()
+  const navigate = useNavigate();
 
 //   let query = useQuery();
 //   const navigate = useNavigate();
@@ -54,12 +55,52 @@ const SentenceShuffling = () => {
     ])
   }
 
-  // const handlecompute = () => {
-  //   const total = formData.reduce((acc, curr) => {
-  //     return acc + Number(curr.cost) * Number(curr.quantity)
-  //   }, 0)
-  //   return total
-  // }
+  const handleDoneclick = async (e) => {
+    e.preventDefault()
+    //alert("Exercise saved")
+
+    var i = 0;
+    //console.log(formData[0].description)
+    let situation = "ok";
+    if(formData[0].description === ''){
+      situation = "notOk";
+      alert("Please enter a description")
+    }
+    for (i = 0; i < formData.length; i++) {
+      //console.log(formData[i].correct);
+      //console.log(formData[i].shuffled);
+      if (formData[i].correct === "" || formData[i].shuffled === "") {
+        alert("Please fill up all fields");
+        situation = "notOk";
+        break;
+      }
+    }
+    if(situation === "ok"){
+      let CorrectSentences = "";
+      let ShuffledSentences = "";
+      for(i = 0; i < formData.length; i++){
+        CorrectSentences = CorrectSentences + formData[i].correct + "#";
+        ShuffledSentences = ShuffledSentences + formData[i].shuffled + "#";
+      }
+      await axios
+          .post("http://localhost:8248/moderator/insert", {
+            type: "sentenceshuffling",
+            // level: query.get("level"),
+            // topic: query.get("topic"),
+            level: "1",
+            topic: "1",
+            correct:CorrectSentences,
+            shuffled:ShuffledSentences,
+            description: formData[0].description,
+            moderator_id: "1",
+          })
+          .then(function (response) {
+            console.log(response);
+            alert("Exercise pending for review");
+          });
+          navigate('/exercise')
+    }
+  }
 
   const getDescription = () => {
     const description = formData.reduce((acc, curr) => {
@@ -129,21 +170,29 @@ const SentenceShuffling = () => {
                             Delete
                           </button>
                         )}
+                      {/* </div> */}
+                      {/* <div id='dropdown-basic'> */}
+                      {formData.length - 1 === index && (
+                        <button
+                          className="button-54v2"
+                          onClick={handleaddclick}
+                        >
+                        Add
+                        </button>
+                      )}
+                      {/* </div> */}
+                      {/* <div id='dropdown-basic'> */}
+                      {formData.length - 1 === index && (
+                        <button
+                          className="button-54v2"
+                          onClick={handleDoneclick}
+                        >
+                          Done
+                        </button>
+                      )}
                       </div>
                     </span>
                   </div>
-                {/* </Col> */}
-              {/* </Row> */}
-              {/* <Row className='mt-2'> */}
-                {/* <Col> */}
-                  {formData.length - 1 === index && (
-                    <button
-                      className="button-54v2"
-                      onClick={handleaddclick}
-                    >
-                      Add
-                    </button>
-                  )}
                 </Col>
               </Row>
             {/* </Container> */}
