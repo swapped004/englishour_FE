@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import "./Form.css"
 import "./sideByside.css"
 import "./button.css";
+import "./box_design.css"
 import axios from "axios";
 // function useQuery() {
 //   const { search } = useLocation();
@@ -100,7 +101,7 @@ const SentenceShuffling = () => {
             moderator_id: "1",
           })
           .then(function (response) {
-            console.log(response);
+            //console.log(response);
             alert("Exercise pending for review");
           });
           navigate('/exercise')
@@ -137,13 +138,19 @@ const SentenceShuffling = () => {
         {formData.map((item, index) => (
           <>
             {/* <Container> */}
-              <Row className='mt-2' key={index}>
+              <Row className='rowHeader'>
+                <Col>
+                    <h3>Question No: {index+1}</h3> 
+                </Col>
+              </Row>
+              <Row className='mt-2 rowContainer' key={index}>
                 <Col>
                   <Form.Group>
                     <Form.Label>Correct Sentence</Form.Label>
                     <Form.Control
                       type='text'
                       placeholder='Enter Correct Sentence'
+                      style={{width: "80%", margin: "auto"}}
                       name='correct'
                       onChange={(e) => handleinputchange(e, index)}
                     />
@@ -156,6 +163,7 @@ const SentenceShuffling = () => {
                       type='text'
                       placeholder='Enter Shuffled Sentence'
                       name='shuffled'
+                      style={{width: "80%", margin: "auto"}}
                       onChange={(e) => handleinputchange(e, index)}
                     />
                   </Form.Group>
@@ -163,8 +171,8 @@ const SentenceShuffling = () => {
                 <Col>
                   <div>
                     <span>
-                      {' '}
-                      ++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                      {/* {' '} */}
+                      {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
                       <div id='dropdown-basic'>
                         {formData.length - 1 === index && formData.length > 1 && (
                           <button

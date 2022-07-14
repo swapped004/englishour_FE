@@ -179,8 +179,8 @@ const ModeratorProfile = () => {
 
                           
 
-                            <label>Current Institute</label>
-                            <input type="text" name="current_institute" defaultValue={formValues.current_institute || ""} onChange={e => handleChange(e)} />
+                            <label>Password</label>
+                            <input type="text" name="password" defaultValue={formValues.password || ""} onChange={e => handleChange(e)} />
                             <br/>
 
                             <label>Profile Image</label>
