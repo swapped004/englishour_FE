@@ -3,6 +3,9 @@ import React, { useState } from 'react'
 import "./moderatorProfileCss.css"
 import "./editProfileCss.css"
 import 'font-awesome/css/font-awesome.min.css'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom';
+
 
 
 
@@ -30,10 +33,12 @@ const ModeratorProfile = () => {
     //  } 
 
         const id = "1";
+        const navigate = useNavigate();
 
         const [formValues, setFormValues] = useState({ 
             firstName: "Camila",
             lastName: "Smith",
+            password: "1234",
             email: "camilaSmith@gmail.com",
             mobile: "01998801231",
             date_of_birth: " 13 July 1983",
@@ -42,7 +47,7 @@ const ModeratorProfile = () => {
             current_institute: "BUET",
             req_date: "11 Aug 2021",
             join_status: "accepted",
-            rating: "8/10",
+            rating: "8",
             ex_count: 12,
             tutorial_count: 15,
             profileImgUrl: "https://bootdey.com/img/Content/avatar/avatar3.png"
@@ -82,8 +87,27 @@ const ModeratorProfile = () => {
         //     setFormValues(list)
         // }
 
-        const handleSubmit = () => {
-
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            console.log(formValues);
+            await axios.post("http://localhost:8248/moderator/insertProfile", {
+                firstName: formValues.firstName,
+                lastName: formValues.lastName,
+                email: formValues.email,
+                password: formValues.password,
+                mobile: formValues.mobile,
+                designation: formValues.designation,
+                join_date: formValues.join_date,
+                current_institute: formValues.current_institute,
+                rating: formValues.rating,
+                profileImgUrl: formValues.profileImgUrl
+                
+          })
+          .then(function (response) {
+            console.log(response);
+            alert("Profile Updated");
+          });
+          navigate('/profile');
         }
 
 

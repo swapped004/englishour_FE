@@ -62,7 +62,7 @@ const SentenceShuffling = () => {
 
   const handleDoneclick = async (e) => {
     e.preventDefault()
-    alert("Exercise saved")
+    // alert("Exercise saved")
 
     var i = 0;
     //console.log(formData[0].description)
