@@ -90,7 +90,7 @@ function App() {
           <Route path="/exercise" element={< Exercise />} />
           <Route path="/tutorial" element={< Tutorial />} />
           <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />
-          <Route exact path="/changeOneLetter" element={< ChangeOneLetter />} />
+          <Route exact path="/changeletter" element={< ChangeOneLetter />} />
           <Route exact path="/profile" element={< ModeratorProfile />} />
           {/* <Route exact path="/profile/timeline" element={< ModeratorTimeline />} /> */}
 

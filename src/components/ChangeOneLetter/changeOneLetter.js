@@ -5,24 +5,21 @@ import "./sideByside.css"
 import "./button.css";
 import "./box_design.css"
 import axios from "axios";
-import { useNavigate } from 'react-router-dom';
-// import { useNavigate, useLocation } from "react-router-dom";
 
-// function useQuery() {
-//   const { search } = useLocation();
+import { useNavigate, useLocation } from "react-router-dom";
 
-//   return React.useMemo(() => new URLSearchParams(search), [search]);
-// }
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 const useStyles = () => ({})
 
 const ChangeOneLetter = () => {
   const classes = useStyles()
   const navigate = useNavigate();
-
-//   let query = useQuery();
-//   const navigate = useNavigate();
-  // console.log(query.get("level"));
+  let query = useQuery();
   
   const [formData, setFormData] = useState([
     {
@@ -89,8 +86,8 @@ const ChangeOneLetter = () => {
             type: "changeletter",
             // level: query.get("level"),
             // topic: query.get("topic"),
-            level: "1",
-            topic: "1",
+            level: query.get("level"),
+            topic: query.get("topic"),
             hints: hints,
             answers: answers,
             description: formData[0].description,

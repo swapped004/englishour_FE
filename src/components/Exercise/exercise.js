@@ -12,11 +12,11 @@ class Exercise extends Component {
       Category: [
         {
           label: 'Communicative',
-          value: 'communicative',
+          value: '1',
         },
         {
           label: 'Grammer',
-          value: 'grammer',
+          value: '2',
         },
       ],
       Level: [
@@ -47,28 +47,16 @@ class Exercise extends Component {
       ],
       Topic: [
         {
-          label: 'Vocabulary 1',
-          value: 'vocabulary1',
+          label: 'Vocabulary',
+          value: '2',
         },
         {
-          label: 'Vocabulary 2',
-          value: 'vocabulary2',
+            label: 'Word',
+            value: '1',
         },
         {
-            label: 'Word 1',
-            value: 'word1',
-        },
-        {
-            label: 'Word 2',
-            value: 'word2',
-        },
-        {
-            label: 'Sentence 1',
-            value: 'Sentence1',
-        },
-        {
-            label: 'Sentence 2',
-            value: 'sentence2',
+            label: 'Sentence',
+            value: '3',
         },
       ],
       Type: [
@@ -111,7 +99,11 @@ class Exercise extends Component {
     window.addEventListener('keydown', this.tabKeyPressed);
   }
 
-  onChange = (item, name) => { console.log(item, name); }
+  onChange = (item, name) => { 
+    console.log(name);
+    this.setState({ [name]: item });
+    console.log(this.state);
+   }
 
   render() {
     const { Category, Level, Topic, Type } = this.state;
@@ -123,43 +115,47 @@ class Exercise extends Component {
         <br /><br />
         <div className="wrapper">
           <Dropdown
-            name="category"
+            name="Category"
             titleSingular="Category"
             title="Category"
             list={Category}
-            onChange={this.onChange}
+            // onChange={this.onChange}
+            onChange = {this.onChange.bind(this)}
           />
 
           <Dropdown
             name="Level"
             title="Level"
             list={Level}
-            onChange={this.onChange}
+            // onChange={this.onChange}
+            onChange = {this.onChange.bind(this)}
           />
         </div>
         <br /><br />
         <h1>Search Topic and Type</h1>
         <br /><br />
         <div className="wrapper">
+        <Dropdown
+            name="Type"
+            searchable={['Search for Type', 'No matching Type']}
+            title="Type"
+            list={Type}
+            // onChange={this.onChange}
+            onChange = {this.onChange.bind(this)}
+          />
           <Dropdown
             name="Topic"
             searchable={['Search for Topic', 'No matching Topic']}
             titleSingular="Topic"
             title="Topic"
             list={Topic}
-            onChange={this.onChange}
-          />
-
-          <Dropdown
-            name="Type"
-            searchable={['Search for Type', 'No matching Type']}
-            title="Type"
-            list={Type}
-            onChange={this.onChange}
+            // onChange={this.onChange}
+            onChange = {this.onChange.bind(this)}
           />
         </div>
         <br /><br />
-        <Link to="/changeOneLetter" style={{ textDecoration: 'none'}} className="button-54">
+        {/* {console.log(this.Selection_state.selection)}  */}
+        <Link to={"/"+this.state.Type.value+"?type="+this.state.Type.value+"&level="+this.state.Level.label+"&category="+this.state.Category.value+"&topic="+this.state.Topic.value} style={{ textDecoration: 'none'}} className="button-54" onClick={this.onChange.bind(this)}>
         Proceed
         </Link>
       </div>

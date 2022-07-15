@@ -1,16 +1,17 @@
 import React, { useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import "./Form.css"
 import "./sideByside.css"
 import "./button.css";
 import "./box_design.css"
 import axios from "axios";
-// function useQuery() {
-//   const { search } = useLocation();
 
-//   return React.useMemo(() => new URLSearchParams(search), [search]);
-// }
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 const useStyles = () => ({})
 
@@ -18,9 +19,10 @@ const SentenceShuffling = () => {
   const classes = useStyles()
   const navigate = useNavigate();
 
-//   let query = useQuery();
-//   const navigate = useNavigate();
-  // console.log(query.get("level"));
+  let query = useQuery();
+  console.log(query.get("level"));
+  console.log(query.get("category"));
+  console.log(query.get("topic"));
   
   const [formData, setFormData] = useState([
     {
@@ -93,8 +95,8 @@ const SentenceShuffling = () => {
             type: "sentenceshuffling",
             // level: query.get("level"),
             // topic: query.get("topic"),
-            level: "1",
-            topic: "1",
+            level: query.get("level"),
+            topic: query.get("topic"),
             correct:CorrectSentences,
             shuffled:ShuffledSentences,
             description: formData[0].description,
