@@ -8,9 +8,9 @@ class ProfileInfo extends Component {
 
     render() { 
 
-        const {formValues} = this.props;
+        const {info} = this.props;
 
-        console.log("formValues: ", formValues);
+        console.log("profileInfojs info: ", info);
 
         return (
 
@@ -22,38 +22,35 @@ class ProfileInfo extends Component {
           <div className="panel-body bio-graph-info">
               <h1>Bio Graph</h1>
               <div className="row">
-                  <div className="bio-row">
-                      <p><span>First Name </span>: {formValues.firstName}</p>
+              <div className="bio-row">
+                      <p><span>First Name </span>: {info.first_name}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Last Name </span>: {formValues.lastName}</p>
+                      <p><span>Last Name </span>: {info.last_name}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Designation </span>: {formValues.designation}</p>
+                      <p><span>Designation </span>: {info.designation}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Date of Birth</span>: {formValues.date_of_birth}</p>
+                      <p><span>Join Date</span>: {info.joinDate}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Current Institute </span>: {formValues.current_institute}</p>
+                      <p><span>Current Institute </span>: {info.institution}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Email </span>: {formValues.email}</p>
+                      <p><span>Email </span>: {info.email}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Mobile </span>: (880) {formValues.mobile}</p>
+                      <p><span>Mobile </span>: (880) {info.mobile}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Joining Date </span>: {formValues.join_date}</p>
+                      <p><span>Rating </span>: {info.rating}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Rating </span>: {formValues.rating}</p>
+                      <p><span>Added Exercise </span>:</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Added Exercise </span>: {formValues.ex_count}</p>
-                  </div>
-                  <div className="bio-row">
-                      <p><span>Added Tutorial </span>: {formValues.tutorial_count}</p>
+                      <p><span>Added Tutorial </span>:</p>
                   </div>
               </div>
           </div>

@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 // import { useHistory } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-
+import axios from 'axios'
 
 import "./moderatorProfileCss.css"
 import "./editProfileCss.css"
@@ -12,9 +12,21 @@ import { render } from '@testing-library/react';
 
 const ModeratorProfile = () => {
 
-        const id = "1";
+        const id = "7";
 
         const navigate = useNavigate();
+        const [info, setInfo] = React.useState({designation:"", email:"", first_name:"", last_name:"", mobile:"", joinDate:"", password:"", profile_picture:"", rating:"", institution:""});
+
+        React.useEffect(() => {
+            const getInfo = async (id) => {
+                const response = await fetch("http://localhost:8248/moderator/profileInfo/moderator_id?moderator_id="+id);
+                const data = await response.json();
+                //console.log(data);
+                setInfo(data);
+            }
+            getInfo(id);            
+        }, []);
+
 
 
         const [formValues, setFormValues] = useState({ 
@@ -45,7 +57,7 @@ const ModeratorProfile = () => {
                      <ModeratorTimeline/>
                 )}
 
-                {timeline === 'profile' && <ProfileInfo formValues= {formValues} />}
+                {timeline === 'profile' && <ProfileInfo info= {info} />}
                 </div>
             );
             
@@ -63,36 +75,57 @@ const ModeratorProfile = () => {
 
     
 
-        const handleChange = (e) => {
+        const handleChange =  async (e) => {
+            e.preventDefault();
 
             const item = e.target.name;
-            const updatedValue = {item:e.target.value};
-            setFormValues(formValues => ({
-                ...formValues,
+            console.log(item);
+            const updatedValue = { ...info, [item]: e.target.value };
+            console.log(updatedValue);
+            setInfo(info => ({
+                ...info,
                 ...updatedValue
-                }));
+               
+
+
+            }));
         }
 
-        const handleSubmit = () => {
 
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+
+            console.log(info.last_name);
+            await axios.post("http://localhost:8248/moderator/insertProfile", {
+                moderator_id: id,
+                firstName: info.first_name,
+                lastName: info.last_name,
+                email: info.email,
+                password: info.password,
+                mobile: info.mobile,
+                designation: info.designation,
+                join_date: info.joinDate,
+                current_institute: info.institution,
+                rating: info.rating,
+                profileImgUrl: info.profile_picture
+                
+          })
+          .then(function (response) {
+            console.log(response);
+            alert("Profile Updated");
+          });
+          navigate('/profile');
         }
-
-
-        const handleCancel = () => {
-            // const history = useHistory();
-            navigate('/profile');
-
-
 
 
             // console.log("history: ", history);
 
 
-        }
 
         return (
             <React.Fragment>
 
+            
                 {/* <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"> */}
                 <div className="container bootstrap snippets bootdey">
                 <div className="row">
@@ -100,23 +133,23 @@ const ModeratorProfile = () => {
                     <div className="panel">
                         <div className="user-heading round">
                             <a href="#">
-                                <img src={formValues.profileImgUrl} alt=""/>
+                                <img src={info.profile_picture} alt=""/>
                             </a>
-                            <h1>{formValues.firstName} {formValues.lastName}</h1>
-                            <p>{formValues.email}</p>
+                            <h1>{info.first_name} {info.last_name}</h1>
+                            <p>{info.email}</p>
                         </div>
 
                         <ul className="nav nav-pills nav-stacked">
-                            <li name="profile"><a href="#" onClick={() => handleProfileInfo()}> <i className="fa fa-user"></i> Profile</a></li>
-                            <li name="timeline"><a href="#" onClick={() => handleTimeline()}> <i className="fa fa-calendar"></i> Recent Activity <span className="label label-warning pull-right r-activity">9</span></a></li>
-                            <li name="edit">
-                                <a className="" href="#popup" > <i className="fa fa-edit"></i> Edit profile</a>
+                            <li ><a href="#" onClick={handleProfileInfo}> <i className="fa fa-user"></i> Profile</a></li>
+                            <li><a href="#" onClick={handleTimeline}> <i className="fa fa-calendar"></i> Recent Activity <span className="label label-warning pull-right r-activity">9</span></a></li>
+                            <li>
+                                <a className="button" href="#popup"> <i className="fa fa-edit"></i> Edit profile</a>
                                 <div className="popup" id="popup">
                                     <div className="popup-inner">
                                         <div className="popup-left">
                                             <div className="popup__photo">
                                                 {/* <img src="https://images.unsplash.com/photo-1515224526905-51c7d77c7bb8?ixlib=rb-0.3.5&s=9980646201037d28700d826b1bd096c4&auto=format&fit=crop&w=700&q=80" alt=""/> */}
-                                                <img src={formValues.profileImgUrl} alt=""/>
+                                                <img src={info.profile_picture} alt=""/>
                                             </div>
                                         <div className="popup-img-btn"><button>CHANGE</button></div>
                                     </div>
@@ -125,48 +158,47 @@ const ModeratorProfile = () => {
                                         {/* {formValues.map((element, index) => ( */}
                                             <div className="form-inline popup-text-content" key={id}>
                                             <label>First Name: </label>
-                                            <input type="text" name="firstName" defaultValue={formValues.firstName || ""}  onChange={e => handleChange(e)} />
+                                            <input type="text" name="first_name" defaultValue={info.first_name || ""}  onChange={e => handleChange(e)} />
                                             <br/>
                                             <label>Last Name: </label>
-                                            <input type="text" name="lastName" defaultValue={formValues.lastName || ""} onChange={e => handleChange(e)} />  
+                                            <input type="text" name="last_name" defaultValue={info.last_name || ""} onChange={e => handleChange(e)} />  
                                             <br/>
                                             <label>Email</label>
-                                            <input type="text" name="email" defaultValue={formValues.email || ""} onChange={e => handleChange(e)} />
+                                            <input type="text" name="email" defaultValue={info.email || ""} onChange={e => handleChange(e)} />
                                             <br/>
 
                                             <label>Mobile</label>
-                                            <input type="text" name="mobile" defaultValue={formValues.mobile || ""} onChange={e => handleChange(e)} />
+                                            <input type="text" name="mobile" defaultValue={info.mobile || ""} onChange={e => handleChange(e)} />
                                             <br/>
 
-                                            <label>Date of Birth</label>
-                                            <input type="text" name="date_of_birth" defaultValue={formValues.date_of_birth || ""} onChange={e => handleChange(e)} />
+                                            <label>Join Date</label>
+                                            <input type="text" name="joinDate" defaultValue={info.joinDate || ""} onChange={e => handleChange(e)} />
                                             <br/>
 
                                             <label>Designation</label>
-                                            <input type="text" name="designation" defaultValue={formValues.designation || ""} onChange={e => handleChange(e)} />
+                                            <input type="text" name="designation" defaultValue={info.designation || ""} onChange={e => handleChange(e)} />
                                             <br/>
 
                                             <label>Current Institute</label>
-                                            <input type="text" name="current_institute" defaultValue={formValues.current_institute || ""} onChange={e => handleChange(e)} />
+                                            <input type="text" name="institution" defaultValue={info.institution || ""} onChange={e => handleChange(e)} />
                                             <br/>
 
                                         
 
-                                            <label>Current Institute</label>
-                                            <input type="text" name="current_institute" defaultValue={formValues.current_institute || ""} onChange={e => handleChange(e)} />
+                                            <label>Password</label>
+                                            <input type="text" name="password" defaultValue={info.password || ""} onChange={e => handleChange(e)} />
                                             <br/>
 
                                             <label>Profile Image</label>
-                                            <input type="text" name="profileImgUrl" defaultValue={formValues.profileImgUrl || ""} onChange={e => handleChange(e)} />
+                                            <input type="text" name="profile_picture" defaultValue={info.profile_picture || ""} onChange={e => handleChange(e)} />
                                             <br/>
-                                        
                                             </div>
+                                        {/* ))} */}
                                         <div className="button-section">
-                                            {/* <button className="button cancel-btn" type="button"> */}
-                                                <a href="#" className="button cancel-btn" style={{"text-decoration": "none", color: "#fff"}}>Cancel </a>
+                                            <a href="#" className="button cancel-btn" style={{"text-decoration": "none", color: "#fff"}}>Cancel </a>
 
-                                            {/* </button> */}
-                                            <button className="button update-btn" type="submit" onClick={() => handleSubmit()}>Update</button>
+                                            <button className="button update-btn" type="submit" onClick={e => handleSubmit(e)}>Update</button>
+                     
                                         </div>
                                     </form>
 
@@ -183,9 +215,9 @@ const ModeratorProfile = () => {
                     {subPart()}   
                 </div>
                 </div>
-                </div>
+            </div>
 
-            </React.Fragment>
+        </React.Fragment>
 
         );
 }

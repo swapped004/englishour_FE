@@ -4,6 +4,8 @@ import "./Form.css"
 import "./sideByside.css"
 import "./button.css";
 import "./box_design.css"
+import axios from "axios";
+import { useNavigate } from 'react-router-dom';
 // import { useNavigate, useLocation } from "react-router-dom";
 
 // function useQuery() {
@@ -16,6 +18,7 @@ const useStyles = () => ({})
 
 const ChangeOneLetter = () => {
   const classes = useStyles()
+  const navigate = useNavigate();
 
 //   let query = useQuery();
 //   const navigate = useNavigate();
@@ -53,6 +56,52 @@ const ChangeOneLetter = () => {
         answer: '',
       },
     ])
+  }
+  const handleDoneclick = async (e) => {
+    e.preventDefault()
+    // alert("Exercise saved")
+
+    var i = 0;
+    //console.log(formData[0].description)
+    let situation = "ok";
+    if(formData[0].description === ''){
+      situation = "notOk";
+      alert("Please enter a description")
+    }
+    for (i = 0; i < formData.length; i++) {
+      //console.log(formData[i].correct);
+      //console.log(formData[i].shuffled);
+      if (formData[i].hint === "" || formData[i].answer === "") {
+        alert("Please fill up all fields");
+        situation = "notOk";
+        break;
+      }
+    }
+    if(situation === "ok"){
+      let hints = "";
+      let answers = "";
+      for(i = 0; i < formData.length; i++){
+        hints += formData[i].hint + "#";
+        answers += formData[i].answer + "#";
+      }
+      await axios
+          .post("http://localhost:8248/moderator/insert", {
+            type: "changeletter",
+            // level: query.get("level"),
+            // topic: query.get("topic"),
+            level: "1",
+            topic: "1",
+            hints: hints,
+            answers: answers,
+            description: formData[0].description,
+            moderator_id: "1",
+          })
+          .then(function (response) {
+            //console.log(response);
+            alert("Exercise pending for review");
+          });
+          navigate('/exercise')
+    }
   }
 
   // const handlecompute = () => {
@@ -142,13 +191,9 @@ const ChangeOneLetter = () => {
                             Delete
                           </button>
                         )}
-                      </div>
-                    </span>
-                  </div>
-                {/* </Col> */}
-              {/* </Row> */}
-              {/* <Row className='mt-2'> */}
-                {/* <Col> */}
+                      {/* </div> */}
+                    {/* </span> */}
+                  {/* </div> */}
                   {formData.length - 1 === index && (
                     <button
                       className="button-54v2"
@@ -157,6 +202,17 @@ const ChangeOneLetter = () => {
                       Add
                     </button>
                   )}
+                  {formData.length - 1 === index && (
+                    <button
+                      className="button-54v2"
+                      onClick={handleDoneclick}
+                    >
+                      Done
+                    </button>
+                  )}
+                  </div>
+                  </span>
+                  </div>
                 </Col>
             {/* </Container> */}
           </>
