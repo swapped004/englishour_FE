@@ -1,106 +1,62 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import "./moderatorProfileCss.css"
 import "./editProfileCss.css"
 import 'font-awesome/css/font-awesome.min.css'
+// import { Col, Form, Row } from 'react-bootstrap'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 
 
-
-
-
-
-
-
-
 const ModeratorProfile = () => {
-    // state = { 
-    //     id: "",
-    //     firstName: "Camila",
-    //     lastName: "Smith",
-    //     email: "camilaSmith@gmail.com",
-    //     mobile: "01998801231",
-    //     date_of_birth: " 13 July 1983",
-    //     designation: "Lecturer",
-    //     join_date: "18 Aug 2021",
-    //     current_institute: "BUET",
-    //     req_date: "11 Aug 2021",
-    //     join_status: "accepted",
-    //     rating: "8/10",
-    //     profileImgUrl: "https://bootdey.com/img/Content/avatar/avatar3.png"
 
-    //  } 
-
-        const id = "1";
+        const id = "7";
         const navigate = useNavigate();
-
-        const [formValues, setFormValues] = useState({ 
-            firstName: "Camila",
-            lastName: "Smith",
-            password: "1234",
-            email: "camilaSmith@gmail.com",
-            mobile: "01998801231",
-            date_of_birth: " 13 July 1983",
-            designation: "Lecturer",
-            join_date: "18 Aug 2021",
-            current_institute: "BUET",
-            req_date: "11 Aug 2021",
-            join_status: "accepted",
-            rating: "8",
-            ex_count: 12,
-            tutorial_count: 15,
-            profileImgUrl: "https://bootdey.com/img/Content/avatar/avatar3.png"
+        const [info, setInfo] = React.useState({designation:"", email:"", first_name:"", last_name:"", mobile:"", joinDate:"", password:"", profile_picture:"", rating:"", institution:""});
 
         
-        });
+        
+        React.useEffect(() => {
+            const getInfo = async (id) => {
+                const response = await fetch("http://localhost:8248/moderator/profileInfo/moderator_id?moderator_id="+id);
+                const data = await response.json();
+                //console.log(data);
+                setInfo(data);
+            }
+            getInfo(id);            
+        }, []);
 
-        const handleChange = (e) => {
+
+        const handleChange =  async (e) => {
+            e.preventDefault();
 
             const item = e.target.name;
-            const updatedValue = {item:e.target.value};
-            setFormValues(formValues => ({
-                ...formValues,
+            console.log(item);
+            const updatedValue = { ...info, [item]: e.target.value };
+            console.log(updatedValue);
+            setInfo(info => ({
+                ...info,
                 ...updatedValue
-                }));
-
-            // const { name, value } = e.target
-            // const list = [...formValues]
-            // list[index][name] = value
-            // setFormValues(list)
+            }));
         }
 
-        // const removeFormFields = (index) => {
-
-
-        //     let copyOfObject = { ...formValues }
-        //     delete copyOfObject['propertyToRemove']
-            
-        //     setShopCart( shopCart => ({
-        //           ...copyOfObject
-        //         }));
-
-
-        //     console.log(index)
-        //     const list = [...formValues]
-        //     list.splice(index, 1)
-        //     setFormValues(list)
-        // }
 
         const handleSubmit = async (e) => {
             e.preventDefault();
-            console.log(formValues);
+
+            console.log(info.last_name);
             await axios.post("http://localhost:8248/moderator/insertProfile", {
-                firstName: formValues.firstName,
-                lastName: formValues.lastName,
-                email: formValues.email,
-                password: formValues.password,
-                mobile: formValues.mobile,
-                designation: formValues.designation,
-                join_date: formValues.join_date,
-                current_institute: formValues.current_institute,
-                rating: formValues.rating,
-                profileImgUrl: formValues.profileImgUrl
+                moderator_id: id,
+                firstName: info.first_name,
+                lastName: info.last_name,
+                email: info.email,
+                password: info.password,
+                mobile: info.mobile,
+                designation: info.designation,
+                join_date: info.joinDate,
+                current_institute: info.institution,
+                rating: info.rating,
+                profileImgUrl: info.profile_picture
                 
           })
           .then(function (response) {
@@ -127,10 +83,10 @@ const ModeratorProfile = () => {
       <div className="panel">
           <div className="user-heading round">
               <a href="#">
-                  <img src={formValues.profileImgUrl} alt=""/>
+                  <img src={info.profile_picture} alt=""/>
               </a>
-              <h1>{formValues.firstName} {formValues.lastName}</h1>
-              <p>{formValues.email}</p>
+              <h1>{info.first_name} {info.last_name}</h1>
+              <p>{info.email}</p>
           </div>
 
           <ul className="nav nav-pills nav-stacked">
@@ -143,7 +99,7 @@ const ModeratorProfile = () => {
                         <div className="popup-left">
                             <div className="popup__photo">
                                 {/* <img src="https://images.unsplash.com/photo-1515224526905-51c7d77c7bb8?ixlib=rb-0.3.5&s=9980646201037d28700d826b1bd096c4&auto=format&fit=crop&w=700&q=80" alt=""/> */}
-                                <img src={formValues.profileImgUrl} alt=""/>
+                                <img src={info.profile_picture} alt=""/>
                             </div>
                         <div className="popup-img-btn"><button>CHANGE</button></div>
                     </div>
@@ -152,54 +108,47 @@ const ModeratorProfile = () => {
                         {/* {formValues.map((element, index) => ( */}
                             <div className="form-inline popup-text-content" key={id}>
                             <label>First Name: </label>
-                            <input type="text" name="firstName" defaultValue={formValues.firstName || ""}  onChange={e => handleChange(e)} />
+                            <input type="text" name="first_name" defaultValue={info.first_name || ""}  onChange={e => handleChange(e)} />
                             <br/>
                             <label>Last Name: </label>
-                            <input type="text" name="lastName" defaultValue={formValues.lastName || ""} onChange={e => handleChange(e)} />  
+                            <input type="text" name="last_name" defaultValue={info.last_name || ""} onChange={e => handleChange(e)} />  
                             <br/>
                             <label>Email</label>
-                            <input type="text" name="email" defaultValue={formValues.email || ""} onChange={e => handleChange(e)} />
+                            <input type="text" name="email" defaultValue={info.email || ""} onChange={e => handleChange(e)} />
                             <br/>
 
                             <label>Mobile</label>
-                            <input type="text" name="mobile" defaultValue={formValues.mobile || ""} onChange={e => handleChange(e)} />
+                            <input type="text" name="mobile" defaultValue={info.mobile || ""} onChange={e => handleChange(e)} />
                             <br/>
 
-                            <label>Date of Birth</label>
-                            <input type="text" name="date_of_birth" defaultValue={formValues.date_of_birth || ""} onChange={e => handleChange(e)} />
+                            <label>Join Date</label>
+                            <input type="text" name="joinDate" defaultValue={info.joinDate || ""} onChange={e => handleChange(e)} />
                             <br/>
 
                             <label>Designation</label>
-                            <input type="text" name="designation" defaultValue={formValues.designation || ""} onChange={e => handleChange(e)} />
+                            <input type="text" name="designation" defaultValue={info.designation || ""} onChange={e => handleChange(e)} />
                             <br/>
 
                             <label>Current Institute</label>
-                            <input type="text" name="current_institute" defaultValue={formValues.current_institute || ""} onChange={e => handleChange(e)} />
+                            <input type="text" name="institution" defaultValue={info.institution || ""} onChange={e => handleChange(e)} />
                             <br/>
 
                           
 
                             <label>Password</label>
-                            <input type="text" name="password" defaultValue={formValues.password || ""} onChange={e => handleChange(e)} />
+                            <input type="text" name="password" defaultValue={info.password || ""} onChange={e => handleChange(e)} />
                             <br/>
 
                             <label>Profile Image</label>
-                            <input type="text" name="profileImgUrl" defaultValue={formValues.profileImgUrl || ""} onChange={e => handleChange(e)} />
+                            <input type="text" name="profile_picture" defaultValue={info.profile_picture || ""} onChange={e => handleChange(e)} />
                             <br/>
-                            
-                            
-                            {/* {
-                                index ? 
-                                <button type="button"  classNameName="button remove" onClick={() => removeFormFields(index)}>Remove</button> 
-                                : null
-                            } */}
                             </div>
                         {/* ))} */}
                         <div className="button-section">
                             <button className="button cancel-btn" type="button" onClick={() => addFormFields()}>Cancel
 
                             </button>
-                            <button className="button update-btn" type="submit" onClick={() => handleSubmit()}>Update</button>
+                            <button className="button update-btn" type="submit" onClick={e => handleSubmit(e)}>Update</button>
                         </div>
                     </form>
 
@@ -216,28 +165,6 @@ const ModeratorProfile = () => {
       </div>
   </div>
   <div className="profile-info col-md-9">
-      {/* <div className="panel">
-          <form>
-              <textarea placeholder="Whats in your mind today?" rows="2" className="form-control input-lg p-text-area"></textarea>
-          </form>
-          <footer className="panel-footer">
-              <button className="btn btn-warning pull-right">Post</button>
-              <ul className="nav nav-pills">
-                  <li>
-                      <a href="#"><i className="fa fa-map-marker"></i></a>
-                  </li>
-                  <li>
-                      <a href="#"><i className="fa fa-camera"></i></a>
-                  </li>
-                  <li>
-                      <a href="#"><i className=" fa fa-film"></i></a>
-                  </li>
-                  <li>
-                      <a href="#"><i className="fa fa-microphone"></i></a>
-                  </li>
-              </ul>
-          </footer>
-      </div> */}
       <div className="panel">
           <div className="bio-graph-heading">
               Aliquam ac magna metus. Nam sed arcu non tellus fringilla fringilla ut vel ispum. Aliquam ac magna metus.
@@ -246,37 +173,34 @@ const ModeratorProfile = () => {
               <h1>Bio Graph</h1>
               <div className="row">
                   <div className="bio-row">
-                      <p><span>First Name </span>: {formValues.firstName}</p>
+                      <p><span>First Name </span>: {info.first_name}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Last Name </span>: {formValues.lastName}</p>
+                      <p><span>Last Name </span>: {info.last_name}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Designation </span>: {formValues.designation}</p>
+                      <p><span>Designation </span>: {info.designation}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Date of Birth</span>: {formValues.date_of_birth}</p>
+                      <p><span>Join Date</span>: {info.joinDate}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Current Institute </span>: {formValues.current_institute}</p>
+                      <p><span>Current Institute </span>: {info.institution}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Email </span>: {formValues.email}</p>
+                      <p><span>Email </span>: {info.email}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Mobile </span>: (880) {formValues.mobile}</p>
+                      <p><span>Mobile </span>: (880) {info.mobile}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Joining Date </span>: {formValues.join_date}</p>
+                      <p><span>Rating </span>: {info.rating}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Rating </span>: {formValues.rating}</p>
+                      <p><span>Added Exercise </span>:</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Added Exercise </span>: {formValues.ex_count}</p>
-                  </div>
-                  <div className="bio-row">
-                      <p><span>Added Tutorial </span>: {formValues.tutorial_count}</p>
+                      <p><span>Added Tutorial </span>:</p>
                   </div>
               </div>
           </div>
