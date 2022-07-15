@@ -11,8 +11,7 @@ import Tutorial from './components/Tutorial/tutorial';
 import Home from './components/HomePage/homepage';
 import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
-import EditProfile from './components/ModeratorProfile/editProfile'
-import EditProfile2 from './components/ModeratorProfile/editProfile2'
+// import ModeratorTimeline from './components/ModeratorTimeline/moderatorTimeline'
 
 // import Register from './components/Register/Register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
@@ -93,9 +92,7 @@ function App() {
           <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />
           <Route exact path="/changeOneLetter" element={< ChangeOneLetter />} />
           <Route exact path="/profile" element={< ModeratorProfile />} />
-          <Route exact path="/edit_profile" element={< EditProfile />} />
-          <Route exact path="/edit_profile2" element={< EditProfile2 />} />
-
+          {/* <Route exact path="/profile/timeline" element={< ModeratorTimeline />} /> */}
 
           {/* <Route exact path="/profile" element={< Profile />} /> */}
         </Routes>

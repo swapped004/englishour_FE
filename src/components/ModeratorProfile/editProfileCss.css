@@ -140,6 +140,11 @@ subset=latin-ext'
 }
 
 button:hover{
+	transform: scale(110%);
+
+}
+
+.button:hover{
     transform: scale(110%);
 }
 
@@ -169,7 +174,8 @@ button:hover{
 }
 
 .popup__text input{
-	background-color: #686868;
+	/* background-color: #686868; */
+	background-color: #DDDDDD;
 	margin: 1rem 0 1rem 5rem;
 	padding: 0.5rem;
 	border-radius: 0.5rem;
