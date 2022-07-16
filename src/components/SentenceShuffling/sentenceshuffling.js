@@ -6,6 +6,7 @@ import "./sideByside.css"
 import "./button.css";
 import "./box_design.css"
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 function useQuery() {
   const { search } = useLocation();
@@ -20,6 +21,11 @@ const SentenceShuffling = () => {
   const navigate = useNavigate();
 
   let query = useQuery();
+  const token = query.get('token');
+
+  var decode = jwt_decode(token);
+  console.log(decode.moderator_id);
+  const id = decode.moderator_id;
   
   const [formData, setFormData] = useState([
     {
@@ -88,7 +94,7 @@ const SentenceShuffling = () => {
         ShuffledSentences = ShuffledSentences + formData[i].shuffled + "#";
       }
       await axios
-          .post("http://localhost:8248/moderator/insert", {
+          .post("http://localhost:8248/moderator/insert?token="+token, {
             type: "sentenceshuffling",
             // level: query.get("level"),
             // topic: query.get("topic"),
@@ -97,13 +103,13 @@ const SentenceShuffling = () => {
             correct:CorrectSentences,
             shuffled:ShuffledSentences,
             description: formData[0].description,
-            moderator_id: "1",
+            moderator_id: id,
           })
           .then(function (response) {
             //console.log(response);
             alert("Exercise pending for review");
           });
-          navigate('/exercise')
+          navigate('/exercise?token='+token)
     }
   }
 

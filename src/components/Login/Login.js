@@ -12,13 +12,20 @@ const Login = ({Login_func, error}) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    Login_func(details);
-    console.log("Error: "+error);
-    if(error === ""){
-      navigate("/homepage");
-    }
-    else
-      navigate("/login");
+    const msg = Login_func(details);
+    console.log(msg);
+    msg.then(value => {
+      if(value === "failure"){
+        navigate("/login");
+      }
+      else if(value === "0"){
+        navigate("/login");
+      }
+      else{
+        //console.log((value));
+        navigate("/homepage?token="+value);
+      }
+    });
   }
 
 
@@ -28,7 +35,7 @@ const Login = ({Login_func, error}) => {
           <div className="form-inner">
             <h2>User Login</h2>
             <div className="form-group">
-              <label htmlFor="username">Username:</label>
+              <label htmlFor="username">Phone no:</label>
               <input type="text" name="username" id="username" onChange={e => setDetails({...details, username: e.target.value})} value={details.username}/>
             </div>
 
@@ -40,9 +47,6 @@ const Login = ({Login_func, error}) => {
             <button type="Submit" className="button-40">
               Login
             </button>
-            {/* {(error !== "") ? <div className="error">{error}</div> : ""} */}
-          
-            {/* {(error !== "") ? <div className="error">{error}</div> : ""} */}
             <Link to="/forgot_password" className="forgotpass-link">Forgot Password?</Link>
             <p></p>
             <p>Don't have an account?    <Link to="/register" className="register-link">Create new account</Link></p>

@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Dropdown } from 'reactjs-dropdown-component';
 import { Link } from "react-router-dom";
-import { useNavigate, useLocation } from "react-router-dom";
 import "./button.css";
 
 
@@ -15,7 +14,7 @@ class Exercise extends Component {
           value: '1',
         },
         {
-          label: 'Grammer',
+          label: 'Grammar',
           value: '2',
         },
       ],
@@ -77,6 +76,14 @@ class Exercise extends Component {
             value: 'sentenceshuffling',
         },
       ],
+      selection: {
+        selected_level: "",
+        selected_topic: "",
+        selected_type: "",
+        selected_category: "",
+        token: "",
+        cnt: 0,
+      },
     };
   }
 
@@ -100,8 +107,63 @@ class Exercise extends Component {
   }
 
   onChange = (item, name) => { 
-    console.log(name);
-    this.setState({ [name]: item });
+    console.log(item.label);
+    //console.log(window.location.href.split("?")[1].split("=")[1]);
+    //this.setState({ [name]: item });
+    //console.log(this.state);
+
+    if (name === "Level") {
+      const new_selection = {
+        selected_level: item.label,
+        selected_topic: this.state.selection.selected_topic,
+        selected_type: this.state.selection.selected_type,
+        selected_category: this.state.selection.selected_category,
+        token: window.location.href.split("?")[1].split("=")[1],
+        cnt: this.state.selection.cnt + 1,
+      };
+      console.log(new_selection.token);
+      this.setState({ selection: new_selection });
+    } else if (name === "Type") {
+      const new_selection = {
+        selected_level: this.state.selection.selected_level,
+        selected_topic: this.state.selection.selected_topic,
+        selected_type: item.value,
+        selected_category: this.state.selection.selected_category,
+        token: window.location.href.split("?")[1].split("=")[1],
+        cnt: this.state.selection.cnt + 1,
+      };
+      console.log(new_selection.selected_type);
+      this.setState({
+        selection: new_selection,
+      });
+    } else if (name === "Topic") {
+      const new_selection = {
+        selected_level: this.state.selection.selected_level,
+        selected_topic: item.label,
+        selected_type: this.state.selection.selected_type,
+        selected_category: this.state.selection.selected_category,
+        token: window.location.href.split("?")[1].split("=")[1],
+        cnt: this.state.selection.cnt + 1,
+      };
+      console.log(new_selection.selected_topic);
+      this.setState({
+        selection: new_selection,
+      });
+    }
+    else if (name === "Category") {
+      const new_selection = {
+        selected_level: this.state.selection.selected_level,
+        selected_topic: this.state.selection.selected_topic,
+        selected_type: this.state.selection.selected_type,
+        selected_category: item.label,
+        token: window.location.href.split("?")[1].split("=")[1],
+        cnt: this.state.selection.cnt + 1,
+      };
+      console.log(new_selection.selected_category);
+      this.setState({
+        selection: new_selection,
+      });
+    }
     console.log(this.state);
    }
 
@@ -155,7 +217,7 @@ class Exercise extends Component {
         </div>
         <br /><br />
         {/* {console.log(this.Selection_state.selection)}  */}
-        <Link to={"/"+this.state.Type.value+"?type="+this.state.Type.value+"&level="+this.state.Level.label+"&category="+this.state.Category.value+"&topic="+this.state.Topic.label} style={{ textDecoration: 'none'}} className="button-54" onClick={this.onChange.bind(this)}>
+        <Link to={"/"+this.state.selection.selected_type+"?token="+this.state.selection.token+"&type="+this.state.selection.selected_type+"&level="+this.state.selection.selected_level+"&category="+this.state.selection.selected_category+"&topic="+this.state.selection.selected_topic} style={{ textDecoration: 'none'}} className="button-54" onClick={this.onChange.bind(this)}>
         Proceed
         </Link>
       </div>

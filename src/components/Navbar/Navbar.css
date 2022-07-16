@@ -1,6 +1,6 @@
 .navbar-container
 {
-    background-color: rgb(9, 2, 36);
+    background-color: rgba(56, 114, 104, 0.685);
     color: rgb(117, 66, 66);
     font-size: 20px;
     font-weight: bold;
@@ -51,7 +51,7 @@
 
 .navbar-link
 {
-    color: rgba(254, 255, 254, 0.966);
+    color: rgba(192, 146, 85, 0.966);
     text-decoration: none;
 }
 

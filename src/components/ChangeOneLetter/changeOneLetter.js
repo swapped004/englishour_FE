@@ -5,6 +5,7 @@ import "./sideByside.css"
 import "./button.css";
 import "./box_design.css"
 import axios from "axios";
+import jwt_decode from "jwt-decode";
 
 import { useNavigate, useLocation } from "react-router-dom";
 
@@ -20,6 +21,12 @@ const ChangeOneLetter = () => {
   const classes = useStyles()
   const navigate = useNavigate();
   let query = useQuery();
+
+  const token = query.get('token');
+
+  var decode = jwt_decode(token);
+  console.log(decode.moderator_id);
+  const id = decode.moderator_id;
   
   const [formData, setFormData] = useState([
     {
@@ -82,7 +89,7 @@ const ChangeOneLetter = () => {
         answers += formData[i].answer + "#";
       }
       await axios
-          .post("http://localhost:8248/moderator/insert", {
+          .post("http://localhost:8248/moderator/insert?token="+token, {
             type: "changeletter",
             // level: query.get("level"),
             // topic: query.get("topic"),
@@ -91,7 +98,7 @@ const ChangeOneLetter = () => {
             hints: hints,
             answers: answers,
             description: formData[0].description,
-            moderator_id: "1",
+            moderator_id: id,
           })
           .then(function (response) {
             //console.log(response);

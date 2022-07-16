@@ -1,68 +1,52 @@
 import './App.css';
-//import './index.css';
 import './styles/global.css';
 import NavBar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
 import Exercise from './components/Exercise/exercise';
 import SentenceShuffling from './components/SentenceShuffling/sentenceshuffling';
 import LandingPage from './components/LandingPage/landingpage';
-// import Profile from './components/Profile/profile';
 import Tutorial from './components/Tutorial/tutorial';
 import Home from './components/HomePage/homepage';
 import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
-// import ModeratorTimeline from './components/ModeratorTimeline/moderatorTimeline'
-
-// import Register from './components/Register/Register';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
-
+import axios from 'axios';
 import "bootstrap/dist/css/bootstrap.min.css";
-
 
 function App() {
 
-  const sample_user = {
-    username: "admin",
-    password: "admin",
-  }
-
-  const [user, setUser] = useState({username: "", email: "", logged_in: false});
+  const [user, setUser] = useState({token:"", logged_in: false});
   const [error, setError] = useState("");
 
-  const Login_func = (details) => {
-    console.log(details);
+  let tkn = "0";
 
-    //check from backend here
-    if(details.username === sample_user.username && details.password === sample_user.password){
-      setUser({username: details.username, email: "admin@google.com", logged_in: true});	
-      setError("");
-      console.log("Login Successful");
-      //redirect to home page
-      //window.location.href = "/";
-    }
+  const Login_func = async (details) => {
 
-    else if(details.username === "" || details.password === ""){
-      setError("Please enter both username and password");
-      console.log("Username or Password is empty");
-      
-      //alert("Username or Password is empty");
-      
-      
-      //window.location.reload(true);
+    if(details.username === "" || details.password === ""){
+      setError("Please fill all the fields");
+      alert("Please fill all the fields");
+      return "failure";
     }
-
-    else
-    {
-      setError("Login Failed");
-      console.log("Login Failed");
-      
-      //alert("Login Failed");
-      
-      //window.location.reload(true);
-    }
+    else{
+      await axios.post("http://localhost:8248/moderator/login", {
+        mobile: details.username.slice(-10),
+        password: details.password
+      })
+      .then(function (response) {
+        tkn = response.data;
+        setError("");
+    })
+    .catch((err) => {
+      alert("Invalid Credentials");
+  });
+  if(tkn !== "0"){
+    setUser({token: tkn, logged_in: true});
   }
+  return tkn;
+  }
+}
 
   const Register = (details) => {
     console.log(details);
@@ -70,7 +54,7 @@ function App() {
 
 
   const Logout = () => {   
-    setUser({username: "", email: "", logged_in: false});
+    setUser({token:"", logged_in: false});
     console.log("Logout");
   }
 
@@ -78,7 +62,7 @@ function App() {
     <div>
     <Router>
       <>
-        <NavBar logged_in={user.logged_in} Logout_func={Logout}/>
+        <NavBar logged_in={user.logged_in} Logout_func={Logout} token={user.token}/>
         {/* <LandingPage logged_in={user.logged_in}/> */}
         <Routes>
           <Route path="/" element={< LandingPage />} />

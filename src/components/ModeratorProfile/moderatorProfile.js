@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios'
 
 import "./moderatorProfileCss.css"
@@ -7,35 +7,57 @@ import "./editProfileCss.css"
 import 'font-awesome/css/font-awesome.min.css'
 import ProfileInfo from './profileInfo'
 import ModeratorTimeline from './moderatorTimeline'
+import Timeline from './timeline'
+import jwt_decode from "jwt-decode";
 
 const ModeratorProfile = () => {
 
-        const id = "7";
+    function useQuery() {
+        const { search } = useLocation();
+      
+        return React.useMemo(() => new URLSearchParams(search), [search]);
+    }
+
+    let query = useQuery();
+    const token = query.get('token');
+        
+        var decode = jwt_decode(token);
+        console.log(decode.moderator_id);
+        const id = decode.moderator_id;
 
         const navigate = useNavigate();
-        const [info, setInfo] = React.useState({designation:"", email:"", first_name:"", last_name:"", mobile:"", joinDate:"", password:"", profile_picture:"", rating:"", institution:""});
+        const [info, setInfo] = React.useState({designation:"", email:"", first_name:"", last_name:"", mobile:"", joinDate:"", profile_picture:"", rating:"", institution:""});
+        const [Exinfo, setExInfo] = React.useState({exercise_type:"",level:"",approval_status:"",topic_name:"",updatedAt:""});
 
         React.useEffect(() => {
             const getInfo = async (id) => {
-                const response = await fetch("http://localhost:8248/moderator/profileInfo/moderator_id?moderator_id="+id);
+                const response = await fetch("http://localhost:8248/moderator/profileInfo/moderator_id?moderator_id="+id+"&token="+token);
                 const data = await response.json();
-                //console.log(data);
                 setInfo(data);
             }
-            getInfo(id);            
+            const getExInfo = async (id) => {
+                const response = await fetch("http://localhost:8248/moderator/exerciseInfo/moderator_id?moderator_id="+id+"&token="+token);
+                const data = await response.json();
+                console.log(data);
+                setExInfo(data);
+            }
+            getInfo(id); 
+            getExInfo(id);             
         }, []);
 
         const [timeline, setTimeline] = useState('profile')
+        console.log("Profile info",info)
 
         const subPart = () => {
 
             return (
                 <div>
                 {timeline === 'timeline' && (
-                     <ModeratorTimeline/>
+                    //  <ModeratorTimeline Exinfo = {Exinfo}/>
+                    <Timeline Exinfo = {Exinfo}/>
                 )}
 
-                {timeline === 'profile' && <ProfileInfo info= {info} />}
+                {timeline === 'profile' && <ProfileInfo info= {info} Exinfo = {Exinfo} />}
                 </div>
             );
             
@@ -74,25 +96,25 @@ const ModeratorProfile = () => {
             e.preventDefault();
 
             console.log(info.last_name);
-            await axios.post("http://localhost:8248/moderator/insertProfile", {
+            await axios.post("http://localhost:8248/moderator/insertProfile?token="+token, {
                 moderator_id: id,
                 firstName: info.first_name,
                 lastName: info.last_name,
                 email: info.email,
-                password: info.password,
                 mobile: info.mobile,
                 designation: info.designation,
                 join_date: info.joinDate,
                 current_institute: info.institution,
                 rating: info.rating,
-                profileImgUrl: info.profile_picture
-                
+                profileImgUrl: info.profile_picture,
           })
           .then(function (response) {
             console.log(response);
             alert("Profile Updated");
           });
-          navigate('/profile');
+          //navigate('/profile');
+          //window.location.reload(true);
+          navigate('/profile?token='+token);
         }
 
 
@@ -118,8 +140,8 @@ const ModeratorProfile = () => {
                         </div>
 
                         <ul className="nav nav-pills nav-stacked">
-                            <li ><a href="#" onClick={handleProfileInfo}> <i className="fa fa-user"></i> Profile</a></li>
-                            <li><a href="#" onClick={handleTimeline}> <i className="fa fa-calendar"></i> Recent Activity <span className="label label-warning pull-right r-activity">9</span></a></li>
+                            <li><a href="#" onClick={handleProfileInfo}> <i className="fa fa-user"></i> Profile</a></li>
+                            <li><a href="#" onClick={handleTimeline}> <i className="fa fa-calendar"></i> Recent Activity <span className="label label-warning pull-right r-activity">{Exinfo.length}</span></a></li>
                             <li>
                                 <a className="button" href="#popup"> <i className="fa fa-edit"></i> Edit profile</a>
                                 <div className="popup" id="popup">
@@ -163,9 +185,9 @@ const ModeratorProfile = () => {
 
                                         
 
-                                            <label>Password</label>
+                                            {/* <label>Password</label>
                                             <input type="text" name="password" defaultValue={info.password || ""} onChange={e => handleChange(e)} />
-                                            <br/>
+                                            <br/> */}
 
                                             <label>Profile Image</label>
                                             <input type="text" name="profile_picture" defaultValue={info.profile_picture || ""} onChange={e => handleChange(e)} />
@@ -173,9 +195,10 @@ const ModeratorProfile = () => {
                                             </div>
                                         {/* ))} */}
                                         <div className="button-section">
-                                            <a href="#" className="button cancel-btn" style={{"text-decoration": "none", color: "#fff"}}>Cancel </a>
+                                            <a href="#" className="button cancel-btn" style={{"text-decoration": "none", color: "#fff"}}>Apply </a>
 
                                             <button className="button update-btn" type="submit" onClick={e => handleSubmit(e)}>Update</button>
+                                            {/* <a href='#' className="button update-btn" type="submit" onClick={e => handleSubmit(e)}>Update</a> */}
                      
                                         </div>
                                     </form>
