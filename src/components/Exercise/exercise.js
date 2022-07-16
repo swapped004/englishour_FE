@@ -47,15 +47,15 @@ class Exercise extends Component {
       ],
       Topic: [
         {
-          label: 'Vocabulary',
+          label: 'vocabulary',
           value: '2',
         },
         {
-            label: 'Word',
+            label: 'word',
             value: '1',
         },
         {
-            label: 'Sentence',
+            label: 'sentence',
             value: '3',
         },
       ],
@@ -155,7 +155,7 @@ class Exercise extends Component {
         </div>
         <br /><br />
         {/* {console.log(this.Selection_state.selection)}  */}
-        <Link to={"/"+this.state.Type.value+"?type="+this.state.Type.value+"&level="+this.state.Level.label+"&category="+this.state.Category.value+"&topic="+this.state.Topic.value} style={{ textDecoration: 'none'}} className="button-54" onClick={this.onChange.bind(this)}>
+        <Link to={"/"+this.state.Type.value+"?type="+this.state.Type.value+"&level="+this.state.Level.label+"&category="+this.state.Category.value+"&topic="+this.state.Topic.label} style={{ textDecoration: 'none'}} className="button-54" onClick={this.onChange.bind(this)}>
         Proceed
         </Link>
       </div>

@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-// import { useHistory } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
@@ -8,7 +7,6 @@ import "./editProfileCss.css"
 import 'font-awesome/css/font-awesome.min.css'
 import ProfileInfo from './profileInfo'
 import ModeratorTimeline from './moderatorTimeline'
-import { render } from '@testing-library/react';
 
 const ModeratorProfile = () => {
 
@@ -26,26 +24,6 @@ const ModeratorProfile = () => {
             }
             getInfo(id);            
         }, []);
-
-
-
-        const [formValues, setFormValues] = useState({ 
-            firstName: "Camila",
-            lastName: "Smith",
-            email: "camilaSmith@gmail.com",
-            mobile: "01998801231",
-            date_of_birth: " 13 July 1983",
-            designation: "Lecturer",
-            join_date: "18 Aug 2021",
-            current_institute: "BUET",
-            req_date: "11 Aug 2021",
-            join_status: "accepted",
-            rating: "8/10",
-            ex_count: 12,
-            tutorial_count: 15,
-            profileImgUrl: "https://bootdey.com/img/Content/avatar/avatar3.png"
-      
-        });
 
         const [timeline, setTimeline] = useState('profile')
 

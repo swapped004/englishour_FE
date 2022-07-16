@@ -1,23 +1,31 @@
-{!props.logged_in ? (
-                    <>
-                    {/* <Nav.Link href="/profile">Profile                         </Nav.Link> */}
-                    <Nav.Link href="/tutorials">Tutorials</Nav.Link>
-                    <NavDropdown
-                        // title={`${userInfo.name}`}
-                        title="Moderator"
-                        id="collasible-nav-dropdown"
-                    >
-                    <NavDropdown.Item href="/profile">
-                    My Profile
-                    </NavDropdown.Item>
-
-                    <NavDropdown.Divider />
-                    {/* <NavDropdown.Item onClick={logoutHandler}> */}
-                    <NavDropdown.Item>
-                        Logout
-                     </NavDropdown.Item>
-                    </NavDropdown>
-                    </>
-                    ) : (
-                    <Nav.Link href="/login">Login</Nav.Link>
-                    )}
+<li>
+                    <span>{Exinfo[0].updatedAt}</span>
+                    <div class="content">
+                        <h3>Content Status: {Exinfo[0].approval_status}</h3>
+                        <p>
+                            You uploaded an Exercise <br />
+                            &emsp; Of Type:   {Exinfo[0].exercise_type} <br />
+                            &emsp; At Level:   {Exinfo[0].level} <br />
+                            &emsp; Under Topic: {Exinfo[0].topic_name}
+                        </p>
+                    </div>
+                </li>
+                
+                <li>
+                    <span>{Exinfo[2].updatedAt}</span>
+                    <div class="content">
+                        <h3>Content Status: {Exinfo[2].approval_status}</h3>
+                        <p>
+                            You uploaded an exercise of Type: {Exinfo[2].exercise_type} at Level: {Exinfo[2].level} under Topic- {Exinfo[2].topic_name}
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <span>{Exinfo[3].updatedAt}</span>
+                    <div class="content">
+                        <h3>Content Status: {Exinfo[3].approval_status}</h3>
+                        <p>
+                            You uploaded an exercise of Type: {Exinfo[3].exercise_type} at level: {Exinfo[3].level} under Topic- {Exinfo[3].topic_name}
+                        </p>
+                    </div>
+                </li>

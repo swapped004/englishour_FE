@@ -20,9 +20,6 @@ const SentenceShuffling = () => {
   const navigate = useNavigate();
 
   let query = useQuery();
-  console.log(query.get("level"));
-  console.log(query.get("category"));
-  console.log(query.get("topic"));
   
   const [formData, setFormData] = useState([
     {

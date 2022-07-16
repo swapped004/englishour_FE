@@ -1,69 +1,80 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './moderatorTimelineCss.css'
 
 
 
 
 const ModeratorTimeline = () => {
+    const id="1";
+    const [Exinfo, setExInfo] = React.useState({exercise_type:"",updatedAt:"",level:"",approval_status:"",topic_name:""});
+
+    React.useEffect(() => {
+        const getExInfo = async (id) => {
+            const response = await fetch("http://localhost:8248/moderator/exerciseInfo/moderator_id?moderator_id="+id);
+            const data = await response.json();
+            //console.log(data);
+            setExInfo(data);
+        }
+        getExInfo(id);            
+    }, []);
+
+    console.log(Exinfo[0]);
+
     return (
         
         <React.Fragment>
-            {/* <!DOCTYPE html>
-            <html>
-            <head>
-            <title>Pure CSS Timeline Design With Cool Hover Effects</title>
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            </head>
-            <body> */}
 
-
-<div class="timeline">
+            <div class="timeline">
                 <ul>
+
                 <li>
-                    <span>3rd January 2020</span>
+                    <span>{Exinfo[0].updatedAt}</span>
                     <div class="content">
-                    <h3>What Is Lorem Ipsum?</h3>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
-                    </p>
+                        <h3>Content Status: {Exinfo[0].approval_status}</h3>
+                        <p>
+                            You uploaded an Exercise Of Type: {Exinfo[0].exercise_type} At Level: {Exinfo[0].level} Under Topic: {Exinfo[0].topic_name}
+                        </p>
                     </div>
                 </li>
                 <li>
-                    <span>21st Jun 2019</span>
+                    <span>{Exinfo[1].updatedAt}</span>
                     <div class="content">
-                    <h3>What Is Lorem Ipsum?</h3>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
+                        <h3>Content Status: {Exinfo[1].approval_status}</h3>
+                        <p>
+                            You uploaded an Exercise Of Type:   {Exinfo[1].exercise_type} At Level:   {Exinfo[1].level} Under Topic: {Exinfo[1].topic_name}
+                        </p>
                     </div>
                 </li>
                 <li>
-                    <span>15th April 2018</span>
+                    <span>{Exinfo[2].updatedAt}</span>
                     <div class="content">
-                    <h3>What Is Lorem Ipsum?</h3>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                    </p>
+                        <h3>Content Status: {Exinfo[2].approval_status}</h3>
+                        <p>
+                            You uploaded an Exercise Of Type:   {Exinfo[2].exercise_type} At Level:   {Exinfo[2].level}  Under Topic: {Exinfo[2].topic_name}
+                        </p>
                     </div>
                 </li>
                 <li>
-                    <span>22nd Mars 2017</span>
+                    <span>{Exinfo[3].updatedAt}</span>
                     <div class="content">
-                    <h3>What Is Lorem Ipsum?</h3>
-                    <p>
-                        Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard.
-                    </p>
+                        <h3>Content Status: {Exinfo[3].approval_status}</h3>
+                        <p>
+                            You uploaded an Exercise Of Type:   {Exinfo[3].exercise_type} At Level:   {Exinfo[3].level} Under Topic: {Exinfo[3].topic_name}
+                        </p>
                     </div>
                 </li>
+                {/* <li> */}
+                    {/* <span>sadfkasd kasjfdf;kas</span> */}
+                    {/* <div class="content"> */}
+                        {/* <h3>Content Status:</h3> */}
+                        {/* <p> */}
+                            {/* You uploaded an exercise of Type: {Exinfo[1].exercise_type} at Level: {Exinfo[1].level} under Topic- {Exinfo[1].topic_name} */}
+                        {/* </p> */}
+                    {/* </div> */}
+                {/* </li> */}
+                
                 </ul>
             </div>     
-
-
-
-
-            {/* </body>
-            </html> */}
-
 
         </React.Fragment>
 
