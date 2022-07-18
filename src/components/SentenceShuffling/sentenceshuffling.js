@@ -213,7 +213,7 @@ const SentenceShuffling = () => {
           {formData.map((item, index) => (
             <>
               <Row>
-                <Col xs={8}><h3><span style={{fontWeight: 'bold'}}>{index+1}.</span> {" "+item.shuffled}</h3></Col>
+                <Col xs={8}><h3><span style={{fontWeight: 'bold'}}>{index+1}.</span> {" "+item.correct}</h3></Col>
                 <br />
                 <Col>
                   <p><h3><span style={{fontWeight: 'bold'}}>Answer:</span> _______________</h3></p>

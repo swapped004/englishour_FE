@@ -6,7 +6,6 @@ import "./moderatorProfileCss.css"
 import "./editProfileCss.css"
 import 'font-awesome/css/font-awesome.min.css'
 import ProfileInfo from './profileInfo'
-import ModeratorTimeline from './moderatorTimeline'
 import Timeline from './timeline'
 import jwt_decode from "jwt-decode";
 
