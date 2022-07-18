@@ -94,7 +94,7 @@ const ChangeOneLetter = () => {
             // level: query.get("level"),
             // topic: query.get("topic"),
             level: query.get("level"),
-            topic: query.get("topic"),
+            tutorial_title: query.get("tutorial"),
             hints: hints,
             answers: answers,
             description: formData[0].description,

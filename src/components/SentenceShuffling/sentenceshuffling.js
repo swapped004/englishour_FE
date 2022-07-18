@@ -31,7 +31,6 @@ const SentenceShuffling = () => {
     {
       description: '',
       correct: '',
-      shuffled: '',
     },
   ])
 
@@ -56,7 +55,6 @@ const SentenceShuffling = () => {
       {
         description: '',
         correct: '',
-        shuffled: '',
       },
     ])
   }
@@ -80,7 +78,7 @@ const SentenceShuffling = () => {
     for (i = 0; i < formData.length; i++) {
       //console.log(formData[i].correct);
       //console.log(formData[i].shuffled);
-      if (formData[i].correct === "" || formData[i].shuffled === "") {
+      if (formData[i].correct === "") {
         alert("Please fill up all fields");
         situation = "notOk";
         break;
@@ -88,10 +86,8 @@ const SentenceShuffling = () => {
     }
     if(situation === "ok"){
       let CorrectSentences = "";
-      let ShuffledSentences = "";
       for(i = 0; i < formData.length; i++){
         CorrectSentences = CorrectSentences + formData[i].correct + "#";
-        ShuffledSentences = ShuffledSentences + formData[i].shuffled + "#";
       }
       await axios
           .post("http://localhost:8248/moderator/insert?token="+token, {
@@ -99,9 +95,8 @@ const SentenceShuffling = () => {
             // level: query.get("level"),
             // topic: query.get("topic"),
             level: query.get("level"),
-            topic: query.get("topic"),
+            tutorial_title: query.get("tutorial"),
             correct:CorrectSentences,
-            shuffled:ShuffledSentences,
             description: formData[0].description,
             moderator_id: id,
           })
@@ -157,18 +152,6 @@ const SentenceShuffling = () => {
                       placeholder='Enter Correct Sentence'
                       style={{width: "80%", margin: "auto"}}
                       name='correct'
-                      onChange={(e) => handleinputchange(e, index)}
-                    />
-                  </Form.Group>
-                </Col>
-                <Col>
-                  <Form.Group>
-                    <Form.Label>Shuffled Sentence</Form.Label>
-                    <Form.Control
-                      type='text'
-                      placeholder='Enter Shuffled Sentence'
-                      name='shuffled'
-                      style={{width: "80%", margin: "auto"}}
                       onChange={(e) => handleinputchange(e, index)}
                     />
                   </Form.Group>

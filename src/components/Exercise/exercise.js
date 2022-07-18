@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Dropdown } from 'reactjs-dropdown-component';
 import { Link } from "react-router-dom";
 import "./button.css";
+import axios from 'axios';
 
 
 class Exercise extends Component {
@@ -10,12 +11,8 @@ class Exercise extends Component {
     this.state = {
       Category: [
         {
-          label: 'Communicative',
-          value: '1',
-        },
-        {
-          label: 'Grammar',
-          value: '2',
+          label: '',
+          value: '',
         },
       ],
       Level: [
@@ -46,16 +43,14 @@ class Exercise extends Component {
       ],
       Topic: [
         {
-          label: 'vocabulary',
-          value: '2',
+          label: '',
+          value: '',
         },
+      ],
+      Tutorial: [
         {
-            label: 'word',
-            value: '1',
-        },
-        {
-            label: 'sentence',
-            value: '3',
+          label: '',
+          value: '',
         },
       ],
       Type: [
@@ -82,6 +77,7 @@ class Exercise extends Component {
         selected_type: "",
         selected_category: "",
         token: "",
+        selected_tutorial:"",
         cnt: 0,
       },
     };
@@ -106,7 +102,7 @@ class Exercise extends Component {
     window.addEventListener('keydown', this.tabKeyPressed);
   }
 
-  onChange = (item, name) => { 
+  onChange = async (item, name) => { 
     console.log(item.label);
     //console.log(window.location.href.split("?")[1].split("=")[1]);
     //this.setState({ [name]: item });
@@ -119,20 +115,33 @@ class Exercise extends Component {
         selected_type: this.state.selection.selected_type,
         selected_category: this.state.selection.selected_category,
         token: window.location.href.split("?")[1].split("=")[1],
+        selected_tutorial: this.state.selection.selected_tutorial,
         cnt: this.state.selection.cnt + 1,
       };
       console.log(new_selection.token);
       this.setState({ selection: new_selection });
     } else if (name === "Type") {
+      const data = await axios.get(
+        "http://localhost:8248/moderator/categoryDetails?token="+window.location.href.split("?")[1].split("=")[1]
+      );
+      console.log(data);
+      const categories = data.data.map((category) => ({
+        label: category.category_name,
+        value: category.category_id,
+      }));
+      this.setState({
+        Category: categories,
+      });
+
       const new_selection = {
         selected_level: this.state.selection.selected_level,
         selected_topic: this.state.selection.selected_topic,
         selected_type: item.value,
         selected_category: this.state.selection.selected_category,
         token: window.location.href.split("?")[1].split("=")[1],
+        selected_tutorial: this.state.selection.selected_tutorial,
         cnt: this.state.selection.cnt + 1,
       };
-      console.log(new_selection.selected_type);
       this.setState({
         selection: new_selection,
       });
@@ -143,11 +152,23 @@ class Exercise extends Component {
         selected_type: this.state.selection.selected_type,
         selected_category: this.state.selection.selected_category,
         token: window.location.href.split("?")[1].split("=")[1],
+        selected_tutorial: this.state.selection.selected_tutorial,
         cnt: this.state.selection.cnt + 1,
       };
-      console.log(new_selection.selected_topic);
       this.setState({
         selection: new_selection,
+      });
+
+      const data = await axios.get(
+        "http://localhost:8248/moderator/tutorialDetails?token="+window.location.href.split("?")[1].split("=")[1]+"&topic_name="+item.label
+      );
+      console.log(data);
+      const tutorials = data.data.map((tutorial) => ({
+        label: tutorial.tutorial_title,
+        value: tutorial.tutorial_id,
+      }));
+      this.setState({
+        Tutorial: tutorials,
       });
     }
     else if (name === "Category") {
@@ -157,9 +178,36 @@ class Exercise extends Component {
         selected_type: this.state.selection.selected_type,
         selected_category: item.label,
         token: window.location.href.split("?")[1].split("=")[1],
+        selected_tutorial: this.state.selection.selected_tutorial,
         cnt: this.state.selection.cnt + 1,
       };
-      console.log(new_selection.selected_category);
+      this.setState({
+        selection: new_selection,
+      });
+
+      console.log(this.state.selection.selected_category);
+      const data = await axios.get(
+        "http://localhost:8248/moderator/topicDetails?token="+window.location.href.split("?")[1].split("=")[1]+"&category_name="+item.label
+      );
+      console.log(data);
+      const topics = data.data.map((topic) => ({
+        label: topic.topic_name,
+        value: topic.topic_id,
+      }));
+      this.setState({
+        Topic: topics,
+      });
+    }
+    else if(name === "Tutorial"){
+      const new_selection = {
+        selected_level: this.state.selection.selected_level,
+        selected_topic: this.state.selection.selected_topic,
+        selected_type: this.state.selection.selected_type,
+        selected_category: item.label,
+        token: window.location.href.split("?")[1].split("=")[1],
+        selected_tutorial: item.label,
+        cnt: this.state.selection.cnt + 1,
+      };
       this.setState({
         selection: new_selection,
       });
@@ -168,19 +216,19 @@ class Exercise extends Component {
    }
 
   render() {
-    const { Category, Level, Topic, Type } = this.state;
+    const { Category, Level, Topic, Type, Tutorial } = this.state;
 
     return (
       <div className="Content">
 
-        <h1>Choose Category and Level</h1>
+        <h1>Type and Level</h1>
         <br /><br />
         <div className="wrapper">
           <Dropdown
-            name="Category"
-            titleSingular="Category"
-            title="Category"
-            list={Category}
+            name="Type"
+            searchable={['Search for Type', 'No matching Type']}
+            title="Type"
+            list={Type}
             // onChange={this.onChange}
             onChange = {this.onChange.bind(this)}
           />
@@ -194,14 +242,14 @@ class Exercise extends Component {
           />
         </div>
         <br /><br />
-        <h1>Search Topic and Type</h1>
+        <h1>Category and Topic</h1>
         <br /><br />
         <div className="wrapper">
-        <Dropdown
-            name="Type"
-            searchable={['Search for Type', 'No matching Type']}
-            title="Type"
-            list={Type}
+          <Dropdown
+            name="Category"
+            titleSingular="Category"
+            title="Category"
+            list={Category}
             // onChange={this.onChange}
             onChange = {this.onChange.bind(this)}
           />
@@ -211,6 +259,20 @@ class Exercise extends Component {
             titleSingular="Topic"
             title="Topic"
             list={Topic}
+            // onChange={this.onChange}
+            onChange = {this.onChange.bind(this)}
+          />
+        </div>
+        <br /><br />
+        <h1>Tutorial</h1>
+        <br /><br />
+        <div className="wrapper">
+        <Dropdown
+            name="Tutorial"
+            searchable={['Search for Tutorial', 'No matching Tutorial']}
+            titleSingular="Tutorial"
+            title="Tutorial"
+            list={Tutorial}
             // onChange={this.onChange}
             onChange = {this.onChange.bind(this)}
           />
