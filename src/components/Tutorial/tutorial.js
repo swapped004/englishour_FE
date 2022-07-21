@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import { Dropdown } from 'reactjs-dropdown-component';
 import { Link } from "react-router-dom";
 import "./button.css";
+const link  = "/add_tutorial?token="+window.location.href.split("?")[1].split("=")[1];
 
 class Tutorial extends Component {
   constructor() {
     super();
+
+    
     this.state = {
       Category: [
         {
@@ -94,7 +97,7 @@ class Tutorial extends Component {
           />
         </div>
         <br /><br />
-        <Link to="/sentenceshuffling" style={{ textDecoration: 'none'}} className="button-54">
+        <Link to={link} style={{ textDecoration: 'none'}}  className="button-54">
         Proceed
         </Link>
       </div>

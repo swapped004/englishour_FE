@@ -6,6 +6,7 @@ import Exercise from './components/Exercise/exercise';
 import SentenceShuffling from './components/SentenceShuffling/sentenceshuffling';
 import LandingPage from './components/LandingPage/landingpage';
 import Tutorial from './components/Tutorial/tutorial';
+import Add_tutorial from './components/Tutorial/Add_tutorial';
 import Home from './components/HomePage/homepage';
 import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
@@ -36,6 +37,7 @@ function App() {
       })
       .then(function (response) {
         tkn = response.data;
+        console.log(tkn);
         setError("");
     })
     .catch((err) => {
@@ -73,6 +75,7 @@ function App() {
           <Route path="/about" element={< Register />} />
           <Route path="/exercise" element={< Exercise />} />
           <Route path="/tutorial" element={< Tutorial />} />
+          <Route path="/add_tutorial" element={< Add_tutorial />} />
           <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />
           <Route exact path="/changeletter" element={< ChangeOneLetter />} />
           <Route exact path="/profile" element={< ModeratorProfile />} />
