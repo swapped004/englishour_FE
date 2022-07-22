@@ -6,8 +6,8 @@ import { PropTypes } from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
+// import ReactMarkdown from 'react-markdown';
+// import remarkGfm from 'remark-gfm';
 
 const Add_tutorial = ({topic_id}) => {
 
