@@ -88,7 +88,8 @@ class Tutorial extends Component {
 
   render() {
     const { Category,Topic } = this.state;
-    const link  = "/add_tutorial?token="+window.location.href.split("?")[1].split("=")[1];
+    const link  = "/add_tutorial?token="+window.location.href.split("?")[1].split("=")[1]+"&topic_id="+this.state.selection.selected_topic;	
+    console.log(link);
 
     return (
       <div className="Content">

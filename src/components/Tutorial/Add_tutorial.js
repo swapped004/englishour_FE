@@ -2,14 +2,14 @@ import React, { useState } from 'react'
 import Yamde from 'yamde'
 import { Link } from "react-router-dom";
 import "./button.css";
-import { PropTypes } from 'prop-types';
+// import { PropTypes } from 'prop-types';
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import jwt_decode from "jwt-decode";
 // import ReactMarkdown from 'react-markdown';
 // import remarkGfm from 'remark-gfm';
 
-const Add_tutorial = ({topic_id}) => {
+const Add_tutorial = () => {
 
     //get token
     function useQuery() {
@@ -21,6 +21,17 @@ const Add_tutorial = ({topic_id}) => {
     let query = useQuery();
     const token = query.get('token');
     var decoded_token = jwt_decode(token);
+
+    //get topic id from url
+    function useQuery2() {
+        const { search } = useLocation();
+
+        return React.useMemo(() => new URLSearchParams(search), [search]);
+    }
+
+    let query2 = useQuery2();
+    const topic_id = query2.get('topic_id');
+    console.log(topic_id);
 
     //get moderator_id
     const moderator_id = decoded_token.moderator_id;
@@ -87,16 +98,6 @@ const Add_tutorial = ({topic_id}) => {
 
     );
   }
-
-//set default props
-Add_tutorial.defaultProps = {
-    topic_id: 1,
-}
-
-//add default prop types
-Add_tutorial.propTypes = {
-    topic_id: PropTypes.number,
-}
 
 export default Add_tutorial;
 
