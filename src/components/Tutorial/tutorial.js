@@ -101,7 +101,7 @@ class Tutorial extends Component {
             titleSingular="Category"
             title="Category"
             list={Category}
-            onChange={this.onChange}
+            onChange = {this.onChange.bind(this)}
           />
 
           <Dropdown
@@ -110,11 +110,11 @@ class Tutorial extends Component {
             titleSingular="Topic"
             title="Topic"
             list={Topic}
-            onChange={this.onChange}
+            onChange = {this.onChange.bind(this)}
           />
         </div>
         <br /><br />
-        <Link to={link} style={{ textDecoration: 'none'}}  className="button-54">
+        <Link to={link} style={{ textDecoration: 'none'}}  className="button-54" onClick={this.onChange.bind(this)}>
         Proceed
         </Link>
       </div>
