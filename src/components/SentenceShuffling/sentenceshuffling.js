@@ -95,7 +95,7 @@ const SentenceShuffling = () => {
             // level: query.get("level"),
             // topic: query.get("topic"),
             level: query.get("level"),
-            tutorial_title: query.get("tutorial"),
+            tutorial_id: query.get("tutorial"),
             correct:CorrectSentences,
             description: formData[0].description,
             moderator_id: id,

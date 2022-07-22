@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Dropdown } from 'reactjs-dropdown-component';
 import { Link } from "react-router-dom";
 import "./button.css";
+import axios from 'axios';
 
 
 class Tutorial extends Component {
@@ -13,39 +14,23 @@ class Tutorial extends Component {
       Category: [
         {
           label: 'Communicative',
-          value: 'communicative',
+          value: '1',
         },
         {
-          label: 'Grammer',
-          value: 'grammer',
+          label: 'Grammar',
+          value: '2',
         },
       ],
       Topic: [
         {
-          label: 'Vocabulary 1',
-          value: 'vocabulary1',
-        },
-        {
-          label: 'Vocabulary 2',
-          value: 'vocabulary2',
-        },
-        {
-            label: 'Word 1',
-            value: 'word1',
-        },
-        {
-            label: 'Word 2',
-            value: 'word2',
-        },
-        {
-            label: 'Sentence 1',
-            value: 'Sentence1',
-        },
-        {
-            label: 'Sentence 2',
-            value: 'sentence2',
+          label: '',
+          value: '',
         },
       ],
+      selection: {
+        selected_topic: "",
+        selected_category: "",
+      },
     };
   }
 
@@ -68,7 +53,38 @@ class Tutorial extends Component {
     window.addEventListener('keydown', this.tabKeyPressed);
   }
 
-  onChange = (item, name) => { console.log(item, name); }
+  onChange = async (item, name) => { 
+    if (name === "Category") {
+      const new_selection = {
+        selected_topic: this.state.selection.selected_topic,
+        selected_category: item.label,
+      };
+      this.setState({
+        selection: new_selection,
+      });
+
+      console.log(this.state.selection.selected_category);
+      const data = await axios.get(
+        "http://localhost:8248/moderator/topicDetails?token="+window.location.href.split("?")[1].split("=")[1]+"&category_name="+item.label
+      );
+      console.log(data);
+      const topics = data.data.map((topic) => ({
+        label: topic.topic_name,
+        value: topic.topic_id,
+      }));
+      this.setState({
+        Topic: topics,
+      });
+    }else if (name === "Topic") {
+      const new_selection = {
+        selected_topic: item.value,
+        selected_category: this.state.selection.selected_category,
+      };
+      this.setState({
+        selection: new_selection,
+      });
+    }
+   }
 
   render() {
     const { Category,Topic } = this.state;
@@ -81,7 +97,7 @@ class Tutorial extends Component {
         <br /><br />
         <div className="wrapper">
           <Dropdown
-            name="category"
+            name="Category"
             titleSingular="Category"
             title="Category"
             list={Category}

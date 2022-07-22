@@ -160,7 +160,7 @@ class Exercise extends Component {
       });
 
       const data = await axios.get(
-        "http://localhost:8248/moderator/tutorialDetails?token="+window.location.href.split("?")[1].split("=")[1]+"&topic_name="+item.label
+        "http://localhost:8248/moderator/tutorialDetails?token="+window.location.href.split("?")[1].split("=")[1]+"&topic_id="+item.value
       );
       console.log(data);
       const tutorials = data.data.map((tutorial) => ({
@@ -203,9 +203,9 @@ class Exercise extends Component {
         selected_level: this.state.selection.selected_level,
         selected_topic: this.state.selection.selected_topic,
         selected_type: this.state.selection.selected_type,
-        selected_category: item.label,
+        selected_category: this.state.selection.selected_category,
         token: window.location.href.split("?")[1].split("=")[1],
-        selected_tutorial: item.label,
+        selected_tutorial: item.value,
         cnt: this.state.selection.cnt + 1,
       };
       this.setState({
