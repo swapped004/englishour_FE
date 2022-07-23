@@ -93,7 +93,8 @@ class Tutorial extends Component {
 
     return (
       <div className="Content">
-
+        <h1>Tutorial Addition</h1>
+        <br />
         <h1>Choose Category and Topic</h1>
         <br /><br />
         <div className="wrapper">

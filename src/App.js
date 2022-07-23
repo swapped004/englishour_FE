@@ -10,6 +10,7 @@ import Add_tutorial from './components/Tutorial/Add_tutorial';
 import Home from './components/HomePage/homepage';
 import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
+import Consecutive from './components/Exercise/Consecutive';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
@@ -74,6 +75,7 @@ function App() {
           <Route path="/help" element={< Register />} />
           <Route path="/about" element={< Register />} />
           <Route path="/exercise" element={< Exercise />} />
+          <Route path="/consecutive" element={< Consecutive />} />
           <Route path="/tutorial" element={< Tutorial />} />
           <Route path="/add_tutorial" element={< Add_tutorial />} />
           <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />

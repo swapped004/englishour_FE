@@ -220,7 +220,8 @@ class Exercise extends Component {
 
     return (
       <div className="Content">
-
+        <h1>Exercise Addition</h1>
+        <br />
         <h1>Type and Level</h1>
         <br /><br />
         <div className="wrapper">

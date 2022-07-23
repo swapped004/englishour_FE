@@ -102,9 +102,19 @@ const SentenceShuffling = () => {
           })
           .then(function (response) {
             //console.log(response);
-            alert("Exercise pending for review");
+            var txt="";
+            if (window.confirm("Exercise Pending for review! Add more?")) {
+              txt = "Yes";
+            } else {
+              txt = "No";
+            }
+            if(txt === "Yes"){
+              navigate("/consecutive?token="+token+"&tutorial="+query.get("tutorial"))
+            }
+            else{
+              navigate('/tutorial?token='+token);
+            }
           });
-          navigate('/exercise?token='+token)
     }
   }
 
