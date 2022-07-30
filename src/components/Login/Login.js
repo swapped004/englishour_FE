@@ -47,7 +47,7 @@ const Login = ({Login_func, error}) => {
             <button type="Submit" className="button-40">
               Login
             </button>
-            <Link to="/forgot_password" className="forgotpass-link">Forgot Password?</Link>
+            <Link to="/forgotPassword" className="forgotpass-link">Forgot Password?</Link>
             <p></p>
             <p>Don't have an account?    <Link to="/register" className="register-link">Create new account</Link></p>
 

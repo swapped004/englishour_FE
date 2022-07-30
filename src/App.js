@@ -11,6 +11,7 @@ import Home from './components/HomePage/homepage';
 import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
 import Consecutive from './components/Exercise/Consecutive';
+import ForgotPassword from './components/Login/forgotPassword';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
@@ -81,6 +82,7 @@ function App() {
           <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />
           <Route exact path="/changeletter" element={< ChangeOneLetter />} />
           <Route exact path="/profile" element={< ModeratorProfile />} />
+          <Route exact path="/forgotPassword" element={< ForgotPassword />} />
           {/* <Route exact path="/profile/timeline" element={< ModeratorTimeline />} /> */}
 
           {/* <Route exact path="/profile" element={< Profile />} /> */}
