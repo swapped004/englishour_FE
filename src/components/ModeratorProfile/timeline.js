@@ -35,7 +35,7 @@ const ModeratorTimeline = ({Exinfo}) => {
                      <div class="content">
                      <h3>Content Status: {item.approval_status}</h3>
                      <p>
-                         You uploaded an Exercise Of Type: {item.exercise_type} At Level: {item.level} Under Topic: {item.topic_name}
+                         You uploaded an Exercise Of Type: {item.exercise_type} At Level: {item.level}
                      </p>
                      </div>
                  </li>

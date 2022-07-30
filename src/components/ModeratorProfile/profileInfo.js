@@ -8,9 +8,9 @@ class ProfileInfo extends Component {
 
     render() { 
 
-        const {info, Exinfo} = this.props;
+        const {info, Exinfo, Tutorialinfo} = this.props;
 
-        console.log("profileInfojs info: ", info);
+        // console.log("profileInfojs info: ", info);
 
         return (
 
@@ -50,7 +50,7 @@ class ProfileInfo extends Component {
                       <p><span>Added Exercise </span>: {Exinfo.length}</p>
                   </div>
                   <div className="bio-row">
-                      <p><span>Added Tutorial </span>:</p>
+                      <p><span>Added Tutorial </span>: {Tutorialinfo.length}</p>
                   </div>
               </div>
           </div>
