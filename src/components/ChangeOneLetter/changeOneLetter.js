@@ -88,6 +88,14 @@ const ChangeOneLetter = () => {
         hints += formData[i].hint + "#";
         answers += formData[i].answer + "#";
       }
+      var currentdate = new Date(); 
+      var datetime = currentdate.getFullYear() + "-"
+              + (currentdate.getMonth()+1)  + "-" 
+              + currentdate.getDate() + "T"  
+              + currentdate.getHours() + ":"  
+              + currentdate.getMinutes() + ":" 
+              + currentdate.getSeconds()+".";
+
       await axios
           .post("http://localhost:8248/moderator/insert?token="+token, {
             type: "changeletter",
@@ -97,6 +105,8 @@ const ChangeOneLetter = () => {
             answers: answers,
             description: formData[0].description,
             moderator_id: id,
+            content:"A new exercise of 'Change One letter To Make New Word' has been added",
+            date: datetime,
           })
           .then(function (response) {
             //console.log(response);
@@ -197,26 +207,26 @@ const ChangeOneLetter = () => {
                         {formData.length - 1 === index && formData.length > 1 && (
                           <button
                             type='button'
-                            className="button-54v2"
+                            className="button-85"
                             onClick={(e) => handleremove(index)}
                           >
                             Delete
                           </button>
-                        )}
+                        )}&nbsp;&nbsp;&nbsp;
                       {/* </div> */}
                     {/* </span> */}
                   {/* </div> */}
                   {formData.length - 1 === index && (
                     <button
-                      className="button-54v2"
+                      className="button-85"
                       onClick={handleaddclick}
                     >
                       Add
                     </button>
-                  )}
+                  )}&nbsp;&nbsp;&nbsp;
                   {formData.length - 1 === index && (
                     <button
-                      className="button-54v2"
+                      className="button-85"
                       onClick={handleDoneclick}
                     >
                       Done
@@ -242,11 +252,6 @@ const ChangeOneLetter = () => {
           </Row>
           {formData.map((item, index) => (
             <>
-
-            {/* <div style={'display'= 'flex'}>
-              <p><h3><span style={{fontWeight: 'bold'}}>Answer:</span> _______________</h3></p>
-              <input type="text" id="fname" name="fname">
-            </div> */}
               <Row style={{display: 'flex'}}>
                 <Col xs={8} >
                   <h3><span style={{fontWeight: 'bold'}}>{index+1}.</span> {" "+item.hint}</h3>   
@@ -258,7 +263,6 @@ const ChangeOneLetter = () => {
                   <svg width="100" height="30" style={{"margin-top": "15px", "margin-left": "20px"}}>
                     <rect width="100" height="30" style={{fill: "rgb(255,255,255)", "margin-top": "10" ,"line-height": 40 , "stroke-width": 3, stroke: "rgb(0,0,0)" }} />
                   </svg>
-                  {/* <p><h3><span style={{fontWeight: 'bold'}}>Answer:</span> _______________</h3></p> */}
                 </Col>
               </Row>
               <hr />

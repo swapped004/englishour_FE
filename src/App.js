@@ -12,6 +12,8 @@ import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
 import Consecutive from './components/Exercise/Consecutive';
 import ForgotPassword from './components/Login/forgotPassword';
+import PreviewChangeOneLetter from './components/Notification/PreviewChangeOneLetter';
+import PreviewSentenceShuffle from './components/Notification/PreviewSentenceShuffle';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
@@ -48,6 +50,7 @@ function App() {
   if(tkn !== "0"){
     setUser({token: tkn, logged_in: true});
   }
+  // console.log(notification);
   return tkn;
   }
 }
@@ -67,7 +70,6 @@ function App() {
     <Router>
       <>
         <NavBar logged_in={user.logged_in} Logout_func={Logout} token={user.token}/>
-        {/* <LandingPage logged_in={user.logged_in}/> */}
         <Routes>
           <Route path="/" element={< LandingPage />} />
           <Route path="/homepage" element={< Home />} />
@@ -83,8 +85,8 @@ function App() {
           <Route exact path="/changeletter" element={< ChangeOneLetter />} />
           <Route exact path="/profile" element={< ModeratorProfile />} />
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
-          {/* <Route exact path="/profile/timeline" element={< ModeratorTimeline />} /> */}
-
+          <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter />} />
+          <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle />} />
           {/* <Route exact path="/profile" element={< Profile />} /> */}
         </Routes>
       </>

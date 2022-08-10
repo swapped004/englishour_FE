@@ -106,7 +106,7 @@ const Add_tutorial = () => {
             handler={setText}
             theme={isLightMode ? "light" : "dark"}></Yamde>
 
-            <Link to="#" className="button-75" onClick={SubmitHandler}>Submit</Link>
+            <Link to="#" className="button-85" onClick={SubmitHandler}>Submit</Link>
             {/* <a className="button-75" href="#popup" onSubmit={SubmitHandler}> <i className="fa fa-edit"></i> Submit</a> */}
             {/* <div className="popup" id="popup">
                 <div className="popup-inner">
