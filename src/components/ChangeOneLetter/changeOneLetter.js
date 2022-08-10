@@ -126,12 +126,6 @@ const ChangeOneLetter = () => {
       }
   }
 
-  // const handlecompute = () => {
-  //   const total = formData.reduce((acc, curr) => {
-  //     return acc + Number(curr.cost) * Number(curr.quantity)
-  //   }, 0)
-  //   return total
-  // }
 
   const getDescription = () => {
     const description = formData.reduce((acc, curr) => {
@@ -161,10 +155,8 @@ const ChangeOneLetter = () => {
         </Row>
 
 
-        {/* </Container> */}
         {formData.map((item, index) => (
           <>
-            {/* <Container> */}
               <Row className='rowHeader'>
                 <Col>
                     <h3>Question No: {index+1}</h3> 
@@ -213,9 +205,6 @@ const ChangeOneLetter = () => {
                             Delete
                           </button>
                         )}&nbsp;&nbsp;&nbsp;
-                      {/* </div> */}
-                    {/* </span> */}
-                  {/* </div> */}
                   {formData.length - 1 === index && (
                     <button
                       className="button-85"

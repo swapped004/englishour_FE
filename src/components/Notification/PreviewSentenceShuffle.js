@@ -1,48 +1,82 @@
 import React, { useState } from 'react';
+import { Col, Row } from 'react-bootstrap'
+import { useLocation } from 'react-router-dom';
+import axios from 'axios'
+
+const useStyles = () => ({})
+function useQuery() {
+    const { search } = useLocation();
+  
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 const PreviewSentenceShuffle = () => {
+    const classes = useStyles()
 
-    // const [formData, setFormData] = useState([
-    //     {
-    //         updatedAt: '',
-    //         topic_name: '',
-    //         exercise_type: "",
-    //         level: "",
-    //         approval_status: "",
-    //     },
-    //   ]);
+    const [formData, setFormData] = useState({whole:""});
+    let query = useQuery();
+    const token = query.get('token');
+    const exercise_id = query.get('exercise_id');
+    console.log(exercise_id);
 
-    // React.useEffect(() => {
-    //     setFormData(Exinfo);             
-    // }, []);
+    React.useEffect(() => {
+      const getFormData = async (id) => {
+          const response = await axios.get("http://localhost:8248/moderator/exercisePreview?exercise_id="+id+"&token="+token+"&exercise_type=sentenceshuffling");
+          console.log(response.data);
+          setFormData({whole:response.data});
+      }
+      getFormData(exercise_id);             
+    }, []);
 
-    //console.log(formData);
+    var temp = [];
+    var infos = [];
+    let description = "";
+    temp = formData.whole.split("#");
+    for(var i = 1; i < temp.length-1; i++) {
+        infos.push(temp[i]);
+    }
+    description = temp[0];
 
     return (
-        
-        <React.Fragment>
-            <div class="timeline">
-                Hi
-                {/* <ul>
-                {formData.map((item, index) => (
-                     <li>
-                     <span>{item.updatedAt.split("T")[0]}</span>
-                     <div class="content">
-                     <h3>Content Status: {item.approval_status}</h3>
-                     <p>
-                         You uploaded an Exercise Of Type: {item.exercise_type} At Level: {item.level}
-                     </p>
-                     </div>
-                 </li>
-                ))}
-                </ul> */}
-            </div>    
-
-        </React.Fragment>
-
-
-
-     );
+      <div>
+        <div className="float-container">
+          <div className={classes.Totalss}>
+        <div className="float-child">
+          <Row>
+            <Col><h2><span style={{fontWeight: 'bold'}}>Preview</span></h2></Col>
+            <Col>
+              <p><h3><span style={{fontWeight: 'bold'}}>{description}</span></h3></p>
+            </Col>
+          </Row>
+          {infos.map((item, index) => (
+            <>
+              <Row>
+                <Col xs={8}><h3><span style={{fontWeight: 'bold'}}>{index+1}.</span> {" "+item}</h3></Col>
+                <br />
+                <Col>
+                  <p><h3><span style={{fontWeight: 'bold'}}>Answer:</span> _______________</h3></p>
+                </Col>
+              </Row>
+              <hr />
+            </>
+          ))}
+        </div>
+      </div>
+    </div>
+    <br/><br/><br/>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button className="button-85">Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+    <button className="button-85">Decline</button>
+  </div>
+  );
 }
  
 export default PreviewSentenceShuffle;

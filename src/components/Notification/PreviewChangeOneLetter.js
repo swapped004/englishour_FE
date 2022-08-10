@@ -1,48 +1,91 @@
 import React, { useState } from 'react';
+import { Col, Form, Row } from 'react-bootstrap'
+import { useNavigate, useLocation } from 'react-router-dom';
+import "./sideByside.css"
+import "./button.css";
+import axios from 'axios'
+
+const useStyles = () => ({})
+function useQuery() {
+    const { search } = useLocation();
+  
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 const PreviewChangeOneLetter = () => {
+    const classes = useStyles()
 
-    // const [formData, setFormData] = useState([
-    //     {
-    //         updatedAt: '',
-    //         topic_name: '',
-    //         exercise_type: "",
-    //         level: "",
-    //         approval_status: "",
-    //     },
-    //   ]);
+    const [formData, setFormData] = useState({whole:""});
+    let query = useQuery();
+    const token = query.get('token');
+    const exercise_id = query.get('exercise_id');
 
-    // React.useEffect(() => {
-    //     setFormData(Exinfo);             
-    // }, []);
+    React.useEffect(() => {
+      const getFormData = async (id) => {
+          const response = await axios.get("http://localhost:8248/moderator/exercisePreview?exercise_id="+id+"&token="+token+"&exercise_type=letterchange");
+          console.log(response.data);
+          setFormData({whole:response.data});
+      }
+      getFormData(exercise_id);             
+    }, []);
 
-    //console.log(formData);
+    // console.log(formData.whole);
+    var temp = [];
+    var infos = [];
+    let description = "";
+    temp = formData.whole.split("#");
+    for(var i = 1; i < temp.length-1; i++) {
+        infos.push(temp[i]);
+    }
+    description = temp[0];
 
     return (
-        
-        <React.Fragment>
-            <div class="timeline">
-                Hi
-                {/* <ul>
-                {formData.map((item, index) => (
-                     <li>
-                     <span>{item.updatedAt.split("T")[0]}</span>
-                     <div class="content">
-                     <h3>Content Status: {item.approval_status}</h3>
-                     <p>
-                         You uploaded an Exercise Of Type: {item.exercise_type} At Level: {item.level}
-                     </p>
-                     </div>
-                 </li>
-                ))}
-                </ul> */}
-            </div>    
+      <div>
+        <div className="float-container">
+          <div className={classes.Totalss}>
+            <div className="float-child">
+              <Row>
+                <Col><h2><span style={{fontWeight: 'bold'}}>Preview</span></h2></Col>
+                <Col>
+                  <p><h3><span style={{fontWeight: 'bold'}}>{description}</span></h3></p>
+                </Col>
+              </Row>
+              {infos.map((item, index) => (
+                <>
+                  <Row style={{display: 'flex'}}>
+                    <Col xs={8} >
+                      <h3><span style={{fontWeight: 'bold'}}>{index+1}.</span> {" "+item}</h3>   
+                      
+                    </Col>
+                    
+                    <Col>
+    
+                      <svg width="100" height="30" style={{"margin-top": "15px", "margin-left": "20px"}}>
+                        <rect width="100" height="30" style={{fill: "rgb(255,255,255)", "margin-top": "10" ,"line-height": 40 , "stroke-width": 3, stroke: "rgb(0,0,0)" }} />
+                      </svg>
+                    </Col>
+                  </Row>
+                  <hr />
+                </>
+              ))}
+            </div>
+          </div>
+        </div>
+        <br/><br/><br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="button-85">Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="button-85">Decline</button>
 
-        </React.Fragment>
-
-
-
-     );
+        </div>
+      )
 }
  
 export default PreviewChangeOneLetter;
