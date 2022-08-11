@@ -1,0 +1,18 @@
+.float-container {
+    border: 3px solid rgb(255, 255, 255);
+    padding: 20px;
+    text-align: center;
+}
+
+.float-child {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    border: 2px solid rgba(31, 3, 190, 0.322);
+}  
+.float-child2 {
+    width: 50%;
+    float: left;
+    padding: 20px;
+    border: 2px solid rgb(255, 255, 255);
+}  
