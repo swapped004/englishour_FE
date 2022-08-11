@@ -62,7 +62,7 @@ class Notification extends React.Component {
     }
     console.log(exId);
     const data = await axios.get(
-      "http://localhost:8248/moderator/exerciseDetails?token="+window.location.href.split("?")[1].split("=")[1]+"&exercise_id="+exId
+      "http://localhost:8248/moderator/exerciseDetails?token="+window.location.href.split("?")[1].split("=")[1].split("#")[0]+"&exercise_id="+exId
     );
     console.log(data.data);
     this.setState({Exercise:data.data});
