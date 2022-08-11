@@ -294,7 +294,7 @@ const GroupWords = () => {
       </div>
       {/* <hr /> */}
       <div className={classes.Totalss}>
-        <div className="float-child">
+        <div className="float-child" style={{"width": "50%"}}>
           <Row>
             <Col><h2><span style={{fontWeight: 'bold'}}>Words: </span></h2></Col>
             

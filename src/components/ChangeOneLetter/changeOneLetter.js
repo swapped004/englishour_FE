@@ -232,7 +232,7 @@ const ChangeOneLetter = () => {
       </div>
       {/* <hr /> */}
       <div className={classes.Totalss}>
-        <div className="float-child">
+        <div className="float-child" style={{"width": "50%"}}>
           <Row>
             <Col><h2><span style={{fontWeight: 'bold'}}>Preview</span></h2></Col>
             <Col>
