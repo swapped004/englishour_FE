@@ -8,7 +8,7 @@ import 'font-awesome/css/font-awesome.min.css'
 import ProfileInfo from './profileInfo'
 import Timeline from './timeline'
 import jwt_decode from "jwt-decode";
-import Notification from '../Notification/Notification';
+import Notification from '../Notification/NotificationClone';
 
 const ModeratorProfile = () => {
 
