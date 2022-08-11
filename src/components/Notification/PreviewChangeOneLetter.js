@@ -19,6 +19,8 @@ const PreviewChangeOneLetter = () => {
     let query = useQuery();
     const token = query.get('token');
     const exercise_id = query.get('exercise_id');
+    const notification_id = query.get('notification_id');
+    console.log(notification_id);
 
     React.useEffect(() => {
       const getFormData = async (id) => {
@@ -38,6 +40,17 @@ const PreviewChangeOneLetter = () => {
         infos.push(temp[i]);
     }
     description = temp[0];
+
+    const handleApprove = async (e) => {
+      e.preventDefault();
+      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id"+notification_id+"&token="+token+"&status=approved");
+      console.log(response.data);
+    }
+    const handleDecline = async (e) => {
+      e.preventDefault();
+      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id"+notification_id+"&token="+token+"&status=declined");
+      console.log(response.data);
+    }
 
     return (
       <div>
@@ -81,8 +94,8 @@ const PreviewChangeOneLetter = () => {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="button-85">Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="button-85">Decline</button>
+        <button className="button-85" onClick={handleApprove}>Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="button-85"onClick={handleDecline}>Decline</button>
 
         </div>
       )

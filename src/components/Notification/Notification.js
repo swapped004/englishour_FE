@@ -142,7 +142,7 @@ class Notification extends React.Component {
                   <div
                     style={{ background: "#fff", padding: "5px" }} className={"lineItmes"}>
                       
-                      <Link to={"/preview"+this.state.Exercise.split("#")[k]+"?token="+window.location.href.split("?")[1].split("=")[1].split("#")[0]+"&exercise_id="+i.content.split("#")[1]} style={{ fontSize: "18px", fontWeight: 700 }}>Review</Link>
+                      <Link to={"/preview"+this.state.Exercise.split("#")[k]+"?token="+window.location.href.split("?")[1].split("=")[1].split("#")[0]+"&exercise_id="+i.content.split("#")[1]+"&notification_id=="+i.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>Review</Link>
                         <span
                           style={{
                             fontSize: "10px",
