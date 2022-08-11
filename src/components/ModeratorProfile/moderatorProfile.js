@@ -8,6 +8,7 @@ import 'font-awesome/css/font-awesome.min.css'
 import ProfileInfo from './profileInfo'
 import Timeline from './timeline'
 import jwt_decode from "jwt-decode";
+import Notification from '../Notification/NotificationClone';
 
 const ModeratorProfile = () => {
 
@@ -29,6 +30,7 @@ const ModeratorProfile = () => {
         const [Exinfo, setExInfo] = React.useState({exercise_type:"",level:"",approval_status:"",tutorial_id:"",updatedAt:""});
         const [Tutorialinfo, setTutorialInfo] = React.useState({tutorial_title:"",content:"",approval_status:"",topic_id:"",updatedAt:""});
         const [password, setPassword] = React.useState({NewPassword:"", ConfirmPassword:""});
+        const [notification, setNotification] = React.useState([{notification_id:"",content:"",date:""}]);
 
         React.useEffect(() => {
             const getInfo = async (id) => {
@@ -48,23 +50,28 @@ const ModeratorProfile = () => {
                 // console.log(data);
                 setTutorialInfo(data);
             }
+            const getNotification = async (id) => {
+                const response = await fetch("http://localhost:8248/moderator/notification/moderator_id?moderator_id="+id+"&token="+token);
+                const data = await response.json();
+                console.log(data[0]);
+                setNotification(data);
+            }
             getInfo(id); 
             getExInfo(id);
-            getTutorialInfo(id);             
+            getTutorialInfo(id);
+            getNotification(id);             
         }, []);
 
         const [timeline, setTimeline] = useState('profile')
-        // console.log("Profile info",info)
+
+        console.log("notification info", notification);
 
         const subPart = () => {
-
             return (
                 <div>
-                {timeline === 'timeline' && (
-                    <Timeline Exinfo = {Exinfo}/>
-                )}
-
+                {timeline === 'timeline' && (<Timeline Exinfo = {Exinfo}/>)}
                 {timeline === 'profile' && <ProfileInfo info= {info} Exinfo = {Exinfo} Tutorialinfo = {Tutorialinfo} />}
+                {timeline === 'notification' && (<Notification notification={notification}/>)}
                 </div>
             );
             
@@ -78,6 +85,11 @@ const ModeratorProfile = () => {
         const handleTimeline = () => {
          
             setTimeline('timeline');
+        }
+
+        const handleNotification = () => {   
+            // console.log("notification call hocche");         
+            setTimeline('notification');
         }
 
     
@@ -257,11 +269,11 @@ const ModeratorProfile = () => {
                                 </div>
                             </div>
                             </li>
+                            <li><a href="#" onClick={handleNotification}> <i className="fa fa-calendar"></i> Notification <span className="label label-warning pull-right r-activity">{notification.length}</span></a></li>
                         </ul>
                     </div>
                 </div>
                 <div className="profile-info col-md-9">
-                    
                     {subPart()}   
                 </div>
                 </div>

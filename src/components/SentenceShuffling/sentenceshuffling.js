@@ -89,19 +89,27 @@ const SentenceShuffling = () => {
       for(i = 0; i < formData.length; i++){
         CorrectSentences = CorrectSentences + formData[i].correct + "#";
       }
+
+      var currentdate = new Date(); 
+      var datetime = currentdate.getFullYear() + "-"
+              + (currentdate.getMonth()+1)  + "-" 
+              + currentdate.getDate() + "T"  
+              + currentdate.getHours() + ":"  
+              + currentdate.getMinutes() + ":" 
+              + currentdate.getSeconds()+".";
+
       await axios
           .post("http://localhost:8248/moderator/insert?token="+token, {
             type: "sentenceshuffling",
-            // level: query.get("level"),
-            // topic: query.get("topic"),
             level: query.get("level"),
             tutorial_id: query.get("tutorial"),
             correct:CorrectSentences,
             description: formData[0].description,
             moderator_id: id,
+            content:"A new exercise of 'Sentence Shuffling' has been added",
+            date: datetime,
           })
           .then(function (response) {
-            //console.log(response);
             var txt="";
             if (window.confirm("Exercise Pending for review! Add more?")) {
               txt = "Yes";
@@ -175,27 +183,23 @@ const SentenceShuffling = () => {
                         {formData.length - 1 === index && formData.length > 1 && (
                           <button
                             type='button'
-                            className="button-54v2"
+                            className="button-85"
                             onClick={(e) => handleremove(index)}
                           >
                             Delete
                           </button>
-                        )}
-                      {/* </div> */}
-                      {/* <div id='dropdown-basic'> */}
+                        )}&nbsp;&nbsp;&nbsp;
                       {formData.length - 1 === index && (
                         <button
-                          className="button-54v2"
+                          className="button-85"
                           onClick={handleaddclick}
                         >
                         Add
                         </button>
-                      )}
-                      {/* </div> */}
-                      {/* <div id='dropdown-basic'> */}
+                      )}&nbsp;&nbsp;&nbsp;
                       {formData.length - 1 === index && (
                         <button
-                          className="button-54v2"
+                          className="button-85"
                           onClick={handleDoneclick}
                         >
                           Done

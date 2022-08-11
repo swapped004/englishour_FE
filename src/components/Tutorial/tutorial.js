@@ -116,7 +116,7 @@ class Tutorial extends Component {
           />
         </div>
         <br /><br />
-        <Link to={link} style={{ textDecoration: 'none'}}  className="button-54" onClick={this.onChange.bind(this)}>
+        <Link to={link} style={{ textDecoration: 'none'}}  className="button-85" onClick={this.onChange.bind(this)}>
         Proceed
         </Link>
       </div>
