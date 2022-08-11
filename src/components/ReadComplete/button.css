@@ -1,6 +1,7 @@
 
 /* CSS */
 
+
 .button-54 {
     font-family: "Open Sans", sans-serif;
     font-size: 16px;
@@ -182,7 +183,102 @@
     }
   }
 
-  /* CSS */
+
+  .container
+  {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 100px;
+    margin-right: auto;
+    padding-bottom: 20px;
+    border: 1px solid #000;
+    width : 50%;
+    margin-top: 20px;
+  }
+
+ .container div
+ {
+    margin: 5px;
+ }
+
+
+
+ /* for Read Complete */
+
+ .invisible
+ {
+    display: none;
+ }
+
+ .inputList
+ {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    margin-top: 20px;
+    margin-left: 450px;
+    margin-right: auto;
+    border: 1px solid #000;
+    width : 50%;
+    margin-top: 20px;
+ }
+
+ .input-base
+ {
+    padding: 5px;
+    background-color:white;
+    text-align: center;
+    color: purple;
+    font-weight: bold;
+    font-size: 25px;
+    margin-top: 20px;
+    margin-left: 10px;
+    margin-right: 10px;
+    border: 1px solid #000;
+ }
+
+
+ 
+ .input-base-first
+ {
+  padding: 5px;
+  text-align: center;
+  margin-top: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
+  border: 1px  #000;
+ }
+
+
+ .grid-container
+ {
+    width : 75%;
+    margin-left: 250px;
+    margin-right: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+ }
+
+ .grid-button
+ {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left: 400px;
+    margin-right: auto;
+    width : 50%;
+    margin-top: 20px;
+ }
+
+ /* CSS */
 .button-85 {
   padding: 0.6em 2em;
   border: none;

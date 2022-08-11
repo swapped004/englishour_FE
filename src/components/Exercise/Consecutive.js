@@ -133,7 +133,7 @@ class Consecutive extends Component {
           />
         </div>
         <br /><br />
-        <Link to={"/"+this.state.selection.selected_type+"?token="+this.state.selection.token+"&level="+this.state.selection.selected_level+"&tutorial="+this.state.selection.selected_tutorial} style={{ textDecoration: 'none'}} className="button-54" onClick={this.onChange.bind(this)}>
+        <Link to={"/"+this.state.selection.selected_type+"?token="+this.state.selection.token+"&level="+this.state.selection.selected_level+"&tutorial="+this.state.selection.selected_tutorial} style={{ textDecoration: 'none'}} className="button-85" onClick={this.onChange.bind(this)}>
         Proceed
         </Link>
       </div>

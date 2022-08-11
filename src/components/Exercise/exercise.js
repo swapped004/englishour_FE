@@ -280,7 +280,7 @@ class Exercise extends Component {
         </div>
         <br /><br />
         {/* {console.log(this.Selection_state.selection)}  */}
-        <Link to={"/"+this.state.selection.selected_type+"?token="+this.state.selection.token+"&type="+this.state.selection.selected_type+"&level="+this.state.selection.selected_level+"&category="+this.state.selection.selected_category+"&tutorial="+this.state.selection.selected_tutorial} style={{ textDecoration: 'none'}} className="button-54" onClick={this.onChange.bind(this)}>
+        <Link to={"/"+this.state.selection.selected_type+"?token="+this.state.selection.token+"&type="+this.state.selection.selected_type+"&level="+this.state.selection.selected_level+"&category="+this.state.selection.selected_category+"&tutorial="+this.state.selection.selected_tutorial} style={{ textDecoration: 'none'}} className="button-85" onClick={this.onChange.bind(this)}>
         Proceed
         </Link>
       </div>
