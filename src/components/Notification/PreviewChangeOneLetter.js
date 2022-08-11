@@ -14,6 +14,7 @@ function useQuery() {
 
 const PreviewChangeOneLetter = () => {
     const classes = useStyles()
+    const navigate = useNavigate();
 
     const [formData, setFormData] = useState({whole:""});
     let query = useQuery();
@@ -45,11 +46,19 @@ const PreviewChangeOneLetter = () => {
       e.preventDefault();
       const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id"+notification_id+"&token="+token+"&status=approved");
       console.log(response.data);
+      alert("Aproved Successfully");
+      if(response.data === "Status Updated") {
+        navigate('/profile?token='+token);
+      }
     }
     const handleDecline = async (e) => {
       e.preventDefault();
       const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id"+notification_id+"&token="+token+"&status=declined");
       console.log(response.data);
+      alert("Declined Successfully");
+      if(response.data === "Status Updated") {
+        navigate('/profile?token='+token);
+      }
     }
 
     return (
