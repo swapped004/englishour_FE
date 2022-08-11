@@ -4,6 +4,8 @@ import NavBar from './components/Navbar/Navbar';
 import Login from './components/Login/Login';
 import Exercise from './components/Exercise/exercise';
 import SentenceShuffling from './components/SentenceShuffling/sentenceshuffling';
+import ReadComplete from './components/ReadComplete/Row_col';
+import NameVerb  from './components/ReadComplete/Name_Verb';
 import LandingPage from './components/LandingPage/landingpage';
 import Tutorial from './components/Tutorial/tutorial';
 import Add_tutorial from './components/Tutorial/Add_tutorial';
@@ -80,6 +82,8 @@ function App() {
           <Route path="/tutorial" element={< Tutorial />} />
           <Route path="/add_tutorial" element={< Add_tutorial />} />
           <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />
+          <Route exact path="/tablecompletion" element={< ReadComplete />} />
+          <Route exact path="/nameverb" element={< NameVerb />} />
           <Route exact path="/changeletter" element={< ChangeOneLetter />} />
           <Route exact path="/profile" element={< ModeratorProfile />} />
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
