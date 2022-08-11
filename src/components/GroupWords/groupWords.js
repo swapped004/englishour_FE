@@ -198,7 +198,7 @@ const GroupWords = () => {
                     <Form.Label>Enter Category</Form.Label>
                     <Form.Control
                       type='text'
-                      placeholder='Enter Hint'
+                      placeholder='Enter Category'
                       style={{width: "80%", margin: "auto"}}
                       name='hint'
                       onChange={(e) => handleinputchange(e, index)}
@@ -215,7 +215,7 @@ const GroupWords = () => {
                     <Form.Label>Enter Word: {ans_index + 1}</Form.Label>
                     <Form.Control
                       type='text'
-                      placeholder='Enter Answer'
+                      placeholder='Enter Word'
                       style={{width: "80%", margin: "auto"}}
                       name='answer'
                       onChange={(e) => handlewordinputchange(e, index, ans_index)}
@@ -338,7 +338,7 @@ const GroupWords = () => {
             <Row>
               <Col><h2><span style={{fontWeight: 'bold'}}>Category: </span></h2></Col>
               <Col>
-                <p><h3><span style={{fontWeight: 'bold'}}>{getDescription()}</span></h3></p>
+                {/* <p><h3><span style={{fontWeight: 'bold'}}>{getDescription()}</span></h3></p> */}
               </Col>
           </Row>
 

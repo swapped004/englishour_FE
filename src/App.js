@@ -17,6 +17,8 @@ import Consecutive from './components/Exercise/Consecutive';
 import ForgotPassword from './components/Login/forgotPassword';
 import PreviewChangeOneLetter from './components/Notification/PreviewChangeOneLetter';
 import PreviewSentenceShuffle from './components/Notification/PreviewSentenceShuffle';
+import PreviewGroupWords from './components/Notification/PreviewGroupWords';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
@@ -93,6 +95,9 @@ function App() {
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
           <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter />} />
           <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle />} />
+          <Route exact path="/previewcategorizewords" element={< PreviewGroupWords />} />
+
+
           {/* <Route exact path="/profile" element={< Profile />} /> */}
         </Routes>
       </>
