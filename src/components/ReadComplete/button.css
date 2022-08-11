@@ -184,25 +184,20 @@
   }
 
 
-  .container
+  .read-container
   {
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     margin-top: 20px;
-    margin-left: 100px;
+    margin-left: 450px;
     margin-right: auto;
-    padding-bottom: 20px;
+    padding: 20px;
     border: 1px solid #000;
     width : 50%;
-    margin-top: 20px;
   }
 
- .container div
- {
-    margin: 5px;
- }
 
 
 

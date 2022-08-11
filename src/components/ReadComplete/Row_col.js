@@ -4,9 +4,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./button.css";
 import jwt_decode from "jwt-decode";
 import axios from "axios";
-import Name_Verb from "./Name_Verb";
 import Grid from './Grid';
-import Sentence from './Sentence';
 import Sentence_add from './Sentence_add';
 
 function useQuery() {
@@ -169,10 +167,8 @@ const Row_col = () => {
 
   return (
     <div>
-        <div className="container">
-
-            
-
+        <div className="read-container">  
+        
             <div>
                 <Dropdown
                     name="row"
