@@ -10,6 +10,8 @@ import Tutorial from './components/Tutorial/tutorial';
 import Add_tutorial from './components/Tutorial/Add_tutorial';
 import Home from './components/HomePage/homepage';
 import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
+import GroupWords from './components/GroupWords/groupWords';
+
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
 import Consecutive from './components/Exercise/Consecutive';
 import ForgotPassword from './components/Login/forgotPassword';
@@ -85,6 +87,8 @@ function App() {
           <Route exact path="/sentenceshuffling" element={< SentenceShuffling />} />
           <Route exact path="/tablecompletion" element={< ReadComplete />} />
           <Route exact path="/changeletter" element={< ChangeOneLetter />} />
+          <Route exact path="/categorizewords" element={< GroupWords />} />
+
           <Route exact path="/profile" element={< ModeratorProfile />} />
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
           <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter />} />

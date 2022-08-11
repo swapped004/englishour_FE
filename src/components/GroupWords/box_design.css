@@ -1,0 +1,14 @@
+.rowContainer{
+    background-color: #9d91d9;
+    border-radius: 0 0 1rem 1rem;
+    padding: 2rem;
+    /* width: 100% */
+}
+
+.rowHeader{
+    background-color:#cedef0;
+    /* width: 10rem;
+    height: 3rem; */
+    border-radius: 1rem 1rem 0 0;
+    margin-top: 2rem;
+}

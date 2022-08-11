@@ -3,28 +3,36 @@ import { Col, Form, Row } from 'react-bootstrap'
 import "./Form.css"
 import "./sideByside.css"
 import "./button.css";
-// import { useNavigate, useLocation } from "react-router-dom";
+import "./box_design.css"
+import axios from "axios";
+import jwt_decode from "jwt-decode";
 
-// function useQuery() {
-//   const { search } = useLocation();
+import { useNavigate, useLocation } from "react-router-dom";
 
-//   return React.useMemo(() => new URLSearchParams(search), [search]);
-// }
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
 
 const useStyles = () => ({})
 
 const GroupWords = () => {
   const classes = useStyles()
+  const navigate = useNavigate();
+  let query = useQuery();
 
-//   let query = useQuery();
-//   const navigate = useNavigate();
-  // console.log(query.get("level"));
+  const token = query.get('token');
+
+  var decode = jwt_decode(token);
+  console.log(decode.moderator_id);
+  const id = decode.moderator_id;
   
   const [formData, setFormData] = useState([
     {
       description: '',
       hint: '',
-      answer: '',
+      answer: [''],
     },
   ])
 
@@ -34,12 +42,27 @@ const GroupWords = () => {
     list[index][name] = value
     setFormData(list)
   }
+  
+  const handlewordinputchange = (e, index, ans_index) => {
+    const {name, value} = e.target;
+    const ans_list = [...formData];
+    ans_list[index][name][ans_index] = value;
+    setFormData(ans_list);
+  }
 
   const handleremove = (index) => {
     console.log(index)
     const list = [...formData]
     list.splice(index, 1)
     setFormData(list)
+  }
+
+  const handlewordremove = (index, ans_index) => {
+    console.log("word index: ", ans_index);
+
+    const list = [...formData];
+    list[index].answer.splice(ans_index, 1);
+    setFormData(list);
   }
 
   const handleaddclick = (e) => {
@@ -49,9 +72,79 @@ const GroupWords = () => {
       {
         description: '',
         hint: '',
-        answer: '',
+        answer: [''],
       },
     ])
+  }
+
+  const handlewordaddclick = (e, index) => {
+    e.preventDefault();
+
+    // const {name, value} = e.target;
+    const ans_list = [...formData];
+    ans_list[index].answer = [...ans_list[index].answer, ''];
+    setFormData(ans_list);
+
+  }
+
+  const handleDoneclick = async (e) => {
+    e.preventDefault()
+    // alert("Exercise saved")
+
+    var i = 0;
+    //console.log(formData[0].description)
+    let situation = "ok";
+    if(formData[0].description === ''){
+      situation = "notOk";
+      alert("Please enter a description")
+    }
+    for (i = 0; i < formData.length; i++) {
+      //console.log(formData[i].correct);
+      //console.log(formData[i].shuffled);
+      if (formData[i].hint === "" || formData[i].answer[0] === "") {
+        alert("Please fill up all fields");
+        situation = "notOk";
+        break;
+      }
+    }
+    if(situation === "ok"){
+      let hints = "";
+      let answers = "";
+      for(i = 0; i < formData.length; i++){
+        hints += formData[i].hint + "#";
+        
+        let ans_len = formData[i].answer.length;
+        for(let j = 0; j < ans_len - 1; j++){
+          answers += formData[i].answer[j] + "#";
+        }
+        answers += formData[i].answer[ans_len - 1] + "###";
+      }
+      await axios
+          .post("http://localhost:8248/moderator/insert?token="+token, {
+            type: "categorizewords",
+            level: query.get("level"),
+            tutorial_id: query.get("tutorial"),
+            hints: hints,
+            answers: answers,
+            description: formData[0].description,
+            moderator_id: id,
+          })
+          .then(function (response) {
+            //console.log(response);
+            var txt="";
+            if (window.confirm("Exercise Pending for review!Add more?")) {
+              txt = "Yes";
+            } else {
+              txt = "No";
+            }
+            if(txt === "Yes"){
+              navigate("/consecutive?token="+token+"&tutorial="+query.get("tutorial"))
+            }
+            else{
+              navigate('/tutorial?token='+token);
+            }
+          });
+      }
   }
 
   // const handlecompute = () => {
@@ -71,13 +164,12 @@ const GroupWords = () => {
   return (
     <div className="float-container">
       <div className="float-child2">
-        
       <Form>
         {/* <Container> */}
         <Row className='mt-2'>
           <Col>
             <Form.Group className="mb-3">
-            <Form.Label><h2>Change One Letter to Make New Word</h2></Form.Label>
+            <Form.Label><h2>Categorize words</h2></Form.Label>
             <Form.Control 
               size="lg"
               type='text'
@@ -94,35 +186,70 @@ const GroupWords = () => {
         {formData.map((item, index) => (
           <>
             {/* <Container> */}
-              <Row className='mt-2'>
+              <Row className='rowHeader'>
                 <Col>
                     <h3>Question No: {index+1}</h3> 
                 </Col>
               </Row>
-              <Row className='mt-2' key={index}>
+              <Row className='mt-2 rowContainer' key={index}>
                 <Col>
                   <Form.Group>
-                    <Form.Label>Enter Hint</Form.Label>
+                    <Form.Label>Enter Category</Form.Label>
                     <Form.Control
                       type='text'
                       placeholder='Enter Hint'
+                      style={{width: "80%", margin: "auto"}}
                       name='hint'
                       onChange={(e) => handleinputchange(e, index)}
                     />
                   </Form.Group>
                 </Col>
-                <Col>
+               
+
+                {formData[index].answer.map((item, ans_index) => (
+                  <React.Fragment>
+
+                  <Col>
                   <Form.Group>
-                    <Form.Label>Enter Answer</Form.Label>
+                    <Form.Label>Enter Word: {ans_index + 1}</Form.Label>
                     <Form.Control
                       type='text'
                       placeholder='Enter Answer'
+                      style={{width: "80%", margin: "auto"}}
                       name='answer'
-                      onChange={(e) => handleinputchange(e, index)}
+                      onChange={(e) => handlewordinputchange(e, index, ans_index)}
                     />
-                  </Form.Group>
+                  </Form.Group>  
                 </Col>
+
                 <Col>
+                
+                {formData[index].answer.length - 1 === ans_index && (
+                <button
+                      className="button-54v2"
+                      onClick={(e) => handlewordaddclick(e, index)}
+                      // onClick={handlewordaddclick}
+                    >
+                      Add More Word
+                    </button>
+                  )}
+
+                  {formData[index].answer.length - 1 === ans_index && formData[index].answer.length > 1 && (
+                          <button
+                            type='button'
+                            className="button-54v2"
+                            onClick={(e) => handlewordremove(index, ans_index)}
+                          >
+                            Delete Word
+                          </button>
+                        )}
+                 </Col>
+                 </React.Fragment>
+                ))}
+               {/* </Col> */}
+              </Row>
+
+              <Col>
                   <div>
                     <span>
                       {/* {' '}
@@ -134,26 +261,32 @@ const GroupWords = () => {
                             className="button-54v2"
                             onClick={(e) => handleremove(index)}
                           >
-                            Delete
+                            Delete Category
                           </button>
                         )}
-                      </div>
-                    </span>
-                  </div>
-                {/* </Col> */}
-              {/* </Row> */}
-              {/* <Row className='mt-2'> */}
-                {/* <Col> */}
+                      {/* </div> */}
+                    {/* </span> */}
+                  {/* </div> */}
                   {formData.length - 1 === index && (
                     <button
                       className="button-54v2"
                       onClick={handleaddclick}
                     >
-                      Add
+                      Add Category
                     </button>
                   )}
+                  {formData.length - 1 === index && (
+                    <button
+                      className="button-54v2"
+                      onClick={handleDoneclick}
+                    >
+                      Done
+                    </button>
+                  )}
+                  </div>
+                  </span>
+                  </div>
                 </Col>
-              </Row>
             {/* </Container> */}
           </>
         ))}
@@ -161,37 +294,78 @@ const GroupWords = () => {
       </div>
       {/* <hr /> */}
       <div className={classes.Totalss}>
-        <div className="float-child">
+        <div className="float-child" style={{"width": "50%"}}>
           <Row>
-            <Col><h2><span style={{fontWeight: 'bold'}}>Preview</span></h2></Col>
+            <Col><h2><span style={{fontWeight: 'bold'}}>Words: </span></h2></Col>
+            
             <Col>
               <p><h3><span style={{fontWeight: 'bold'}}>{getDescription()}</span></h3></p>
             </Col>
           </Row>
-          {formData.map((item, index) => (
+          
+          {formData.map((item1, index) => ( 
+              <Row style={{display: 'flex', "flex-wrap": "wrap"}}>
+
+          {item1.answer.map((item, ans_index) => (
+
             <>
 
             {/* <div style={'display'= 'flex'}>
               <p><h3><span style={{fontWeight: 'bold'}}>Answer:</span> _______________</h3></p>
               <input type="text" id="fname" name="fname">
             </div> */}
-              <Row style={{display: 'flex'}}>
                 <Col xs={8} >
-                  <h3><span style={{fontWeight: 'bold'}}>{index+1}.</span> {" "+item.hint}</h3>   
-                  
+                  {/* <h3><span style={{fontWeight: 'bold'}}>{index+1}.</span> {" "+item.hint}</h3>    */}
+                  <h3 style={{"width":"15rem", height: "3rem", "background-color": "gray", "margin": "1rem", "border-radius": "0.5rem"}}> {" "+item}</h3>   
+
                 </Col>
                 
                 <Col>
 
-                  <svg width="100" height="30" style={{"margin-top": "15px", "margin-left": "20px"}}>
+                  {/* <svg width="100" height="30" style={{"margin-top": "15px", "margin-left": "20px"}}>
                     <rect width="100" height="30" style={{fill: "rgb(255,255,255)", "margin-top": "10" ,"line-height": 40 , "stroke-width": 3, stroke: "rgb(0,0,0)" }} />
-                  </svg>
+                  </svg> */}
                   {/* <p><h3><span style={{fontWeight: 'bold'}}>Answer:</span> _______________</h3></p> */}
                 </Col>
-              </Row>
               <hr />
             </>
           ))}
+              </Row>
+          
+          ))}
+
+            <Row>
+              <Col><h2><span style={{fontWeight: 'bold'}}>Category: </span></h2></Col>
+              <Col>
+                <p><h3><span style={{fontWeight: 'bold'}}>{getDescription()}</span></h3></p>
+              </Col>
+          </Row>
+
+          {formData.map((item, index) => ( 
+              <Row style={{display: 'flex', "flex-wrap": "wrap"}}>
+                  <Col xs={8} >
+                  {/* <h3><span style={{fontWeight: 'bold'}}>{index+1}.</span> {" "+item.hint}</h3>    */}
+                  {/* <h3 style={{"width":"15rem", height: "3rem", "background-color": "gray", "margin": "1rem", "border-radius": "0.5rem"}}> {" "+item}</h3>    */}
+
+                </Col>
+                
+                <Col xs={8} >
+                {/* <p><h3><span style={{fontWeight: 'bold'}}>Answer:</span> _______________</h3></p> */}
+                <p style={{"width": "20rem", "height": "3rem"}}><h3><span style={{fontWeight: 'bold'}}>{index+1}. {item.hint}:</span></h3></p>
+
+                
+                  {/* <svg width="100" height="30" style={{"margin-top": "15px", "margin-left": "20px"}}>
+                    <rect width="100" height="30" style={{fill: "rgb(255,255,255)", "margin-top": "10" ,"line-height": 40 , "stroke-width": 3, stroke: "rgb(0,0,0)" }} />
+                  </svg> */}
+                </Col>
+
+                <Col xs={8}>
+                  <p style={{"width": "30rem", "height": "4rem", "background-color": "gray", "margin": "1rem 0", "border-radius": "0.5rem"}}></p>
+                </Col>
+
+              </Row>
+            ))}
+
         </div>
       </div>
     </div>

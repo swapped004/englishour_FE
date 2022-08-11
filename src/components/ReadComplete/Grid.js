@@ -148,7 +148,7 @@ export default function Grid({token, col, row, tutorial_id, setTables}) {
         </TableContainer>
     </div>
     <div className="grid-button">
-        <button className="button-54v2" onClick={sendToParent}>
+        <button className="button-85" onClick={sendToParent}>
             Save Table
         </button>
     </div>

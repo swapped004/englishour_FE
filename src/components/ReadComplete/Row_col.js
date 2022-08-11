@@ -143,6 +143,7 @@ const Row_col = () => {
             sentence_list: sentences,
             description: description,
             moderator_id: id,
+            content:"A new exercise of 'Table Completion' has been added",
           })
           .then(function (response) {
             console.log(response);
@@ -195,7 +196,7 @@ const Row_col = () => {
             </div>
             
             <div>
-                <button className= "button-54v2" onClick={clickHandler}>
+                <button className= "button-85" onClick={clickHandler}>
                 {/* <button className={rowcolbtn? "btn btn-primary":"invisble"} onClick={clickHandler}> */}
                 {/* {rowcolbtn? <>Next</>:null} */}
                 Next
@@ -213,7 +214,7 @@ const Row_col = () => {
 
         {rowcolbtn ?  (<>
         <div className='grid-button'>
-            <button className='button-54' onClick={submitHandler}>
+            <button className='button-85' onClick={submitHandler}>
                 Add Exercise
             </button>
         </div>
