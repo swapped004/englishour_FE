@@ -35,7 +35,9 @@ const PreviewSentenceShuffle = () => {
     let description = "";
     temp = formData.whole.split("#");
     for(var i = 1; i < temp.length-1; i++) {
+      if(temp[i] !== "") {
         infos.push(temp[i]);
+      }
     }
     description = temp[0];
 

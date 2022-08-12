@@ -11,13 +11,15 @@ import Add_tutorial from './components/Tutorial/Add_tutorial';
 import Home from './components/HomePage/homepage';
 import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
 import GroupWords from './components/GroupWords/groupWords';
-
+import FillinTheGaps from './components/FillinTheGaps/fillinthegaps';
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
 import Consecutive from './components/Exercise/Consecutive';
 import ForgotPassword from './components/Login/forgotPassword';
 import PreviewChangeOneLetter from './components/Notification/PreviewChangeOneLetter';
 import PreviewSentenceShuffle from './components/Notification/PreviewSentenceShuffle';
 import PreviewGroupWords from './components/Notification/PreviewGroupWords';
+import Preview from './components/FillinTheGaps/preview';
+import PreviewFillIntheGaps from './components/Notification/PreviewFillIntheGaps';
 
 import React from 'react';
 import axios from 'axios';
@@ -116,15 +118,14 @@ function App() {
           <Route exact path="/tablecompletion" element={< ReadComplete />} />
           <Route exact path="/changeletter" element={< ChangeOneLetter />} />
           <Route exact path="/categorizewords" element={< GroupWords />} />
-
+          <Route exact path="/fillinthegaps" element={< FillinTheGaps />} />
           <Route exact path="/profile" element={< ModeratorProfile />} />
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
           <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter />} />
           <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle />} />
           <Route exact path="/previewcategorizewords" element={< PreviewGroupWords />} />
-
-
-          {/* <Route exact path="/profile" element={< Profile />} /> */}
+          <Route exact path="/previewfillinthegaps" element={< PreviewFillIntheGaps />} />
+          <Route exact path="/preview" element={< Preview />} />
         </Routes>
     </div>
   );

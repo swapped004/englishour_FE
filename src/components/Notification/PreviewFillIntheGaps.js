@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Col, Form, Row } from 'react-bootstrap'
+import { Col, Row } from 'react-bootstrap'
 import { useNavigate, useLocation } from 'react-router-dom';
 import "./sideByside.css"
 import "./button.css";
@@ -25,7 +25,7 @@ const PreviewGroupWords = () => {
 
     React.useEffect(() => {
       const getFormData = async (id) => {
-          const response = await axios.get("http://localhost:8248/moderator/exercisePreview?exercise_id="+id+"&token="+token+"&exercise_type=categorizewords");
+          const response = await axios.get("http://localhost:8248/moderator/exercisePreview?exercise_id="+id+"&token="+token+"&exercise_type=fillinthegaps");
           console.log(response.data);
           setFormData({whole:response.data});
       }
@@ -34,27 +34,29 @@ const PreviewGroupWords = () => {
 
     console.log(formData.whole);
     var temp = [];
-    // var infos = [];
-    let categories = [];
-    let answers = [];
+    let passage = [];
+    let clues = [];
 
     let description = "";
     temp = formData.whole.split("###");
-    for(var i = 1; i < temp.length-1; i++) {
-        // infos.push(temp[i]);
-
+    console.log(temp);
+    for(var i = 1; i < temp.length; i++) {
         let items = temp[i].split("##");
-        categories.push(items[0]);
-        let item_answers = [];
+        passage.push(items[0]);
+        let item_clues = [];
         if(items.length > 1){
-            item_answers = items[1].split("#");
+            item_clues = items[1].split("#");
         }
 
-        for(let tempAns of item_answers){
-            answers.push(tempAns);
+        for(let tempclue of item_clues){
+            if(tempclue !== ""){
+                clues.push(tempclue);
+            }
         }        
     }
     description = temp[0];
+    const finalPassage = passage[0].replace(/ *\([^)]*\) */g, " __________ ");
+    console.log(finalPassage)
 
     const handleApprove = async (e) => {
       e.preventDefault();
@@ -86,76 +88,36 @@ const PreviewGroupWords = () => {
                   <p><h3><span style={{fontWeight: 'bold'}}>{description}</span></h3></p>
                 </Col>
               </Row>
-
-
-
-
               <Row>
                 <Col><h2><span style={{fontWeight: 'bold'}}>Words: </span></h2></Col>
-                
-                {/* <Col>
-                <p><h3><span style={{fontWeight: 'bold'}}>{getDescription()}</span></h3></p>
-                </Col> */}
                </Row>
 
 
                <Row style={{display: 'flex', "flex-wrap": "wrap"}}>
 
-              {answers.map((item, index) => ( 
-
-                // {item1.answer.map((item, ans_index) => (
-
+              {clues.map((item, index) => ( 
                     <> 
                         <Col xs={8} >
-                        {/* <h3><span style={{fontWeight: 'bold'}}>{index+1}.</span> {" "+item.hint}</h3>    */}
                         <h3 style={{"width":"15em", height: "4rem", "line-height": "4rem" ,"background-color": "gray", "margin": "1rem", "border-radius": "0.5rem"}}> {" "+item}</h3>   
 
-                        </Col>
-                        
-                        <Col>
-
-                        {/* <svg width="100" height="30" style={{"margin-top": "15px", "margin-left": "20px"}}>
-                            <rect width="100" height="30" style={{fill: "rgb(255,255,255)", "margin-top": "10" ,"line-height": 40 , "stroke-width": 3, stroke: "rgb(0,0,0)" }} />
-                        </svg> */}
-                        {/* <p><h3><span style={{fontWeight: 'bold'}}>Answer:</span> _______________</h3></p> */}
                         </Col>
                     <hr />
                     </>
                 
                 ))}
-                    </Row>
-
-                    <Row>
-                    <Col><h2><span style={{fontWeight: 'bold'}}>Category: </span></h2></Col>
-                    <Col>
-                        {/* <p><h3><span style={{fontWeight: 'bold'}}>{getDescription()}</span></h3></p> */}
-                    </Col>
                 </Row>
 
-                {categories.map((item, index) => ( 
-                    <Row style={{display: 'flex', "flex-wrap": "wrap"}}>
-                        <Col xs={8} >
-                        {/* <h3><span style={{fontWeight: 'bold'}}>{index+1}.</span> {" "+item.hint}</h3>    */}
-                        {/* <h3 style={{"width":"15rem", height: "3rem", "background-color": "gray", "margin": "1rem", "border-radius": "0.5rem"}}> {" "+item}</h3>    */}
+                <Row>
+                    <Col><h2><span style={{fontWeight: 'bold'}}>Category: </span></h2></Col>
+                </Row>
 
-                        </Col>
-                        
-                        <Col xs={8} >
-                        {/* <p><h3><span style={{fontWeight: 'bold'}}>Answer:</span> _______________</h3></p> */}
-                        <p style={{"width": "30em", "height": "3rem"}}><h3><span style={{fontWeight: 'bold'}}>{index+1}. {item}:</span></h3></p>
+                <Row style={{display: 'flex', "flex-wrap": "wrap"}}>
+                    
+                    <Col xs={8} >
+                    <p style={{"width": "110em", "height": "7rem"}}><h4><span style={{fontWeight: 'bold'}}>{finalPassage}</span></h4></p>
+                    </Col>
 
-                        
-                        {/* <svg width="100" height="30" style={{"margin-top": "15px", "margin-left": "20px"}}>
-                            <rect width="100" height="30" style={{fill: "rgb(255,255,255)", "margin-top": "10" ,"line-height": 40 , "stroke-width": 3, stroke: "rgb(0,0,0)" }} />
-                        </svg> */}
-                        </Col>
-
-                        <Col xs={8}>
-                        <p style={{"width": "50em", "height": "4rem", "background-color": "gray", "margin": "1rem 0", "border-radius": "0.5rem"}}></p>
-                        </Col>
-
-                    </Row>
-                    ))}
+                </Row>
             </div>
           </div>
         </div>

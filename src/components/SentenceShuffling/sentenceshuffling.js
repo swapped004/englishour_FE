@@ -59,11 +59,6 @@ const SentenceShuffling = () => {
     ])
   }
 
-  // const handleDoneclick = () => {
-
-  // }
-
-
   const handleDoneclick = async (e) => {
     e.preventDefault()
     // alert("Exercise saved")
@@ -177,6 +172,7 @@ const SentenceShuffling = () => {
                 <Col>
                   <div>
                     <span>
+                      <br/>
                       {/* {' '} */}
                       {/* ++++++++++++++++++++++++++++++++++++++++++++++++++++++ */}
                       <div id='dropdown-basic'>
@@ -217,7 +213,7 @@ const SentenceShuffling = () => {
       </div>
       {/* <hr /> */}
       <div className={classes.Totalss}>
-        <div className="float-child">
+        <div className="float-child3">
           <Row>
             <Col><h2><span style={{fontWeight: 'bold'}}>Preview</span></h2></Col>
             <Col>

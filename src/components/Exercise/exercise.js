@@ -70,6 +70,10 @@ class Exercise extends Component {
             label: 'Sentence Shuffling',
             value: 'sentenceshuffling',
         },
+        {
+          label: 'Fill in the Gaps',
+          value: 'fillinthegaps',
+        },
       ],
       selection: {
         selected_level: "",

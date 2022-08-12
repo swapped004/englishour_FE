@@ -38,9 +38,12 @@ const PreviewChangeOneLetter = () => {
     let description = "";
     temp = formData.whole.split("#");
     for(var i = 1; i < temp.length-1; i++) {
-        infos.push(temp[i]);
+        if(temp[i] !== ""){
+          infos.push(temp[i]);
+        }
     }
     description = temp[0];
+    console.log(infos);
 
     const handleApprove = async (e) => {
       e.preventDefault();
