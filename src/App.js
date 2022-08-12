@@ -17,11 +17,13 @@ import Consecutive from './components/Exercise/Consecutive';
 import ForgotPassword from './components/Login/forgotPassword';
 import PreviewChangeOneLetter from './components/Notification/PreviewChangeOneLetter';
 import PreviewSentenceShuffle from './components/Notification/PreviewSentenceShuffle';
-import { Routes, Route } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import PreviewGroupWords from './components/Notification/PreviewGroupWords';
+
 import React from 'react';
 import axios from 'axios';
 import { useLocation } from "react-router-dom";
+import { Routes, Route } from 'react-router-dom';
+import { useState, useEffect, useState } from 'react';
 import jwt_decode from "jwt-decode";
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -119,6 +121,9 @@ function App() {
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
           <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter />} />
           <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle />} />
+          <Route exact path="/previewcategorizewords" element={< PreviewGroupWords />} />
+
+
           {/* <Route exact path="/profile" element={< Profile />} /> */}
         </Routes>
     </div>

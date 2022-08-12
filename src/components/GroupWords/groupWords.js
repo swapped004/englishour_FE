@@ -128,6 +128,7 @@ const GroupWords = () => {
             answers: answers,
             description: formData[0].description,
             moderator_id: id,
+            content:"A new exercise of 'Categorize words' has been added",
           })
           .then(function (response) {
             //console.log(response);
@@ -197,7 +198,7 @@ const GroupWords = () => {
                     <Form.Label>Enter Category</Form.Label>
                     <Form.Control
                       type='text'
-                      placeholder='Enter Hint'
+                      placeholder='Enter Category'
                       style={{width: "80%", margin: "auto"}}
                       name='hint'
                       onChange={(e) => handleinputchange(e, index)}
@@ -214,7 +215,7 @@ const GroupWords = () => {
                     <Form.Label>Enter Word: {ans_index + 1}</Form.Label>
                     <Form.Control
                       type='text'
-                      placeholder='Enter Answer'
+                      placeholder='Enter Word'
                       style={{width: "80%", margin: "auto"}}
                       name='answer'
                       onChange={(e) => handlewordinputchange(e, index, ans_index)}
@@ -223,10 +224,10 @@ const GroupWords = () => {
                 </Col>
 
                 <Col>
-                
+                <br/>
                 {formData[index].answer.length - 1 === ans_index && (
                 <button
-                      className="button-54v2"
+                      className="button-85"
                       onClick={(e) => handlewordaddclick(e, index)}
                       // onClick={handlewordaddclick}
                     >
@@ -237,7 +238,7 @@ const GroupWords = () => {
                   {formData[index].answer.length - 1 === ans_index && formData[index].answer.length > 1 && (
                           <button
                             type='button'
-                            className="button-54v2"
+                            className="button-85"
                             onClick={(e) => handlewordremove(index, ans_index)}
                           >
                             Delete Word
@@ -269,15 +270,15 @@ const GroupWords = () => {
                   {/* </div> */}
                   {formData.length - 1 === index && (
                     <button
-                      className="button-54v2"
+                      className="button-85"
                       onClick={handleaddclick}
                     >
                       Add Category
                     </button>
-                  )}
+                  )}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {formData.length - 1 === index && (
                     <button
-                      className="button-54v2"
+                      className="button-85"
                       onClick={handleDoneclick}
                     >
                       Done
@@ -337,7 +338,7 @@ const GroupWords = () => {
             <Row>
               <Col><h2><span style={{fontWeight: 'bold'}}>Category: </span></h2></Col>
               <Col>
-                <p><h3><span style={{fontWeight: 'bold'}}>{getDescription()}</span></h3></p>
+                {/* <p><h3><span style={{fontWeight: 'bold'}}>{getDescription()}</span></h3></p> */}
               </Col>
           </Row>
 
