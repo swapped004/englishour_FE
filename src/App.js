@@ -17,13 +17,24 @@ import Consecutive from './components/Exercise/Consecutive';
 import ForgotPassword from './components/Login/forgotPassword';
 import PreviewChangeOneLetter from './components/Notification/PreviewChangeOneLetter';
 import PreviewSentenceShuffle from './components/Notification/PreviewSentenceShuffle';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import { useState } from 'react';
+import { Routes, Route } from 'react-router-dom';
+import { useState, useEffect } from 'react';
 import React from 'react';
 import axios from 'axios';
+import { useLocation } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+function useQuery() {
+  const { search } = useLocation();
+
+  return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 function App() {
+
+  let query = useQuery();
+  const token = query.get('token');
 
   const [user, setUser] = useState({token:"", logged_in: false});
   const [error, setError] = useState("");
@@ -68,10 +79,25 @@ function App() {
     console.log("Logout");
   }
 
+  //everytime page reloads, check if user is logged in
+  useEffect(() => {
+    //check jwt token
+    if(token !== null){
+      const decoded = jwt_decode(token);
+      console.log(decoded);
+      const moderator_id = decoded.moderator_id;
+
+      //if cant decode token, user is not logged in
+      if(moderator_id === undefined){
+        setUser({token:"", logged_in: false});
+      }
+      else
+        setUser({token: token, logged_in: true});
+    }
+  }, [token]);
+
   return (
     <div>
-    <Router>
-      <>
         <NavBar logged_in={user.logged_in} Logout_func={Logout} token={user.token}/>
         <Routes>
           <Route path="/" element={< LandingPage />} />
@@ -95,8 +121,6 @@ function App() {
           <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle />} />
           {/* <Route exact path="/profile" element={< Profile />} /> */}
         </Routes>
-      </>
-    </Router>
     </div>
   );
 }

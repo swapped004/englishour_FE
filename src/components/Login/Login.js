@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import "./button.css";
 
-const Login = ({Login_func, error}) => {
+const Login = ({Login_func, error, setToken}) => {
 
   const [details, setDetails] = useState({username: "", password: "", error:""});	// Initialise state
 
