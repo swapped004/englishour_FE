@@ -72,7 +72,7 @@ class Exercise extends Component {
         },
         {
           label: 'Fill in the Gaps',
-          value: 'fillinthegaps',
+          value: 'fillgaps',
         },
       ],
       selection: {

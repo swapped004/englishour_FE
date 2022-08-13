@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 import { useNavigate, useLocation } from 'react-router-dom';
 // import TextareaAutosize from '@mui/base/TextareaAutosize';
-// import TextareaAutosize from 'react-textarea-autosize';
+import TextareaAutosize from 'react-textarea-autosize';
 import "./Form.css"
 import "./sideByside.css"
 import "./button.css";
@@ -71,6 +71,12 @@ const Preview = () => {
           });
   }
 
+  const handleDeclineclick = async (e) => {
+    e.preventDefault();
+    navigate(-1);
+
+  }
+
   return (
     <div>
         <div className="float-container">
@@ -124,7 +130,7 @@ const Preview = () => {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         <button className="button-85" onClick={handleDoneclick}>Done</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="button-85">Decline</button>
+        <button className="button-85" onClick={handleDeclineclick}>Decline</button>
 
         </div>
   )

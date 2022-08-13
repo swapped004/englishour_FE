@@ -2,6 +2,9 @@ import axios from 'axios';
 import React from 'react'
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
+// import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import { PieChart } from "react-minimal-pie-chart";
+import "./styles.css"
 
 
 function useQuery() {
@@ -13,7 +16,7 @@ function useQuery() {
 
 const Stat = () => {
 
-
+    const COLORS = ["#8884d8", "#82ca9d", "#FFBB28", "#FF8042", "#AF19FF"];
     //get token and moderator id
     const navigate = useNavigate();
 
@@ -93,57 +96,171 @@ const Stat = () => {
 
     //initialize state as an empty list
     const [exerciseStat, setExerciseStat] = React.useState([]);
-    
-
-     //get all stats from database with axios
-     const getStats = async () => {
-        console.log('get stats');
-        const result = await axios.get(
-            "http://localhost:8248/moderator/getModStats?token="+token+"&moderator_id="+moderator_id
-        );
-
-        console.log(result.data);
-
-        for (let i = 0; i < result.data.length; i++) {
-            console.log("backend data",i);
-            console.log(result.data[i]);
-
-            setTimeout(() => {
-                setExerciseStat(prevState => [...prevState, result.data[i]]);
-              }, 10);
-
-            console.log("exercisStat");
-            console.log(exerciseStat);
-            
-        }
-
-        
-        
-    }
+    const [pieData, setPieData] = React.useState([]);
 
     //when page loads get stats
     React.useEffect(() => {
-       
 
+        //get all stats from database with axios
+        const getStats = async () => {
+            console.log('get stats');
+            const result = await axios.get(
+                "http://localhost:8248/moderator/getModStats?token="+token+"&moderator_id="+moderator_id
+            );
+            
+            console.log(result.data);
+            setExerciseStat(result.data);
+
+            //set pie data
+            var temp = [];
+            for (var i = 0; i < result.data.length; i++) {
+                temp.push({
+                    title: result.data[i].exercise_type + "_" + result.data[i].exercise_id,
+                    value: result.data[i].no_of_attempts,
+                    color: COLORS[i%COLORS.length]
+                });
+            }
+
+            console.log("temp");
+            console.log(temp);
+            setPieData(temp);
+        }
+    
         getStats();
-
-        console.log("final exerciseStat:");
-        console.log(exerciseStat);
     }, [] );
+
+    console.log("final exerciseStat:");
+    console.log(exerciseStat);
+
+    console.log("pieData:");
+    console.log(pieData);
 
 
     // console.log("final exerciseStat:");
     // console.log(exerciseStat);
 
+    const updateLevel = async(exercise_id, new_level, flag) => {
+        console.log("update level");
+        console.log(exercise_id);
+
+        if(flag === 0) {
+            new_level = new_level - 1;
+        }
+        else {
+            new_level = new_level + 1;
+        }
+        console.log(new_level);
+
+        if(new_level < 1) {
+            new_level = 1;
+            alert("Level cannot be less than 0");	
+        }
+        else if(new_level > 10) {
+            alert("Level cannot be greater than 10");	
+            new_level = 10;
+        }
+        //post a request to update level
+
+        await axios.post(
+            "http://localhost:8248/moderator/updateLevel?token="+token,
+            {
+                exercise_id: exercise_id,
+                new_level: new_level
+            }
+        )
+        .then(function (response) {
+            console.log(response);
+            if(response.status === 200) {
+                //alert("Level updated successfully");
+                //set the corresponding level in the state
+                for (var i = 0; i < exerciseStat.length; i++) {
+                    if(exerciseStat[i].exercise_id === exercise_id) {
+                        setExerciseStat(exerciseStat.map(item => (item.exercise_id === exercise_id ? {...item, level: new_level} : item)));
+                        break;
+                    }
+                }
+            }
+            else {
+                alert("Level update failed");
+            }
+          });
+
+    }
+
+
+   
 
 
 
 
   //return the stats with charts
 
+    // for each exercise in exerciseStat, show a chart of attempted and solve for that exercise
   return (
     <div>
-        stat
+       {exerciseStat.map((exercise,index) => (
+        <>
+        
+        {/* draw a chart showing percent of attempt and solves */}
+        <div className='exercise-stat-content'>
+            <div className='exercise-stat-content-left'>
+                <h3><b>Exercise Id</b>:  &nbsp; {exercise.exercise_id}</h3>
+                <h3><b>Exercise Type</b>:  &nbsp; {exercise.exercise_type}</h3>
+                <h3><b>Category</b>:  &nbsp; {exercise.category_name}</h3>
+                <h3><b>Topic</b>:  &nbsp; {exercise.topic_name}</h3>
+                <h3><b>Created at</b>:  &nbsp; {exercise.creation_date}</h3>
+                <h3><b>No of attempts</b>:  &nbsp; {exercise.no_of_attempts}</h3>
+                <h3><b>No of Solves:</b>  &nbsp; {exercise.no_of_solves}</h3>
+
+                <div className='exercise-stat-level'>
+                    <button id={exercise.exercise_id + "_" + exercise.level} onClick={() =>
+                        updateLevel(exercise.exercise_id, exercise.level, 0)
+                        }><i className="fa fa-minus fa-2x"></i></button>
+                    <h3><b>Current Level</b>:  &nbsp; {exercise.level}</h3>
+                    <button iden={exercise.exercise_id + "_" + exercise.level} onClick={() =>
+                        updateLevel(exercise.exercise_id, exercise.level, 1)
+                        }><i className="fa fa-plus fa-2x"></i></button>
+                </div>
+            </div>
+            
+            
+                <PieChart
+                    animate
+                    animationDuration={500}
+                    animationEasing="ease-in-out"
+                    center={[50, 50]}
+                    data={[
+                        { title: "Attempted", value: exercise.no_of_attempts/(exercise.no_of_attempts + exercise.no_of_solves), color: "#8884d8" },
+                        { title: "Solved", value: exercise.no_of_solves/(exercise.no_of_attempts + exercise.no_of_solves), color: "#82ca9d" },
+                    ]}
+                    
+                    
+                    lengthAngle={360}
+                    lineWidth={15}
+                    paddingAngle={0}
+                    radius={30}
+                    rounded
+                    startAngle={0}
+                    viewBoxSize={[100, 100]}
+
+                    label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
+                    labelPosition={80}
+                    labelStyle={{
+                        fontSize: "8px",
+                        fontColor: "FFFFFA",
+                        fontWeight: "800",
+                      }}
+                >
+                    
+                </PieChart>
+            
+            
+        </div>
+
+        </>
+        
+        ))}
+
 
     </div>
   )

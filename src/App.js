@@ -19,8 +19,9 @@ import PreviewChangeOneLetter from './components/Notification/PreviewChangeOneLe
 import PreviewSentenceShuffle from './components/Notification/PreviewSentenceShuffle';
 import PreviewGroupWords from './components/Notification/PreviewGroupWords';
 import Preview from './components/FillinTheGaps/preview';
-import PreviewFillIntheGaps from './components/Notification/PreviewFillIntheGaps';
 import Stat from './components/Statistics/Stat';
+import PreviewFillGaps from './components/Notification/PreviewFillIntheGaps';
+
 
 import React from 'react';
 import axios from 'axios';
@@ -119,13 +120,13 @@ function App() {
           <Route exact path="/tablecompletion" element={< ReadComplete />} />
           <Route exact path="/changeletter" element={< ChangeOneLetter />} />
           <Route exact path="/categorizewords" element={< GroupWords />} />
-          <Route exact path="/fillinthegaps" element={< FillinTheGaps />} />
+          <Route exact path="/fillgaps" element={< FillinTheGaps />} />
           <Route exact path="/profile" element={< ModeratorProfile />} />
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
           <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter />} />
           <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle />} />
           <Route exact path="/previewcategorizewords" element={< PreviewGroupWords />} />
-          <Route exact path="/previewfillinthegaps" element={< PreviewFillIntheGaps />} />
+          <Route exact path="/previewfillgaps" element={< PreviewFillGaps />} />
           <Route exact path="/preview" element={< Preview />} />
           <Route exact path="/stats" element={< Stat />} />
         </Routes>
