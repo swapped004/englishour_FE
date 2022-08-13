@@ -2,8 +2,10 @@ import React from 'react';
 import "./Navbar.css";
 import { Link } from 'react-router-dom';
 
-const NavBar = ({logged_in, Logout_func, token}) => {
+const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
     
+    console.log("Navbar isAdmin: ", isAdmin);
+
     return (
 
     <div className="navbar-container">
@@ -21,9 +23,9 @@ const NavBar = ({logged_in, Logout_func, token}) => {
 
         <div className="navbar-menu">
             <ul>
-               
+
                 <li>
-                    <Link to={"/profile?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Profile</Link>
+                    <Link to={isAdmin?"/adminprofile?token="+token:"/profile?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Profile</Link>
                 </li>
 
                 <li>

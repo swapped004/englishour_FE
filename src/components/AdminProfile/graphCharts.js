@@ -1,54 +1,16 @@
-<li>
-                    <span>Date</span>
-                    <div class="content">
-                        <h3>Content Status: {Exinfo[0].approval_status}</h3>
-                        <p>
-                            You uploaded an Exercise Of Type: {Exinfo[0].exercise_type} At Level: {Exinfo[0].level} Under Topic: {Exinfo[0].topic_name}
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <span>Date</span>
-                    <div class="content">
-                        <h3>Content Status: {Exinfo[1].approval_status}</h3>
-                        <p>
-                            You uploaded an Exercise Of Type:   {Exinfo[1].exercise_type} At Level:   {Exinfo[1].level} Under Topic: {Exinfo[1].topic_name}
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <span>Date</span>
-                    <div class="content">
-                        <h3>Content Status: {Exinfo[2].approval_status}</h3>
-                        <p>
-                            You uploaded an Exercise Of Type:   {Exinfo[2].exercise_type} At Level:   {Exinfo[2].level}  Under Topic: {Exinfo[2].topic_name}
-                        </p>
-                    </div>
-                </li>
-                <li>
-                    <span>Date</span>
-                    <div class="content">
-                        <h3>Content Status: {Exinfo[3].approval_status}</h3>
-                        <p>
-                            You uploaded an Exercise Of Type:   {Exinfo[3].exercise_type} At Level:   {Exinfo[3].level} Under Topic: {Exinfo[3].topic_name}
-                        </p>
-                    </div>
-                </li>
+
+import React, { useState } from 'react'
+import { useNavigate, useLocation } from 'react-router-dom';
+import axios from 'axios'
 
 
-                Sizvy: $2a$10$/qgSeLiYLOQ1rems/Dsgwe3XT0QpbUFNur00dhurl4DxUtDUmgm36
-
-                Shakil: $2a$10$HNEuhdflh3E/6SF/oXbO4O6GweEyoggms9xSpHmWk/BJjGHJfXJ5i
+const GraphCharts = () => {
 
 
+    return (
+        <React.Fragment>
 
-
-
-
-
-
-                <div>
-          <div className="row">
+<div className="row">
               <div className="col-md-6">
                   <div className="panel">
                       <div className="panel-body">
@@ -121,4 +83,11 @@
               </div>
               
           </div>
-      </div>
+
+        </React.Fragment>
+
+    )
+}
+
+
+export default GraphCharts;

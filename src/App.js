@@ -13,6 +13,8 @@ import ChangeOneLetter from './components/ChangeOneLetter/changeOneLetter';
 import GroupWords from './components/GroupWords/groupWords';
 import FillinTheGaps from './components/FillinTheGaps/fillinthegaps';
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
+import AdminProfile from './components/AdminProfile/adminProfile'
+
 import Consecutive from './components/Exercise/Consecutive';
 import ForgotPassword from './components/Login/forgotPassword';
 import PreviewChangeOneLetter from './components/Notification/PreviewChangeOneLetter';
@@ -35,12 +37,15 @@ function useQuery() {
   return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
+let globalIsAdmin = false;
+
+
 function App() {
 
   let query = useQuery();
   const token = query.get('token');
 
-  const [user, setUser] = useState({token:"", logged_in: false});
+  const [user, setUser] = useState({token:"", logged_in: false, isAdmin: false});
   const [error, setError] = useState("");
 
   let tkn = "0";
@@ -66,7 +71,18 @@ function App() {
       alert("Invalid Credentials");
   });
   if(tkn !== "0"){
-    setUser({token: tkn, logged_in: true});
+
+    var decode = jwt_decode(tkn);
+
+    console.log("moderator id: ", decode.moderator_id);
+
+    const response = await fetch("http://localhost:8248/moderator/profileInfo/moderator_id?moderator_id="+decode.moderator_id+"&token="+tkn);
+    const data = await response.json();
+    console.log("this is data.isAdmin: ", data.isAdmin);
+    // setInfo(data);
+    globalIsAdmin = data.isAdmin;
+
+    setUser({token: tkn, logged_in: true, isAdmin: data.isAdmin});
   }
   // console.log(notification);
   return tkn;
@@ -79,7 +95,7 @@ function App() {
 
 
   const Logout = () => {   
-    setUser({token:"", logged_in: false});
+    setUser({token:"", logged_in: false, isAdmin: false});
     console.log("Logout");
   }
 
@@ -93,16 +109,16 @@ function App() {
 
       //if cant decode token, user is not logged in
       if(moderator_id === undefined){
-        setUser({token:"", logged_in: false});
+        setUser({token:"", logged_in: false, isAdmin: false});
       }
       else
-        setUser({token: token, logged_in: true});
+        setUser({token: token, logged_in: true, isAdmin: globalIsAdmin});
     }
   }, [token]);
 
   return (
     <div>
-        <NavBar logged_in={user.logged_in} Logout_func={Logout} token={user.token}/>
+        <NavBar logged_in={user.logged_in} Logout_func={Logout} token={user.token} isAdmin={user.isAdmin}/>
         <Routes>
           <Route path="/" element={< LandingPage />} />
           <Route path="/homepage" element={< Home />} />
@@ -120,6 +136,8 @@ function App() {
           <Route exact path="/categorizewords" element={< GroupWords />} />
           <Route exact path="/fillinthegaps" element={< FillinTheGaps />} />
           <Route exact path="/profile" element={< ModeratorProfile />} />
+          <Route exact path="/adminprofile" element={< AdminProfile />} />
+
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
           <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter />} />
           <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle />} />
