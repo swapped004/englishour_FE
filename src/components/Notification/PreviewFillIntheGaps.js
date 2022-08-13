@@ -12,55 +12,89 @@ function useQuery() {
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const PreviewGroupWords = () => {
+const PreviewFillinTheGaps = () => {
     const classes = useStyles()
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({whole:""});
+    const [formData, setFormData] = useState({passage:""});
+    const [DescData, setDescData] = useState({description:""});
+    const [answers, setAnswers] = useState([]);
     let query = useQuery();
     const token = query.get('token');
     const exercise_id = query.get('exercise_id');
     const notification_id = query.get('notification_id');
-    console.log(notification_id);
+    // console.log(token, exercise_id, notification_id);
 
     React.useEffect(() => {
-      const getFormData = async (id) => {
-          const response = await axios.get("http://localhost:8248/moderator/exercisePreview?exercise_id="+id+"&token="+token+"&exercise_type=fillinthegaps");
+      const getPassageData = async (id) => {
+          const response = await axios.get("http://localhost:8248/moderator/exercisePreview?exercise_id="+id+"&token="+token+"&exercise_type=fillgaps");
           console.log(response.data);
-          setFormData({whole:response.data});
+          setFormData({passage:response.data});
       }
-      getFormData(exercise_id);             
+      const getDescriptionData = async (id) => {
+        const response = await axios.get("http://localhost:8248/moderator/exercisePreview?exercise_id="+id+"&token="+token+"&exercise_type=fillgapsdescription");
+        console.log(response.data);
+        setDescData({description:response.data});
+      }
+      const getAnswerData = async (id) => {
+        const response = await axios.get("http://localhost:8248/moderator/exercisePreview?exercise_id="+id+"&token="+token+"&exercise_type=fillgapsanswers");
+        console.log(response.data);
+        setAnswers(response.data);
+      }
+      getPassageData(exercise_id);
+      getDescriptionData(exercise_id);  
+      getAnswerData(exercise_id);           
     }, []);
 
-    console.log(formData.whole);
-    var temp = [];
-    let passage = [];
-    let clues = [];
+    console.log(formData.passage);
+    console.log(DescData.description);
+    console.log(answers);
+    // var temp = [];
 
-    let description = "";
-    temp = formData.whole.split("###");
-    console.log(temp);
-    for(var i = 1; i < temp.length; i++) {
-        let items = temp[i].split("##");
-        passage.push(items[0]);
-        let item_clues = [];
-        if(items.length > 1){
-            item_clues = items[1].split("#");
-        }
+    // let description = "";
+    // temp = formData.whole.split("###");
+    // description = temp[0];
+    // let givenPassage = temp[1];
 
-        for(let tempclue of item_clues){
-            if(tempclue !== ""){
-                clues.push(tempclue);
-            }
-        }        
-    }
-    description = temp[0];
-    const finalPassage = passage[0].replace(/ *\([^)]*\) */g, " __________ ");
-    console.log(finalPassage)
+    // let givenClues = [];
+    // let finalPassage = givenPassage.split("##")[0];
+    // givenClues = givenPassage.split("##")[1].split("#");
+    // let finalClues = [];
+    // for(let clue of givenClues){
+    //     finalClues.push(clue);
+    // }
+    // console.log(finalClues);
+
+    // let clues = []
+    // const txt = temp[1];
+    // const regExp = /\(([^)]+)\)/g;
+    // const matches = [...txt.match(regExp)];
+    // console.log(matches);
+    // for(let i = 0; i < matches.length; i++){
+    //   clues.push(matches[i].replace(/[()]/g, ''));
+    // }
+    // console.log(clues);
+    // console.log(temp);
+    // for(var i = 1; i < temp.length; i++) {
+    //     let items = temp[i].split("##");
+    //     passage.push(items[0]);
+    //     let item_clues = [];
+    //     if(items.length > 1){
+    //         item_clues = items[1].split("#");
+    //     }
+
+    //     for(let tempclue of item_clues){
+    //         if(tempclue !== ""){
+    //             clues.push(tempclue);
+    //         }
+    //     }        
+    // }
+    //const finalPassage = passage[0].replace(/ *\([^)]*\) */g, " __________ ");
+    //console.log(finalPassage)
 
     const handleApprove = async (e) => {
       e.preventDefault();
-      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id"+notification_id+"&token="+token+"&status=approved");
+      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=approved");
       console.log(response.data);
       alert("Aproved Successfully");
       if(response.data === "Status Updated") {
@@ -69,7 +103,7 @@ const PreviewGroupWords = () => {
     }
     const handleDecline = async (e) => {
       e.preventDefault();
-      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id"+notification_id+"&token="+token+"&status=declined");
+      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=declined");
       console.log(response.data);
       alert("Declined Successfully");
       if(response.data === "Status Updated") {
@@ -85,7 +119,7 @@ const PreviewGroupWords = () => {
               <Row>
                 <Col><h2><span style={{fontWeight: 'bold'}}>Preview</span></h2></Col>
                 <Col>
-                  <p><h3><span style={{fontWeight: 'bold'}}>{description}</span></h3></p>
+                  <p><h3><span style={{fontWeight: 'bold'}}>{DescData.description}</span></h3></p>
                 </Col>
               </Row>
               <Row>
@@ -95,7 +129,7 @@ const PreviewGroupWords = () => {
 
                <Row style={{display: 'flex', "flex-wrap": "wrap"}}>
 
-              {clues.map((item, index) => ( 
+              {answers.map((item, index) => ( 
                     <> 
                         <Col xs={8} >
                         <h3 style={{"width":"15em", height: "4rem", "line-height": "4rem" ,"background-color": "gray", "margin": "1rem", "border-radius": "0.5rem"}}> {" "+item}</h3>   
@@ -108,13 +142,13 @@ const PreviewGroupWords = () => {
                 </Row>
 
                 <Row>
-                    <Col><h2><span style={{fontWeight: 'bold'}}>Category: </span></h2></Col>
+                    <Col><h2><span style={{fontWeight: 'bold'}}>Passage: </span></h2></Col>
                 </Row>
 
                 <Row style={{display: 'flex', "flex-wrap": "wrap"}}>
                     
                     <Col xs={8} >
-                    <p style={{"width": "110em", "height": "7rem"}}><h4><span style={{fontWeight: 'bold'}}>{finalPassage}</span></h4></p>
+                    <p style={{"width": "110em", "height": "7rem"}}><h4><span style={{fontWeight: 'bold'}}>{formData.passage}</span></h4></p>
                     </Col>
 
                 </Row>
@@ -138,4 +172,4 @@ const PreviewGroupWords = () => {
       )
 }
  
-export default PreviewGroupWords;
+export default PreviewFillinTheGaps;

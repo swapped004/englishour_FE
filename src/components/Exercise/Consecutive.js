@@ -50,6 +50,10 @@ class Consecutive extends Component {
             label: 'Sentence Shuffling',
             value: 'sentenceshuffling',
         },
+        {
+          label: 'Fill in the Gaps',
+          value: 'fillgaps',
+        },
       ],
       selection: {
         selected_level: "",
