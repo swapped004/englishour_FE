@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 import { useNavigate, useLocation } from 'react-router-dom';
-import Preview from './preview'
 // import TextareaAutosize from '@mui/base/TextareaAutosize';
-import TextareaAutosize from 'react-textarea-autosize';
+// import TextareaAutosize from 'react-textarea-autosize';
 import "./Form.css"
 import "./sideByside.css"
 import "./button.css";
@@ -96,14 +95,14 @@ const FillinTheGaps = () => {
                   <Form.Group>
                     <Form.Label><h3>Passage</h3></Form.Label>
                     <br/>
-                    <TextareaAutosize
+                    {/* <TextareaAutosize
                     aria-label="minimum height"
                     minRows={3}
                     placeholder='Enter the Passage(keep the gap words within a first bracket)'
                     name='passage'
                     onChange={(e) => handleinputchange(e, index)}
                     style={{ width: 1800, boxSizing: 'border-box'}}
-                  />
+                  /> */}
                   </Form.Group>
                 </Col>
                 <Col>

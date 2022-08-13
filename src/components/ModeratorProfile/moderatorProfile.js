@@ -163,6 +163,10 @@ const ModeratorProfile = () => {
 
             // console.log("history: ", history);
 
+        
+        const handleStats = () => {
+            navigate('/stats?token='+token);
+        }
 
 
         return (
@@ -185,6 +189,7 @@ const ModeratorProfile = () => {
                         <ul className="nav nav-pills nav-stacked">
                             <li><a href="#" onClick={handleProfileInfo}> <i className="fa fa-user"></i> Profile</a></li>
                             <li><a href="#" onClick={handleTimeline}> <i className="fa fa-calendar"></i> Recent Activity <span className="label label-warning pull-right r-activity">{Exinfo.length}</span></a></li>
+                            <li><a href="#" onClick={handleStats} > <i className="fa fa-bar-chart"></i> Statistics </a></li>
                             <li>
                                 <a className="button" href="#popup"> <i className="fa fa-edit"></i> Edit profile</a>
                                 <div className="popup" id="popup">
@@ -240,7 +245,7 @@ const ModeratorProfile = () => {
                                 </div>
                             </li>
                             <li>
-                                <a className="button" href="#popupPassword"> <i className="fa fa-edit"></i> Edit Password</a>
+                                <a className="button" href="#popupPassword"> <i className="fa fa-key"></i> Edit Password</a>
                                 <div className="popup" id="popupPassword">
                                     <div className="popup-inner">
                                         <div className="popup-left">
@@ -269,7 +274,7 @@ const ModeratorProfile = () => {
                                 </div>
                             </div>
                             </li>
-                            <li><a href="#" onClick={handleNotification}> <i className="fa fa-calendar"></i> Notification <span className="label label-warning pull-right r-activity">{notification.length}</span></a></li>
+                            <li><a href="#" onClick={handleNotification}> <i className="fa fa-bell"></i> Notification <span className="label label-warning pull-right r-activity">{notification.length}</span></a></li>
                         </ul>
                     </div>
                 </div>

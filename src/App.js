@@ -20,6 +20,7 @@ import PreviewSentenceShuffle from './components/Notification/PreviewSentenceShu
 import PreviewGroupWords from './components/Notification/PreviewGroupWords';
 import Preview from './components/FillinTheGaps/preview';
 import PreviewFillIntheGaps from './components/Notification/PreviewFillIntheGaps';
+import Stat from './components/Statistics/Stat';
 
 import React from 'react';
 import axios from 'axios';
@@ -126,6 +127,7 @@ function App() {
           <Route exact path="/previewcategorizewords" element={< PreviewGroupWords />} />
           <Route exact path="/previewfillinthegaps" element={< PreviewFillIntheGaps />} />
           <Route exact path="/preview" element={< Preview />} />
+          <Route exact path="/stats" element={< Stat />} />
         </Routes>
     </div>
   );

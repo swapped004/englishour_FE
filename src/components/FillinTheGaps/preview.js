@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Col, Form, Row } from 'react-bootstrap'
 import { useNavigate, useLocation } from 'react-router-dom';
 // import TextareaAutosize from '@mui/base/TextareaAutosize';
-import TextareaAutosize from 'react-textarea-autosize';
+// import TextareaAutosize from 'react-textarea-autosize';
 import "./Form.css"
 import "./sideByside.css"
 import "./button.css";
