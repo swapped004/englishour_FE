@@ -139,7 +139,7 @@ const Stat = () => {
     // console.log("final exerciseStat:");
     // console.log(exerciseStat);
 
-    const updateLevel = async(exercise_id, new_level, flag) => {
+    const updateLevel = (exercise_id, new_level, flag) => {
         console.log("update level");
         console.log(exercise_id);
 
@@ -153,39 +153,53 @@ const Stat = () => {
 
         if(new_level < 1) {
             new_level = 1;
-            alert("Level cannot be less than 0");	
+            alert("Level cannot be less than 1");	
         }
         else if(new_level > 10) {
             alert("Level cannot be greater than 10");	
             new_level = 10;
         }
-        //post a request to update level
 
-        await axios.post(
-            "http://localhost:8248/moderator/updateLevel?token="+token,
-            {
-                exercise_id: exercise_id,
-                new_level: new_level
+        
+        //set the corresponding level in the state
+        for (var i = 0; i < exerciseStat.length; i++) {
+            if(exerciseStat[i].exercise_id === exercise_id) {
+                setExerciseStat(exerciseStat.map(item => (item.exercise_id === exercise_id ? {...item, level: new_level} : item)));
+                break;
             }
-        )
-        .then(function (response) {
-            console.log(response);
-            if(response.status === 200) {
-                //alert("Level updated successfully");
-                //set the corresponding level in the state
-                for (var i = 0; i < exerciseStat.length; i++) {
-                    if(exerciseStat[i].exercise_id === exercise_id) {
-                        setExerciseStat(exerciseStat.map(item => (item.exercise_id === exercise_id ? {...item, level: new_level} : item)));
-                        break;
-                    }
-                }
-            }
-            else {
-                alert("Level update failed");
-            }
-          });
-
+        }
     }
+
+    //update the level in the database
+    const updateLevelDB = async(exercise_id, new_level) => {
+        console.log("update level");
+        console.log(exercise_id);
+        console.log(new_level);
+
+        //pop up a confirmation box
+        if(window.confirm("Are you sure you want to update the level of this exercise?")) {
+            
+            //post a request to update level
+
+            await axios.post(
+                "http://localhost:8248/moderator/updateLevel?token="+token,
+                {
+                    exercise_id: exercise_id,
+                    new_level: new_level
+                }
+            )
+            .then(function (response) {
+                console.log(response);
+                if(response.status === 200) {
+                    alert("Level updated successfully");
+                }
+                else {
+                    alert("Level update failed");
+                }
+            });
+        }
+    }
+
 
 
    
@@ -221,6 +235,10 @@ const Stat = () => {
                         updateLevel(exercise.exercise_id, exercise.level, 1)
                         }><i className="fa fa-plus fa-2x"></i></button>
                 </div>
+
+                <div className='exercise-stat-level-submit'>       
+                    <button className="button-85" onClick={() => updateLevelDB(exercise.exercise_id, exercise.level)}>Update Level</button>
+                </div>       
             </div>
             
             
