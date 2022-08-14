@@ -101,7 +101,7 @@ class Notification extends React.Component {
                          <span>{this.generateMonth(item.date)}</span>
                          <div class="content">
                          <p>
-                         <Link to={"/preview"+this.state.Exercise.split("#")[index]+"?token="+window.location.href.split("?")[1].split("=")[1].split("#")[0]+"&exercise_id="+item.content.split("#")[1]+"&notification_id=="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link>
+                         <Link to={"/preview"+this.state.Exercise.split("#")[index]+"?token="+window.location.href.split("?")[1].split("=")[1].split("#")[0]+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link>
                          </p>
                          <span style={{fontSize: "15px",fontWeight: 700,color: "#747474",float: "right"}}>
                             {item.date.split("T")[1].split(".")[0]}

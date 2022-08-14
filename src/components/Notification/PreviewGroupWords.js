@@ -21,7 +21,7 @@ const PreviewGroupWords = () => {
     const token = query.get('token');
     const exercise_id = query.get('exercise_id');
     const notification_id = query.get('notification_id');
-    console.log(notification_id);
+    console.log(exercise_id);
 
     React.useEffect(() => {
       const getFormData = async (id) => {
@@ -34,7 +34,6 @@ const PreviewGroupWords = () => {
 
     console.log(formData.whole);
     var temp = [];
-    // var infos = [];
     let categories = [];
     let answers = [];
 
@@ -58,8 +57,8 @@ const PreviewGroupWords = () => {
 
     const handleApprove = async (e) => {
       e.preventDefault();
-      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id"+notification_id+"&token="+token+"&status=approved");
-      console.log(response.data);
+      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=approved");
+      console.log(response.data)
       alert("Aproved Successfully");
       if(response.data === "Status Updated") {
         navigate('/profile?token='+token);
@@ -67,7 +66,7 @@ const PreviewGroupWords = () => {
     }
     const handleDecline = async (e) => {
       e.preventDefault();
-      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id"+notification_id+"&token="+token+"&status=declined");
+      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=declined");
       console.log(response.data);
       alert("Declined Successfully");
       if(response.data === "Status Updated") {

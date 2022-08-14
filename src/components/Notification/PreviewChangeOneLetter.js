@@ -47,7 +47,7 @@ const PreviewChangeOneLetter = () => {
 
     const handleApprove = async (e) => {
       e.preventDefault();
-      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id"+notification_id+"&token="+token+"&status=approved");
+      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=approved");
       console.log(response.data);
       alert("Aproved Successfully");
       if(response.data === "Status Updated") {
@@ -56,7 +56,7 @@ const PreviewChangeOneLetter = () => {
     }
     const handleDecline = async (e) => {
       e.preventDefault();
-      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id"+notification_id+"&token="+token+"&status=declined");
+      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=declined");
       console.log(response.data);
       alert("Declined Successfully");
       if(response.data === "Status Updated") {
