@@ -9,9 +9,9 @@ import ProfileInfo from './profileInfo'
 import Timeline from './timeline'
 import jwt_decode from "jwt-decode";
 import Notification from '../Notification/NotificationClone';
-import Stat from '../Statistics/Stat';
+import GraphCharts from './graphCharts'
 
-const ModeratorProfile = () => {
+const AdminProfile = () => {
 
     function useQuery() {
         const { search } = useLocation();
@@ -23,35 +23,35 @@ const ModeratorProfile = () => {
     const token = query.get('token');
         
         var decode = jwt_decode(token);
-        console.log("is admin: ", decode.isAdmin);
         // console.log(decode.moderator_id);
         const id = decode.moderator_id;
 
         const navigate = useNavigate();
-        const [info, setInfo] = React.useState({designation:"", email:"", first_name:"", last_name:"", mobile:"", joinDate:"", profile_picture:"", rating:"", institution:""});
-        const [Exinfo, setExInfo] = React.useState({exercise_type:"",level:"",approval_status:"",tutorial_id:"",updatedAt:""});
-        const [Tutorialinfo, setTutorialInfo] = React.useState({tutorial_title:"",content:"",approval_status:"",topic_id:"",updatedAt:""});
+        const [info, setInfo] = React.useState({designation:"", email:"", first_name:"", last_name:"", mobile:"", joinDate:"", profile_picture:"", rating:"", institution:"", isAdmin:"",});
+        // const [Exinfo, setExInfo] = React.useState({exercise_type:"",level:"",approval_status:"",tutorial_id:"",updatedAt:""});
+        // const [Tutorialinfo, setTutorialInfo] = React.useState({tutorial_title:"",content:"",approval_status:"",topic_id:"",updatedAt:""});
         const [password, setPassword] = React.useState({NewPassword:"", ConfirmPassword:""});
         const [notification, setNotification] = React.useState([{notification_id:"",content:"",date:""}]);
 
         React.useEffect(() => {
+            console.log("admin profile e ashchi");
             const getInfo = async (id) => {
                 const response = await fetch("http://localhost:8248/moderator/profileInfo/moderator_id?moderator_id="+id+"&token="+token);
                 const data = await response.json();
                 setInfo(data);
             }
-            const getExInfo = async (id) => {
-                const response = await fetch("http://localhost:8248/moderator/exerciseInfo/moderator_id?moderator_id="+id+"&token="+token);
-                const data = await response.json();
-                // console.log(data);
-                setExInfo(data);
-            }
-            const getTutorialInfo = async (id) => {
-                const response = await fetch("http://localhost:8248/moderator/TutorialInfo/moderator_id?moderator_id="+id+"&token="+token);
-                const data = await response.json();
-                // console.log(data);
-                setTutorialInfo(data);
-            }
+            // const getExInfo = async (id) => {
+            //     const response = await fetch("http://localhost:8248/moderator/exerciseInfo/moderator_id?moderator_id="+id+"&token="+token);
+            //     const data = await response.json();
+            //     // console.log(data);
+            //     setExInfo(data);
+            // }
+            // const getTutorialInfo = async (id) => {
+            //     const response = await fetch("http://localhost:8248/moderator/TutorialInfo/moderator_id?moderator_id="+id+"&token="+token);
+            //     const data = await response.json();
+            //     // console.log(data);
+            //     setTutorialInfo(data);
+            // }
             const getNotification = async (id) => {
                 const response = await fetch("http://localhost:8248/moderator/notification/moderator_id?moderator_id="+id+"&token="+token);
                 const data = await response.json();
@@ -59,8 +59,8 @@ const ModeratorProfile = () => {
                 setNotification(data);
             }
             getInfo(id); 
-            getExInfo(id);
-            getTutorialInfo(id);
+            // getExInfo(id);
+            // getTutorialInfo(id);
             getNotification(id);             
         }, []);
 
@@ -71,10 +71,9 @@ const ModeratorProfile = () => {
         const subPart = () => {
             return (
                 <div>
-                {timeline === 'timeline' && (<Timeline Exinfo = {Exinfo}/>)}
-                {timeline === 'profile' && <ProfileInfo info= {info} Exinfo = {Exinfo} Tutorialinfo = {Tutorialinfo} />}
+                {timeline === 'timeline' && (<Timeline />)}
+                {timeline === 'profile' && <ProfileInfo info= {info}  />}
                 {timeline === 'notification' && (<Notification notification={notification}/>)}
-                {timeline === 'stat' && (<Stat/>)}
                 </div>
             );
             
@@ -93,11 +92,6 @@ const ModeratorProfile = () => {
         const handleNotification = () => {   
             // console.log("notification call hocche");         
             setTimeline('notification');
-        }
-
-        const handleStats = () => {
-            navigate('/stats?token='+token);
-            // setTimeline('stat');
         }
 
     
@@ -171,8 +165,6 @@ const ModeratorProfile = () => {
 
             // console.log("history: ", history);
 
-        
-        
 
 
         return (
@@ -193,9 +185,10 @@ const ModeratorProfile = () => {
                         </div>
 
                         <ul className="nav nav-pills nav-stacked">
-                            <li><a href="#" onClick={handleProfileInfo}> <i className="fa fa-user"></i> Profile</a></li>
-                            <li><a href="#" onClick={handleTimeline}> <i className="fa fa-calendar"></i> Recent Activity <span className="label label-warning pull-right r-activity">{Exinfo.length}</span></a></li>
-                            <li><a href="#" onClick={handleStats} > <i className="fa fa-bar-chart"></i> Statistics </a></li>
+                            <li><a href="#" onClick={handleProfileInfo}> <i className="fa fa-user"></i> Admin Profile</a></li>
+                            <li><a href="#" onClick={handleTimeline}> <i className="fa fa-calendar"></i> Recent Activity <span className="label label-warning pull-right r-activity">
+                                {/* {Exinfo.length} */}
+                                </span></a></li>
                             <li>
                                 <a className="button" href="#popup"> <i className="fa fa-edit"></i> Edit profile</a>
                                 <div className="popup" id="popup">
@@ -251,7 +244,7 @@ const ModeratorProfile = () => {
                                 </div>
                             </li>
                             <li>
-                                <a className="button" href="#popupPassword"> <i className="fa fa-key"></i> Edit Password</a>
+                                <a className="button" href="#popupPassword"> <i className="fa fa-edit"></i> Edit Password</a>
                                 <div className="popup" id="popupPassword">
                                     <div className="popup-inner">
                                         <div className="popup-left">
@@ -280,7 +273,7 @@ const ModeratorProfile = () => {
                                 </div>
                             </div>
                             </li>
-                            <li><a href="#" onClick={handleNotification}> <i className="fa fa-bell"></i> Notification <span className="label label-warning pull-right r-activity">{notification.length}</span></a></li>
+                            <li><a href="#" onClick={handleNotification}> <i className="fa fa-calendar"></i> Notification <span className="label label-warning pull-right r-activity">{notification.length}</span></a></li>
                         </ul>
                     </div>
                 </div>
@@ -288,6 +281,16 @@ const ModeratorProfile = () => {
                     {subPart()}   
                 </div>
                 </div>
+
+
+
+                <GraphCharts/>
+
+                {/* <div> */}
+          
+      {/* </div> */}
+
+
             </div>
 
         </React.Fragment>
@@ -295,4 +298,4 @@ const ModeratorProfile = () => {
         );
 }
  
-export default ModeratorProfile;
+export default AdminProfile;
