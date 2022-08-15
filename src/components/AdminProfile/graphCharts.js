@@ -14,32 +14,32 @@ import {Chart as ChartJS} from 'chart.js/auto';
 const UserData = [
     {
       id: 1,
-      year: 2016,
-      userGain: 80000,
+      name: "Towhid",
+      userGain: 10,
       userLost: 823,
     },
     {
       id: 2,
-      year: 2017,
-      userGain: 45677,
+      name: "Sizvy",
+      userGain: 15,
       userLost: 345,
     },
     {
       id: 3,
-      year: 2018,
-      userGain: 78888,
+      name: "Swapnil",
+      userGain: 25,
       userLost: 555,
     },
     {
       id: 4,
-      year: 2019,
-      userGain: 90000,
+      name: "Saiful",
+      userGain: 17,
       userLost: 4555,
     },
     {
       id: 5,
-      year: 2020,
-      userGain: 4300,
+      name: "Shakil",
+      userGain: 18,
       userLost: 234,
     },
   ];
@@ -47,13 +47,62 @@ const UserData = [
 
 
 
-
+  function useQuery() {
+    const { search } = useLocation();
+  
+    return React.useMemo(() => new URLSearchParams(search), [search]);
+ }
 const GraphCharts = () => {
+    let query = useQuery();
+    const token = query.get('token');
+    console.log("token in graph: ", token);
 
-    const [userData, setUserData] = useState({
-        labels: UserData.map( (data) => data.year), 
+    
+      const [moderatorEx, setModeratorEx] = React.useState([{exercise_id:"", exercise_type:"", added_ex_count:"", moderator_name:"", moderator_id:"" }]);
+
+
+
+      
+      React.useEffect(() => {
+        console.log("graph charts useEffec");
+        const getInfo = async () => {
+            const response = await fetch("http://localhost:8248/moderator/graphChart?token="+token);
+            const data = await response.json();
+            setModeratorEx(data);
+        }
+        getInfo();            
+    }, []);
+    
+
+    console.log("graph charts: after userData", moderatorEx);
+
+    // const [userData, setUserData] = useState({
+    //     labels: moderatorEx.map( (data) => data.moderator_name), 
+    //     datasets: [{
+    //       label: "Modererator Joined", 
+    //       data: UserData.map( (data) => data.added_ex_count),
+    //       backgroundColor: [
+    //         "rgba(75,192,192,1)",
+    //         //   "#ecf0f1",
+    //         //   "#50AF95",
+    //         //   "#f3ba2f",
+    //         //   "#2a71d0",
+    //       ],
+    //       borderColor: "black",
+    //       borderWidth: 2,
+    //     },
+    //     // {
+    //     //   label: 'Quantity',
+    //     //   data: [85000, 70000, 67000, 90000, 30400],
+    //     //   backgroundColor: 'orange'
+    //     // }
+    //   ]
+    //   });
+
+      const [userData, setUserData] = useState({
+        labels: UserData.map( (data) => data.name), 
         datasets: [{
-          label: "Users Gained", 
+          label: "Modererator Joined", 
           data: UserData.map( (data) => data.userGain),
           backgroundColor: [
             "rgba(75,192,192,1)",
@@ -65,16 +114,14 @@ const GraphCharts = () => {
           borderColor: "black",
           borderWidth: 2,
         },
-        {
-          label: 'Quantity',
-          data: [85000, 70000, 67000, 90000, 30400],
-          backgroundColor: 'orange'
-        }
+        // {
+        //   label: 'Quantity',
+        //   data: [85000, 70000, 67000, 90000, 30400],
+        //   backgroundColor: 'orange'
+        // }
       ]
       });
-    
 
-      console.log("graph charts: after userData");
 
 
     return (
@@ -92,7 +139,7 @@ const GraphCharts = () => {
                             maintainAspectRatio: true,
                             scales: {
                                 y: {
-                                    beginAtZero: false,
+                                    beginAtZero: true,
                                 }
                             },
                             legend:{

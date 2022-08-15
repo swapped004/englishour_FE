@@ -259,7 +259,7 @@ const GroupWords = () => {
                         {formData.length - 1 === index && formData.length > 1 && (
                           <button
                             type='button'
-                            className="button-54v2"
+                            className="button-85"
                             onClick={(e) => handleremove(index)}
                           >
                             Delete Category
@@ -268,6 +268,7 @@ const GroupWords = () => {
                       {/* </div> */}
                     {/* </span> */}
                   {/* </div> */}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   {formData.length - 1 === index && (
                     <button
                       className="button-85"

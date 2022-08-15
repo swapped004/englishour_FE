@@ -47,7 +47,7 @@ const Preview = () => {
 
       await axios
           .post("http://localhost:8248/moderator/insert?token="+token, {
-            type: "fillinthegaps",
+            type: "fillgaps",
             level: query.get("level"),
             tutorial_id: query.get("tutorial"),
             passage:passage,
