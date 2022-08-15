@@ -9,6 +9,7 @@ import ProfileInfo from './profileInfo'
 import Timeline from './timeline'
 import jwt_decode from "jwt-decode";
 import Notification from '../Notification/NotificationClone';
+import Stat from '../Statistics/Stat';
 
 const ModeratorProfile = () => {
 
@@ -73,6 +74,7 @@ const ModeratorProfile = () => {
                 {timeline === 'timeline' && (<Timeline Exinfo = {Exinfo}/>)}
                 {timeline === 'profile' && <ProfileInfo info= {info} Exinfo = {Exinfo} Tutorialinfo = {Tutorialinfo} />}
                 {timeline === 'notification' && (<Notification notification={notification}/>)}
+                {timeline === 'stat' && (<Stat/>)}
                 </div>
             );
             
@@ -91,6 +93,11 @@ const ModeratorProfile = () => {
         const handleNotification = () => {   
             // console.log("notification call hocche");         
             setTimeline('notification');
+        }
+
+        const handleStats = () => {
+            navigate('/stats?token='+token);
+            // setTimeline('stat');
         }
 
     
@@ -165,9 +172,7 @@ const ModeratorProfile = () => {
             // console.log("history: ", history);
 
         
-        const handleStats = () => {
-            navigate('/stats?token='+token);
-        }
+        
 
 
         return (
