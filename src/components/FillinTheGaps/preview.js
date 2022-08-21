@@ -63,7 +63,7 @@ const Preview = () => {
               txt = "No";
             }
             if(txt === "Yes"){
-              navigate("/consecutive?token="+token+"&tutorial="+query.get("tutorial"))
+              navigate("/consecutive?token="+token+"&tutorial="+query.get("tutorial")+"&level="+query.get("level"));
             }
             else{
               navigate('/tutorial?token='+token);

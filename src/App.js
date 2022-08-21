@@ -23,6 +23,7 @@ import PreviewGroupWords from './components/Notification/PreviewGroupWords';
 import Preview from './components/FillinTheGaps/preview';
 import Stat from './components/Statistics/Stat';
 import PreviewFillGaps from './components/Notification/PreviewFillIntheGaps';
+import ContentTree from './components/Exercise/ContentTree';
 
 
 import React from 'react';
@@ -128,7 +129,7 @@ function App() {
           <Route path="/register" element={< Register />} />
           <Route path="/help" element={< Register />} />
           <Route path="/about" element={< Register />} />
-          <Route path="/exercise" element={< Exercise />} />
+          <Route path="/exercise" element={< ContentTree />} />
           <Route path="/consecutive" element={< Consecutive />} />
           <Route path="/tutorial" element={< Tutorial />} />
           <Route path="/add_tutorial" element={< Add_tutorial />} />

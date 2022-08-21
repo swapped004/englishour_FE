@@ -154,7 +154,7 @@ const Row_col = () => {
               txt = "No";
             }
             if(txt === "Yes"){
-              navigate("/consecutive?token="+token+"&tutorial="+tutorial_id)
+              navigate("/consecutive?token="+token+"&tutorial="+tutorial_id+"&level="+level+"&type=readcomplete");
             }
             else{
               navigate('/tutorial?token='+token);

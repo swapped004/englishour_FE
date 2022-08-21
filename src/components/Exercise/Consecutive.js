@@ -1,148 +1,135 @@
-import React, { Component } from 'react';
+import axios from 'axios';
+import React, { useEffect } from 'react'
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import jwt_decode from "jwt-decode";
 import { Dropdown } from 'reactjs-dropdown-component';
-import { Link } from "react-router-dom";
-import "./button.css";
+import { TreeView } from '@material-ui/lab';
 
-class Consecutive extends Component {
-  constructor() {
-    super();
-    this.state = {
-      Level: [
-        {
-          label: '1',
-          value: 'one',
-        },
-        {
-          label: '2',
-          value: 'two',
-        },
-        {
-            label: '3',
-            value: 'three',
-        },
-        {
-            label: '4',
-            value: 'four',
-        },
-        {
-            label: '5',
-            value: 'five',
-        },
-        {
-            label: '6',
-            value: 'six',
-        },
-      ],
-      Type: [
-        {
-            label: 'Table Completion',
-            value: 'tablecompletion',
-        },
-        {
-            label: 'Change Letter',
-            value: 'changeletter',
-        },
-        {
-            label: 'Categorize Words',
-            value: 'categorizewords',
-        },
-        {
-            label: 'Sentence Shuffling',
-            value: 'sentenceshuffling',
-        },
-        {
-          label: 'Fill in the Gaps',
-          value: 'fillgaps',
-        },
-      ],
-      selection: {
-        selected_level: "",
-        selected_type: "",
-        selected_tutorial:"",
-        token: "",
-      },
-    };
+import "./Consecutive.css"
+import "./button.css"
+
+
+function useQuery() {
+    const { search } = useLocation();
+  
+    return React.useMemo(() => new URLSearchParams(search), [search]);
   }
 
-  componentDidMount() {
-    window.addEventListener('keydown', this.tabKeyPressed);
-    window.addEventListener('mousedown', this.mouseClicked);
-  }
+const Consecutive = () => {
 
-  tabKeyPressed = (e) => {
-    if (e.keyCode === 9) {
-      document.querySelector('body').classList.remove('noFocus');
-      window.removeEventListener('keydown', this.tabKeyPressed);
-      window.addEventListener('mousedown', this.mouseClicked);
+  const navigate = useNavigate();
+
+  let query = useQuery();
+  const token = query.get('token');
+
+  var decode = jwt_decode(token);
+
+  const moderator_id = decode.moderator_id;
+  console.log(moderator_id);
+
+  const level = query.get('level');
+  console.log(level);
+
+  const tutorial_id = query.get('tutorial');
+  console.log(tutorial_id);
+
+  const type = query.get('type');
+
+
+  const [exercise_type, setExerciseType] = React.useState(type);
+  const type_options = [
+    {
+      label: 'Table Completion',
+      value: 'tablecompletion',
+    },
+    {
+        label: 'Change Letter',
+        value: 'changeletter',
+    },
+    {
+        label: 'Categorize Words',
+        value: 'categorizewords',
+    },
+    {
+        label: 'Sentence Shuffling',
+        value: 'sentenceshuffling',
+    },
+    {
+      label: 'Fill in the Gaps',
+      value: 'fillgaps',
+    },
+  ];
+
+  const [exercise_details, setExerciseDetails] = React.useState({
+    tutorial_name: "",
+    topic_name: "",
+    category_name: "",
+  });
+
+  React.useEffect(() => {
+
+    //get all stats from database with axios
+    const getDetails = async () => {
+        console.log('get exercise details');
+        const result = await axios.get(
+            "http://localhost:8248/moderator/getConsecutiveDetails?token="+token+"&tutorial_id="+tutorial_id
+        );
+        
+        console.log(result.data);
+        setExerciseDetails(result.data);
+    }
+
+    getDetails();
+  }, [] );
+
+  const handleClick = (e) => {
+    console.log("clicked");
+    console.log("value:"+exercise_type);
+
+    if(exercise_type!=""){
+        navigate("/"+exercise_type+"?token="+token+"&tutorial_id="+tutorial_id+"&level="+level);
+    }
+
+    else
+    {
+        alert("Please select an exercise type");
     }
   }
 
-  mouseClicked = () => {
-    document.querySelector('body').classList.add('noFocus');
-    window.removeEventListener('mousedown', this.mouseClicked);
-    window.addEventListener('keydown', this.tabKeyPressed);
-  }
 
-  onChange = async (item, name) => { 
-    //console.log(item.label);
 
-    if (name === "Level") {
-        console.log(window.location.href.split("?")[1].split("=")[1].split("&")[0]);
-        console.log(window.location.href.split("?")[1].split("=")[2]);
-        const new_selection = {
-            selected_level: item.label,
-            selected_type: this.state.selection.selected_type,
-            token: window.location.href.split("?")[1].split("=")[1].split("&")[0],
-            selected_tutorial: window.location.href.split("?")[1].split("=")[2],
-        };
-        this.setState({ selection: new_selection });
-        } else if (name === "Type") {
-        const new_selection = {
-            selected_level: this.state.selection.selected_level,
-            selected_type: item.value,
-            token: window.location.href.split("?")[1].split("=")[1],
-            selected_tutorial:window.location.href.split("?")[1].split("=")[1],
-        };
-        this.setState({
-            selection: new_selection,
-        });
-    }
-}
 
-  render() {
-    const {Level,Type} = this.state;
-
-    return (
-      <div className="Content">
-        <h1>Exercise Addition</h1>
-        <br />
-        <h1>Type and Level</h1>
-        <br /><br />
-        <div className="wrapper">
-          <Dropdown
-            name="Type"
-            searchable={['Search for Type', 'No matching Type']}
-            title="Type"
-            list={Type}
-            // onChange={this.onChange}
-            onChange = {this.onChange.bind(this)}
-          />
-
-          <Dropdown
-            name="Level"
-            title="Level"
-            list={Level}
-            // onChange={this.onChange}
-            onChange = {this.onChange.bind(this)}
-          />
-        </div>
-        <br /><br />
-        <Link to={"/"+this.state.selection.selected_type+"?token="+this.state.selection.token+"&level="+this.state.selection.selected_level+"&tutorial="+this.state.selection.selected_tutorial} style={{ textDecoration: 'none'}} className="button-85" onClick={this.onChange.bind(this)}>
-        Proceed
-        </Link>
+  //return a dropdown to choose type
+  return (
+    <div className='consecutive_container'>
+      {/* show hierarchy with category, topic, level */}
+      <div className='hierarchy'>
+        <h1>  {exercise_details.category_name} &nbsp;&nbsp;</h1>
+        <h3> &#8594;{exercise_details.topic_name} &nbsp;&nbsp;</h3>
+        <h3> &#8594; {exercise_details.tutorial_name} &nbsp;&nbsp;</h3>
+        <h3> &#8594; level =  {level}</h3>
       </div>
-    );
-  }
+
+      <div className='dropdown_type'>
+        <Dropdown
+            name="Exercise Type"
+            titleSingular="Type"
+            title="Exercise Type"
+            list={type_options}
+            //on change, set the exercise type to the value of the dropdown
+            onChange={(e) => setExerciseType(e.value)}
+        />
+      </div>
+
+      <div className='button-54'>
+        < button onClick={() => handleClick()}>
+          Next
+        </button>
+      </div>
+      
+
+    </div>
+  )
 }
 
-export default Consecutive;
+export default Consecutive
