@@ -218,7 +218,7 @@ const Stat = () => {
         {/* draw a chart showing percent of attempt and solves */}
         <div className='exercise-stat-content'>
             <div className='exercise-stat-content-left'>
-                <h3><b>Exercise Id</b>:  &nbsp; {exercise.exercise_id}</h3>
+                <h3><b>No</b>:  &nbsp; {index+1}</h3>
                 <h3><b>Exercise Type</b>:  &nbsp; {exercise.exercise_type}</h3>
                 <h3><b>Category</b>:  &nbsp; {exercise.category_name}</h3>
                 <h3><b>Topic</b>:  &nbsp; {exercise.topic_name}</h3>

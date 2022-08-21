@@ -186,9 +186,8 @@ const AdminProfile = () => {
 
                         <ul className="nav nav-pills nav-stacked">
                             <li><a href="#" onClick={handleProfileInfo}> <i className="fa fa-user"></i> Admin Profile</a></li>
-                            <li><a href="#" onClick={handleTimeline}> <i className="fa fa-calendar"></i> Recent Activity <span className="label label-warning pull-right r-activity">
-                                {/* {Exinfo.length} */}
-                                </span></a></li>
+                            {/* <li><a href="#" onClick={handleTimeline}> <i className="fa fa-calendar"></i> Recent Activity <span className="label label-warning pull-right r-activity">
+                                </span></a></li> */}
                             <li>
                                 <a className="button" href="#popup"> <i className="fa fa-edit"></i> Edit profile</a>
                                 <div className="popup" id="popup">
@@ -273,7 +272,7 @@ const AdminProfile = () => {
                                 </div>
                             </div>
                             </li>
-                            <li><a href="#" onClick={handleNotification}> <i className="fa fa-calendar"></i> Notification <span className="label label-warning pull-right r-activity">{notification.length}</span></a></li>
+                            {/* <li><a href="#" onClick={handleNotification}> <i className="fa fa-calendar"></i> Notification <span className="label label-warning pull-right r-activity">{notification.length}</span></a></li> */}
                         </ul>
                     </div>
                 </div>
