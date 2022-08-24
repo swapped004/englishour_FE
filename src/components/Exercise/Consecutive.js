@@ -87,7 +87,7 @@ const Consecutive = () => {
     console.log("value:"+exercise_type);
 
     if(exercise_type!=""){
-        navigate("/"+exercise_type+"?token="+token+"&tutorial_id="+tutorial_id+"&level="+level);
+        navigate("/"+exercise_type+"?token="+token+"&tutorial="+tutorial_id+"&level="+level);
     }
 
     else

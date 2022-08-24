@@ -154,8 +154,12 @@ const ContentTree = () => {
                                       {Levels.map((level) => (
                                           <TreeItem classes={{label: classes.label}} key={"level_"+level} nodeId={"level_"+level} label={level}>
                                             {/* filter exercises by tutorial_id and level */}
-                                            {Exercises.filter(exercise => exercise.tutorial_id === tutorial.tutorial_id && exercise.level === level).map((exercise) => (
-                                                <TreeItem classes={{label: classes.label}} key={"exercise_"+exercise.exercise_id} nodeId={"exercise_"+exercise.exercise_id} label={"~ "+exercise.exercise_id + "(" +exercise.exercise_type+")"}/>
+                                            {Exercises.filter(exercise => exercise.tutorial_id === tutorial.tutorial_id && exercise.level === level).map((exercise,index) => (
+                                                <Link to={"/preview"+exercise.exercise_type+"?token="+token+"&level="+level+"&tutorial="+tutorial.tutorial_id+"&exercise_id="+exercise.exercise_id}>
+                                                <TreeItem classes={{label: classes.label}} key={"exercise_"+exercise.exercise_id} nodeId={"exercise_"+exercise.exercise_id} label={"-  "+(index + 1) + "(" +exercise.exercise_type+")"}>
+                                                </TreeItem>
+                                                </Link>
+                                                
                                             ))}
                                             {console.log(level)}
                                             {/* onClick function depending on button id */}
