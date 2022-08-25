@@ -14,14 +14,14 @@ function useQuery() {
   }
 
 
-const Stat = () => {
+const Stat = ({token}) => {
 
     const COLORS = ["#8884d8", "#82ca9d", "#FFBB28", "#FF8042", "#AF19FF"];
     //get token and moderator id
     const navigate = useNavigate();
 
-    let query = useQuery();
-    const token = query.get('token');
+    // let query = useQuery();
+    // const token = query.get('token');
 
     var decode = jwt_decode(token);
     
