@@ -78,7 +78,7 @@ const Add_tutorial = () => {
         navigate("/tutorial?token="+token);  
       }
       else{
-        navigate("/consecutive?token="+token+"&tutorial="+tutorial_id);
+        navigate("/consecutive?token="+token+"&tutorial="+tutorial_id+"&level=");
       }
 
     };

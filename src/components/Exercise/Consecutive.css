@@ -27,3 +27,18 @@
 {
    padding: 10px;
 }
+
+.dropdown_consecutive_container
+{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    width: 50%;
+    height: 100%;
+    margin: 10px;
+    
+    padding: 20px;
+    border: 3px inset pink;
+
+}

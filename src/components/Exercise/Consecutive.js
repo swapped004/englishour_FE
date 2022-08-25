@@ -35,6 +35,8 @@ const Consecutive = () => {
 
   const type = query.get('type');
 
+  const [fromTutorial, setFromTutorial] = React.useState(false);
+
 
   const [exercise_type, setExerciseType] = React.useState(type);
   const type_options = [
@@ -60,6 +62,50 @@ const Consecutive = () => {
     },
   ];
 
+  const [Level, setLevel] = React.useState(level);
+  const level_options = [
+    {
+      label: '1',
+      value: '1',
+    },
+    {
+      label: '2',
+      value: '2',
+    },
+    {
+      label: '3',
+      value: '3',
+    },
+    {
+      label: '4',
+      value: '4',
+    },
+    {
+      label: '5',
+      value: '5',
+    },
+    {
+      label: '6',
+      value: '6',
+    },
+    {
+      label: '7',
+      value: '7',
+    },
+    {
+      label: '8',
+      value: '8',
+    },
+    {
+      label: '9',
+      value: '9',
+    },
+    {
+      label: '10',
+      value: '10',
+    }
+  ];
+
   const [exercise_details, setExerciseDetails] = React.useState({
     tutorial_name: "",
     topic_name: "",
@@ -79,6 +125,10 @@ const Consecutive = () => {
         setExerciseDetails(result.data);
     }
 
+    //if level is blank or undefined, set level to 1
+    if(level === undefined || level === ""){
+      setFromTutorial(true);
+    }
     getDetails();
   }, [] );
 
@@ -87,7 +137,7 @@ const Consecutive = () => {
     console.log("value:"+exercise_type);
 
     if(exercise_type!=""){
-        navigate("/"+exercise_type+"?token="+token+"&tutorial="+tutorial_id+"&level="+level);
+        navigate("/"+exercise_type+"?token="+token+"&tutorial="+tutorial_id+"&level="+Level);
     }
 
     else
@@ -105,20 +155,37 @@ const Consecutive = () => {
       {/* show hierarchy with category, topic, level */}
       <div className='hierarchy'>
         <h1>  {exercise_details.category_name} &nbsp;&nbsp;</h1>
-        <h3> &#8594;{exercise_details.topic_name} &nbsp;&nbsp;</h3>
-        <h3> &#8594; {exercise_details.tutorial_name} &nbsp;&nbsp;</h3>
-        <h3> &#8594; level =  {level}</h3>
+        <h3> &#8594;&nbsp;&nbsp;{exercise_details.topic_name} &nbsp;&nbsp;</h3>
+        <h3> &#8594;&nbsp;&nbsp;{exercise_details.tutorial_name} &nbsp;&nbsp;</h3>
+        {fromTutorial? null : <h3> &#8594;&nbsp;&nbsp;level =  {level}</h3>}
       </div>
 
-      <div className='dropdown_type'>
-        <Dropdown
-            name="Exercise Type"
-            titleSingular="Type"
-            title="Exercise Type"
-            list={type_options}
-            //on change, set the exercise type to the value of the dropdown
-            onChange={(e) => setExerciseType(e.value)}
-        />
+      <div className='dropdown_consecutive_container'>
+        <div className='dropdown_type'>
+          <Dropdown
+              name="Exercise Type"
+              titleSingular="Type"
+              title="Exercise Type"
+              list={type_options}
+              //on change, set the exercise type to the value of the dropdown
+              onChange={(e) => setExerciseType(e.value)}
+          />
+        </div>
+
+        {fromTutorial? 
+        <div className='dropdown_type'>
+          <Dropdown
+              name="Level"
+              titleSingular="Level"
+              title="Level"
+              list={level_options}
+              //on change, set the exercise type to the value of the dropdown
+              onChange={(e) => setLevel(e.value)}
+          />
+        </div>
+        :
+          null
+        }
       </div>
 
       <div className='button-54'>
