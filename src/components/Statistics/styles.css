@@ -153,6 +153,21 @@
     border: 1px solid purple;
     background-color: #fff;
     border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.legends_container_exercise
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 1400px;
+    width: 20%;
+    border: 3px dotted grey;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }
 
 .legends

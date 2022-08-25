@@ -212,10 +212,40 @@ const Stat = ({token}) => {
     // for each exercise in exerciseStat, show a chart of attempted and solve for that exercise
   return (
     <div>
+         
+       
        {exerciseStat.map((exercise,index) => (
         <>
         
         {/* draw a chart showing percent of attempt and solves */}
+        {exercise.no_of_attempts != 0 ? (
+            <div className="legends_container_exercise">
+            
+                <div className="legends">
+                    <div className='legend_title'>
+                        Attempted % &nbsp;&nbsp;
+                    </div>
+                    <div className='legend_color'>
+                    <span style={{ backgroundColor: "#8884d8" }}>
+                    &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    </div>
+                </div>
+
+                <div className="legends">
+                    <div className='legend_title'>
+                        Solved % &nbsp;&nbsp;
+                    </div>
+                    <div className='legend_color'>
+                    <span style={{ backgroundColor:"#82ca9d" }}>
+                    &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    </div>
+                </div>
+            
+        </div>
+        ) : null
+    }
         <div className='exercise-stat-content'>
             <div className='exercise-stat-content-left'>
                 <h3><b>No</b>:  &nbsp; {index+1}</h3>
@@ -241,6 +271,7 @@ const Stat = ({token}) => {
                 </div>       
             </div>
             
+                {exercise.no_of_attempts !=0  ?(
             
                 <PieChart
                     animate
@@ -271,6 +302,9 @@ const Stat = ({token}) => {
                 >
                     
                 </PieChart>
+       ) : <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No attempts to solve yet !</h1>}
+
+       
             
             
         </div>
