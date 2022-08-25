@@ -14,14 +14,14 @@ function useQuery() {
   }
 
 
-const Stat = () => {
+const Stat = ({token}) => {
 
     const COLORS = ["#8884d8", "#82ca9d", "#FFBB28", "#FF8042", "#AF19FF"];
     //get token and moderator id
     const navigate = useNavigate();
 
-    let query = useQuery();
-    const token = query.get('token');
+    // let query = useQuery();
+    // const token = query.get('token');
 
     var decode = jwt_decode(token);
     
@@ -212,10 +212,40 @@ const Stat = () => {
     // for each exercise in exerciseStat, show a chart of attempted and solve for that exercise
   return (
     <div>
+         
+       
        {exerciseStat.map((exercise,index) => (
         <>
         
         {/* draw a chart showing percent of attempt and solves */}
+        {exercise.no_of_attempts != 0 ? (
+            <div className="legends_container_exercise">
+            
+                <div className="legends">
+                    <div className='legend_title'>
+                        Attempted % &nbsp;&nbsp;
+                    </div>
+                    <div className='legend_color'>
+                    <span style={{ backgroundColor: "#8884d8" }}>
+                    &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    </div>
+                </div>
+
+                <div className="legends">
+                    <div className='legend_title'>
+                        Solved % &nbsp;&nbsp;
+                    </div>
+                    <div className='legend_color'>
+                    <span style={{ backgroundColor:"#82ca9d" }}>
+                    &nbsp; &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </span>
+                    </div>
+                </div>
+            
+        </div>
+        ) : null
+    }
         <div className='exercise-stat-content'>
             <div className='exercise-stat-content-left'>
                 <h3><b>No</b>:  &nbsp; {index+1}</h3>
@@ -241,6 +271,7 @@ const Stat = () => {
                 </div>       
             </div>
             
+                {exercise.no_of_attempts !=0  ?(
             
                 <PieChart
                     animate
@@ -271,6 +302,9 @@ const Stat = () => {
                 >
                     
                 </PieChart>
+       ) : <h1>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No attempts to solve yet !</h1>}
+
+       
             
             
         </div>
