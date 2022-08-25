@@ -11,7 +11,7 @@ function LandingPage({ history }) {
         <Row>
           <div className="intro-text">
             <div>
-              <h1 className="title">Welcome To ENGLISHOUR</h1>
+              <h1 className="title">WELCOME O ENGLISHOUR</h1>
               <p className="subtitle">Learn English in a Fun Way</p>
             </div>
             <div className="buttonContainer">

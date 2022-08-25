@@ -4,6 +4,10 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { Dropdown } from 'reactjs-dropdown-component';
 import { TreeView } from '@material-ui/lab';
+import FileUpload from './fileUpload'
+import FileList  from './fileList';
+import Papa from 'papaparse';
+
 
 import "./Consecutive.css"
 import "./button.css"
@@ -34,8 +38,12 @@ const Consecutive = () => {
   console.log(tutorial_id);
 
   const type = query.get('type');
-
+  const [files, setFiles] = React.useState([])
   const [fromTutorial, setFromTutorial] = React.useState(false);
+
+  const removeFile = (filename) => {
+    setFiles(files.filter(file => file.name !== filename))
+  }
 
 
   const [exercise_type, setExerciseType] = React.useState(type);
@@ -136,7 +144,7 @@ const Consecutive = () => {
     console.log("clicked");
     console.log("value:"+exercise_type);
 
-    if(exercise_type!=""){
+    if(exercise_type!==""){
         navigate("/"+exercise_type+"?token="+token+"&tutorial="+tutorial_id+"&level="+Level);
     }
 
@@ -144,6 +152,93 @@ const Consecutive = () => {
     {
         alert("Please select an exercise type");
     }
+  }
+
+  const handleClickFile = async (e) => {
+    // e.preventDefault();
+    console.log("clicked file add, ", files[0].name);
+    const formData = new FormData();
+    formData.append(
+        "newFile",
+        files[0],
+        files[0].name
+    )
+    
+    Papa.parse(files[0], {
+      header: true,
+      skipEmptyLines: true,
+      complete: function (results) {
+        for(let i=0;i<results.data.length;i++){
+          if(results.data[i].type === "sentenceshuffling"){
+            axios
+            .post("http://localhost:8248/moderator/insert?token="+token, {
+              type: "sentenceshuffling",
+              level: query.get("level"),
+              tutorial_id: query.get("tutorial"),
+              correct: results.data[i].CorrectSentences,
+              description: results.data[i].Description,
+              moderator_id: moderator_id,
+              content:"A new exercise of 'Sentence Shuffling' has been added",
+            })
+            .then(function (response) {
+              console.log(response);
+            });
+          }
+          else if(results.data[i].type === "tablecompletion"){
+
+          }
+          else if(results.data[i].type === "changeletter"){
+            axios
+            .post("http://localhost:8248/moderator/insert?token="+token, {
+              type: "changeletter",
+              level: query.get("level"),
+              tutorial_id: query.get("tutorial"),
+              hints: results.data[i].Hints,
+              answers: results.data[i].Answers,
+              description: results.data[i].Description,
+              moderator_id: moderator_id,
+              content:"A new exercise of 'Change One letter To Make New Word' has been added",
+            })
+            .then(function (response) {
+              console.log(response);
+              
+            });
+          }
+          else if(results.data[i].type === "categorizewords"){
+            axios
+            .post("http://localhost:8248/moderator/insert?token="+token, {
+              type: "categorizewords",
+              level: query.get("level"),
+              tutorial_id: query.get("tutorial"),
+              hints: results.data[i].Category,
+              answers: results.data[i].CatWords,
+              description: results.data[i].Description,
+              moderator_id: moderator_id,
+              content:"A new exercise of 'Categorize words' has been added",
+            })
+            .then(function (response) {
+              console.log(response);
+            });
+
+          }
+          else if(results.data[i].type === "fillgaps"){
+            axios
+            .post("http://localhost:8248/moderator/insert?token="+token, {
+              type: "fillgaps",
+              level: query.get("level"),
+              tutorial_id: query.get("tutorial"),
+              passage: results.data[i].Passage,
+              description: results.data[i].Description,
+              moderator_id: moderator_id,
+              content:"A new exercise of 'Fill in the Gaps' has been added",
+            })
+            .then(function (response) {
+              console.log(response);
+            });
+          }
+        }
+      },
+    });
   }
 
 
@@ -188,15 +283,22 @@ const Consecutive = () => {
         }
       </div>
 
-      <div className='button-54'>
+      <div className='button-85'>
         < button onClick={() => handleClick()}>
-          Next
+          Manual Input
         </button>
       </div>
-      
-
+      <div><h1>OR</h1></div>
+        <div className="titlefile">Upload file</div>
+        <FileUpload files={files} setFiles={setFiles} removeFile={removeFile}/>
+        <FileList files={files} removeFile={removeFile} />
+        <div className='button-85'>
+        < button onClick={() => handleClickFile()}>
+          UPLOAD FILE
+        </button>
+      </div>
     </div>
   )
 }
 
-export default Consecutive
+export default Consecutive;

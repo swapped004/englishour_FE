@@ -1,0 +1,32 @@
+liFile {
+    list-style: none;
+    margin: 1.2em 0;
+    background-color: #f55e3038;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    padding: 1.5em 2.5em;
+
+    svg {
+        color: #f55321;
+        &:first-child {
+            font-size: 1.5em;
+            margin-right: 0.8em;
+        }
+    }
+
+    p {
+        flex: 1;
+        font-size: 1.5rem;
+    }
+
+    .actions {
+        justify-self: flex-end;
+        cursor: pointer;
+        font-size: 1.5em;
+
+        .fa-spinner {
+            font-size: 1.5em;
+        }
+    }
+}

@@ -7,6 +7,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import TreeItem from '@material-ui/lab/TreeItem';
 import TreeView from '@material-ui/lab/TreeView';
 import { makeStyles } from '@material-ui/core/styles';
+// import Popup from './Popup';
 
 import "./ContentTree.css"
 // import "./button.css"
@@ -51,8 +52,7 @@ const ContentTree = () => {
 
   const type = query.get('type');
 
-
-
+  // const [openPopup, setOpenPopup] = React.useState(false);
   const [exercise_type, setExerciseType] = React.useState(type);
   const type_options = [
     {
@@ -125,6 +125,7 @@ const ContentTree = () => {
 
 
     console.log("level: "+level);
+    // setOpenPopup(true);
     navigate("/consecutive?token="+token+"&tutorial="+tutorial_id+"&level="+level);
   }
 
@@ -183,6 +184,9 @@ const ContentTree = () => {
                 ))}
             </TreeView>
         </div>
+        {/* <Popup openPopup={openPopup} setOpenPopup = {setOpenPopup}>
+            
+        </Popup> */}
     </div>
    
   );
