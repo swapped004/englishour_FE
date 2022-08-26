@@ -80,7 +80,7 @@ class Notification extends React.Component {
                             <li>
                              <div class="content">
                              <p>
-                                No New Notifications!!
+                                No New Content to Review!!
                              </p>
                              </div>
                          </li>

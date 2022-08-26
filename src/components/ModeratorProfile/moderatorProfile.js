@@ -280,7 +280,7 @@ const ModeratorProfile = () => {
                                 </div>
                             </div>
                             </li>
-                            <li><a href="#" onClick={handleNotification}> <i className="fa fa-bell"></i> Notification <span className="label label-warning pull-right r-activity">{notification.length}</span></a></li>
+                            <li><a href="#" onClick={handleNotification}> <i className="fa fa-bell"></i> Review Content <span className="label label-warning pull-right r-activity">{notification.length}</span></a></li>
                         </ul>
                     </div>
                 </div>

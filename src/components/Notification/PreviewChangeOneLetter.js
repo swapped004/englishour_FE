@@ -52,6 +52,8 @@ const PreviewChangeOneLetter = () => {
       alert("Aproved Successfully");
       if(response.data === "Status Updated") {
         navigate('/profile?token='+token);
+        // navigate(-1);
+        //window.location.reload(true);
       }
     }
     const handleDecline = async (e) => {

@@ -21,6 +21,14 @@ function useQuery() {
 
 const Consecutive = () => {
 
+  function delay(delayInms) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(2);
+      }, delayInms);
+    });
+  }
+
   const navigate = useNavigate();
 
   let query = useQuery();
@@ -169,76 +177,84 @@ const Consecutive = () => {
       skipEmptyLines: true,
       complete: function (results) {
         for(let i=0;i<results.data.length;i++){
-          if(results.data[i].type === "sentenceshuffling"){
-            axios
-            .post("http://localhost:8248/moderator/insert?token="+token, {
-              type: "sentenceshuffling",
-              level: query.get("level"),
-              tutorial_id: query.get("tutorial"),
-              correct: results.data[i].CorrectSentences,
-              description: results.data[i].Description,
-              moderator_id: moderator_id,
-              content:"A new exercise of 'Sentence Shuffling' has been added",
-            })
-            .then(function (response) {
-              console.log(response);
-            });
-          }
-          else if(results.data[i].type === "tablecompletion"){
+          // setTimeout(function(){
+            if(results.data[i].type === "sentenceshuffling"){
+              axios
+              .post("http://localhost:8248/moderator/insert?token="+token, {
+                type: "sentenceshuffling",
+                level: query.get("level"),
+                tutorial_id: query.get("tutorial"),
+                correct: results.data[i].CorrectSentences,
+                description: results.data[i].Description,
+                moderator_id: moderator_id,
+                content:"A new exercise of 'Sentence Shuffling' has been added",
+              })
+              .then(function (response) {
+                console.log(response);
+                delay(1000);
+              });
+            }
+            else if(results.data[i].type === "tablecompletion"){
 
-          }
-          else if(results.data[i].type === "changeletter"){
-            axios
-            .post("http://localhost:8248/moderator/insert?token="+token, {
-              type: "changeletter",
-              level: query.get("level"),
-              tutorial_id: query.get("tutorial"),
-              hints: results.data[i].Hints,
-              answers: results.data[i].Answers,
-              description: results.data[i].Description,
-              moderator_id: moderator_id,
-              content:"A new exercise of 'Change One letter To Make New Word' has been added",
-            })
-            .then(function (response) {
-              console.log(response);
-              
-            });
-          }
-          else if(results.data[i].type === "categorizewords"){
-            axios
-            .post("http://localhost:8248/moderator/insert?token="+token, {
-              type: "categorizewords",
-              level: query.get("level"),
-              tutorial_id: query.get("tutorial"),
-              hints: results.data[i].Category,
-              answers: results.data[i].CatWords,
-              description: results.data[i].Description,
-              moderator_id: moderator_id,
-              content:"A new exercise of 'Categorize words' has been added",
-            })
-            .then(function (response) {
-              console.log(response);
-            });
+            }
+            else if(results.data[i].type === "changeletter"){
+              axios
+              .post("http://localhost:8248/moderator/insert?token="+token, {
+                type: "changeletter",
+                level: query.get("level"),
+                tutorial_id: query.get("tutorial"),
+                hints: results.data[i].Hints,
+                answers: results.data[i].Answers,
+                description: results.data[i].Description,
+                moderator_id: moderator_id,
+                content:"A new exercise of 'Change One letter To Make New Word' has been added",
+              })
+              .then(function (response) {
+                console.log(response);
+                delay(1000);
+                
+              });
+            }
+            else if(results.data[i].type === "categorizewords"){
+              axios
+              .post("http://localhost:8248/moderator/insert?token="+token, {
+                type: "categorizewords",
+                level: query.get("level"),
+                tutorial_id: query.get("tutorial"),
+                hints: results.data[i].Category,
+                answers: results.data[i].CatWords,
+                description: results.data[i].Description,
+                moderator_id: moderator_id,
+                content:"A new exercise of 'Categorize words' has been added",
+              })
+              .then(function (response) {
+                console.log(response);
+                delay(1000);
+              });
 
-          }
-          else if(results.data[i].type === "fillgaps"){
-            axios
-            .post("http://localhost:8248/moderator/insert?token="+token, {
-              type: "fillgaps",
-              level: query.get("level"),
-              tutorial_id: query.get("tutorial"),
-              passage: results.data[i].Passage,
-              description: results.data[i].Description,
-              moderator_id: moderator_id,
-              content:"A new exercise of 'Fill in the Gaps' has been added",
-            })
-            .then(function (response) {
-              console.log(response);
-            });
-          }
+            }
+            else if(results.data[i].type === "fillgaps"){
+              axios
+              .post("http://localhost:8248/moderator/insert?token="+token, {
+                type: "fillgaps",
+                level: query.get("level"),
+                tutorial_id: query.get("tutorial"),
+                passage: results.data[i].Passage,
+                description: results.data[i].Description,
+                moderator_id: moderator_id,
+                content:"A new exercise of 'Fill in the Gaps' has been added",
+              })
+              .then(function (response) {
+                console.log(response);
+                delay(1000);
+              });
+            }
+          // }, 1000);
         }
       },
     });
+    alert("Exercise added successfully");
+    window.location.reload(true);
   }
 
 
