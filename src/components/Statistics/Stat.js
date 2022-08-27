@@ -212,6 +212,13 @@ const Stat = ({token}) => {
     // for each exercise in exerciseStat, show a chart of attempted and solve for that exercise
   return (
     <div>
+
+        {exerciseStat.length === 0 ? (
+            <div>
+                <h1>You have not added any exercise</h1>
+            </div>
+        ) : null
+        }
          
        
        {exerciseStat.map((exercise,index) => (
