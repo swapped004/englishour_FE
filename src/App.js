@@ -14,7 +14,6 @@ import GroupWords from './components/GroupWords/groupWords';
 import FillinTheGaps from './components/FillinTheGaps/fillinthegaps';
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
 import AdminProfile from './components/AdminProfile/adminProfile'
-
 import Consecutive from './components/Exercise/Consecutive';
 import ForgotPassword from './components/Login/forgotPassword';
 import PreviewChangeOneLetter from './components/Notification/PreviewChangeOneLetter';
@@ -25,6 +24,12 @@ import StatTabs from './components/Statistics/StatTabs';
 import PreviewFillGaps from './components/Notification/PreviewFillIntheGaps';
 import PreviewReadComplete from './components/Notification/PreviewReadComplete';
 import ContentTree from './components/Exercise/ContentTree';
+
+import TreeChangeOneLetter from './components/TreeView/TreeChangeOneLetter';
+import TreeSentenceShuffle from './components/TreeView/TreeSentenceShuffle';
+import TreeGroupWords from './components/TreeView/TreeGroupWords';
+import TreeFillGaps from './components/TreeView/TreeFillIntheGaps';
+
 
 
 import React from 'react';
@@ -150,6 +155,11 @@ function App() {
           <Route exact path="/previewreadcomplete" element={< PreviewReadComplete />} />
           <Route exact path="/preview" element={< Preview />} />
           <Route exact path="/stats" element={< StatTabs />} />
+
+          <Route exact path="/treechangeletter" element={< TreeChangeOneLetter />} />
+          <Route exact path="/treesentenceshuffling" element={< TreeSentenceShuffle />} />
+          <Route exact path="/treecategorizewords" element={< TreeGroupWords />} />
+          <Route exact path="/treefillgaps" element={< TreeFillGaps />} />
         </Routes>
     </div>
   );

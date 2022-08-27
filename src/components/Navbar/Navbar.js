@@ -1,10 +1,13 @@
 import React from 'react';
 import "./Navbar.css";
 import { Link } from 'react-router-dom';
+import Notification from "./notification5.png";
 
 const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
     
     console.log("Navbar isAdmin: ", isAdmin);
+    const [open, setOpen] = React.useState(false);
+
 
     return (
 
@@ -36,10 +39,13 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
                     <Link to="/login" className={logged_in ? "hidden" :"navbar-link" }>Sign In</Link>
                 </li>
                 <li>
-                    <Link to={"/exercise?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Exercise</Link>
+                    <Link to={"/exercise?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Index</Link>
                 </li>
                 <li>
                     <Link to={"/tutorial?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Tutorial</Link>
+                </li>
+                <li>
+                    <Link to="" className={logged_in ? "iconNot" :"hidden" } onClick={() => setOpen(!open)}>{<img src={Notification} className="iconImgNot" alt="" />}</Link>
                 </li>
                 <li>
                     <Link to="/" className={logged_in ? "navbar-btn" : "hidden"} onClick={Logout_func}>Logout</Link>
