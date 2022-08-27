@@ -99,6 +99,7 @@ const PreviewFillinTheGaps = () => {
       alert("Aproved Successfully");
       if(response.data === "Status Updated") {
         navigate('/profile?token='+token);
+        // navigate(-1);
       }
     }
     const handleDecline = async (e) => {
