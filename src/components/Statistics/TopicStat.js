@@ -19,7 +19,9 @@ const TopicStat = ({token}) => {
 
     
     //randomly generate 100 colors and store in array
-    const COLORS = Array.from({ length: 100 }, () => randomColor());
+    // const COLORS = Array.from({ length: 100 }, () => randomColor());
+    //20 different colors
+    const COLORS = ["#8884d8", "#82ca9d", "#FFBB28", "#FF8042", "#AF19FF", "#FF0000", "#FF00FF", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF", "#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF", "#FF00FF", "#FF0000", "#00FF00", "#0000FF", "#FFFF00", "#00FFFF"];
 
     const [TopicStat, setTopicStat] = React.useState([]);
     const [pieData, setPieData] = React.useState([]);
@@ -70,6 +72,7 @@ const TopicStat = ({token}) => {
                 </div>
             ))}
         </div>
+        
         <PieChart
                     animate
                     animationDuration={500}
@@ -84,7 +87,7 @@ const TopicStat = ({token}) => {
                     radius={25}
                     rounded
                     startAngle={0}
-                    viewBoxSize={[100, 100]}
+                    viewBoxSize={[100, 60]}
 
                     label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
                     labelPosition={80}
@@ -96,8 +99,27 @@ const TopicStat = ({token}) => {
                 >
                     
         </PieChart>
+
+        <div className='exercise-stat-content-right'>
+        {TopicStat.map((topic, index) => (
+                <div className='exercise-stat-content-right-box'>
+                 <h3><b>No</b>:  &nbsp; {index+1}</h3>
+                 <h3><b>Topic name</b>:  &nbsp; {topic.topic_name}</h3>
+                 <h3><b>Category</b>:  &nbsp; {topic.category_name}</h3>
+                 <h3><b>No of attempts</b>:  &nbsp; {topic.no_of_attempts}</h3>
+                 <h3><b>No of Solves:</b>  &nbsp; {topic.no_of_solved}</h3>
+                 <h3><b>No of ReadComplete:</b>  &nbsp; {topic.no_of_readComplete}</h3>
+                 <h3><b>No of GroupWords:</b>  &nbsp; {topic.no_of_groupWords}</h3>
+                 <h3><b>No of ShuffledSentence:</b>  &nbsp; {topic.no_of_shuffledSentence}</h3>
+                 <h3><b>No of LetterChange:</b>  &nbsp; {topic.no_of_letterChange}</h3>
+                 <h3><b>No of FillInTheGaps:</b>  &nbsp; {topic.no_of_fillInTheGaps}</h3>
+                 </div>
+        ))}
+        </div>
+       </div>
+
+      
         
-    </div>
   )
 }
 

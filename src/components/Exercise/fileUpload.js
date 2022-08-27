@@ -1,6 +1,4 @@
 import React from 'react'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faPlus } from '@fortawesome/free-solid-svg-icons'
 import './fileUpload.scss'
 
 import axios from 'axios'
@@ -39,9 +37,7 @@ const FileUpload = ({ files, setFiles, removeFile }) => {
                 <div className="file-inputs">
                     <input type="file" onChange={uploadHandler} />
                     <button>
-                        <i>
-                            <FontAwesomeIcon icon={faPlus} />
-                        </i>
+                        <i className="fa fa-plus" aria="hidden"></i>
                         Upload
                     </button>
                 </div>

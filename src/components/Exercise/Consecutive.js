@@ -3,7 +3,6 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { Dropdown } from 'reactjs-dropdown-component';
-import { TreeView } from '@material-ui/lab';
 import FileUpload from './fileUpload'
 import FileList  from './fileList';
 import Papa from 'papaparse';
@@ -193,7 +192,18 @@ const Consecutive = () => {
             level: level,
             tutorial_id: tutorial_id,
             moderator_id: moderator_id,
+            Sentences: results.data[i].Sentences,
+            Grid: results.data[i].Grid,
+            nrows: results.data[i].nrows,
+            ncols: results.data[i].ncols,
+
           }
+
+          console.log("Sentences:"+tempData.Sentences);
+          console.log("Grid:"+tempData.Grid);
+          console.log("nrows:"+tempData.nrows);
+          console.log("ncols:"+tempData.ncols);
+
           AllExercises.push(tempData);
         }
         // console.log(results.data);
@@ -208,8 +218,8 @@ const Consecutive = () => {
         });
       },
     });
-    // alert("Exercise added successfully");
-    window.location.reload(true);
+    alert("Exercise added successfully");
+    //window.location.reload(true);
   }
 
 
