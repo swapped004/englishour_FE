@@ -48,6 +48,7 @@ const PreviewSentenceShuffle = () => {
       alert("Aproved Successfully");
       if(response.data === "Status Updated") {
         navigate('/profile?token='+token);
+        window.location.reload(true);
       }
     }
     const handleDecline = async (e) => {
@@ -57,6 +58,7 @@ const PreviewSentenceShuffle = () => {
       alert("Declined Successfully");
       if(response.data === "Status Updated") {
         navigate('/profile?token='+token);
+        window.location.reload(true);
       }
     }
 

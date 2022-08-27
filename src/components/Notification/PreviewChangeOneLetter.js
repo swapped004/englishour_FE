@@ -53,7 +53,7 @@ const PreviewChangeOneLetter = () => {
       if(response.data === "Status Updated") {
         navigate('/profile?token='+token);
         // navigate(-1);
-        //window.location.reload(true);
+        window.location.reload(true);
       }
     }
     const handleDecline = async (e) => {
@@ -63,6 +63,7 @@ const PreviewChangeOneLetter = () => {
       alert("Declined Successfully");
       if(response.data === "Status Updated") {
         navigate('/profile?token='+token);
+        window.location.reload(true);
       }
     }
 

@@ -99,7 +99,7 @@ const PreviewFillinTheGaps = () => {
       alert("Aproved Successfully");
       if(response.data === "Status Updated") {
         navigate('/profile?token='+token);
-        // navigate(-1);
+        window.location.reload(true);
       }
     }
     const handleDecline = async (e) => {
@@ -109,6 +109,7 @@ const PreviewFillinTheGaps = () => {
       alert("Declined Successfully");
       if(response.data === "Status Updated") {
         navigate('/profile?token='+token);
+        window.location.reload(true);
       }
     }
 
