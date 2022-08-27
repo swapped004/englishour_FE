@@ -22,6 +22,7 @@ import PreviewGroupWords from './components/Notification/PreviewGroupWords';
 import Preview from './components/FillinTheGaps/preview';
 import StatTabs from './components/Statistics/StatTabs';
 import PreviewFillGaps from './components/Notification/PreviewFillIntheGaps';
+import PreviewReadComplete from './components/Notification/PreviewReadComplete';
 import ContentTree from './components/Exercise/ContentTree';
 
 import TreeChangeOneLetter from './components/TreeView/TreeChangeOneLetter';
@@ -151,6 +152,7 @@ function App() {
           <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle />} />
           <Route exact path="/previewcategorizewords" element={< PreviewGroupWords />} />
           <Route exact path="/previewfillgaps" element={< PreviewFillGaps />} />
+          <Route exact path="/previewreadcomplete" element={< PreviewReadComplete />} />
           <Route exact path="/preview" element={< Preview />} />
           <Route exact path="/stats" element={< StatTabs />} />
 
