@@ -125,3 +125,49 @@
               
           </div>
       </div>
+
+
+
+
+                <li>
+                    <span>{generateMonth(item.date)}</span>
+                    <div class="content">
+                        <p>
+                            <Link to={"/preview"+Exercise.split("#")[index]+"?token="+window.location.href.split("=")[1]+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link>
+                        </p>
+                        <span style={{fontSize: "15px",fontWeight: 700,color: "#747474",float: "right"}}>{item.date.split("T")[1].split(".")[0]}</span>
+                    </div>
+                </li>
+
+                <div className="notificationsNot">
+            {notification.map((item, index) => (
+                displayNotification(item.content.split("#")[0])
+            ))}
+        </div>
+
+
+
+        {open && logged_in ?
+            <div className="mainNot">
+                <div className="popupNot">
+                    <div className="popupNot-header">
+                        <h1>popup</h1>
+                        <h1 onClick={() => setOpen(!open)}>X</h1>
+                    </div>
+                {/* <div>
+                    <p>This is simple popup in React js</p>
+                </div> */}
+                {notification.map((item, index) => (
+                        <li>
+                            <span>{generateMonth(item.date)}</span>
+                            <div class="content">
+                                <p>
+                                    <Link to={"/preview"+Exercise.split("#")[index]+"?token="+window.location.href.split("=")[1]+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link>
+                                </p>
+                                <span style={{fontSize: "15px",fontWeight: 700,color: "#747474",float: "right"}}>{item.date.split("T")[1].split(".")[0]}</span>
+                            </div>
+                        </li>
+                ))}
+                </div>
+            </div>:""
+        }

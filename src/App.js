@@ -57,6 +57,8 @@ function App() {
 
   const [user, setUser] = useState({token:"", logged_in: false, isAdmin: false});
   const [error, setError] = useState("");
+  const [notification, setNotification] = React.useState([{notification_id:"",content:"",date:""}]);
+
 
   let tkn = "0";
 
@@ -83,12 +85,10 @@ function App() {
   if(tkn !== "0"){
 
     var decode = jwt_decode(tkn);
-
-    console.log("moderator id: ", decode.moderator_id);
+    console.log("calling get notifications ", tkn);
 
     const response = await fetch("http://localhost:8248/moderator/profileInfo/moderator_id?moderator_id="+decode.moderator_id+"&token="+tkn);
     const data = await response.json();
-    console.log("this is data.isAdmin: ", data.isAdmin);
     // setInfo(data);
     globalIsAdmin = data.isAdmin;
 
@@ -114,7 +114,7 @@ function App() {
     //check jwt token
     if(token !== null){
       const decoded = jwt_decode(token);
-      console.log(decoded);
+      // console.log(decoded);
       const moderator_id = decoded.moderator_id;
 
       //if cant decode token, user is not logged in
