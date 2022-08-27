@@ -130,7 +130,8 @@ const TreeReadComplete = () => {
                       value={(i == 0 || j == 0)? table?.[i]?.[j]: ""}
                       disabled = {true}
                       //set background color to black if value is empty
-                      style={{backgroundColor: (table?.[i]?.[j] == "" && !(i ==0 && j == 0)) ? "black" : "white" ,fontWeight: "bold", color: "black", fontSize: "1.5rem"}}
+                      // style={{backgroundColor: (table?.[i]?.[j] == "" && !(i ==0 && j == 0)) ? "black" : "white" ,fontWeight: "bold", color: "black", fontSize: "1.5rem"}}
+                      style={{backgroundColor: (table?.[i]?.[j] == "" && !(i ==0 || j == 0)) ? "black" : "white" ,fontWeight: "bold", color: "black", fontSize: "1.5rem"}}
                       //set text to bold
                         
                     />
@@ -202,6 +203,8 @@ const TreeReadComplete = () => {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {/* <button className="button-85" onClick={handleApprove}>Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="button-85"onClick={handleDecline}>Decline</button> */}
 
     </div>
   )

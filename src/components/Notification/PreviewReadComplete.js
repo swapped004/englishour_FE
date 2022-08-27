@@ -131,7 +131,7 @@ const PreviewReadComplete = ({setOpen}) => {
                       value={(i == 0 || j == 0)? table?.[i]?.[j]: ""}
                       disabled = {true}
                       //set background color to black if value is empty
-                      style={{backgroundColor: (table?.[i]?.[j] == "" && !(i ==0 && j == 0)) ? "black" : "white" ,fontWeight: "bold", color: "black", fontSize: "1.5rem"}}
+                      style={{backgroundColor: (table?.[i]?.[j] == "" && !(i ==0 || j == 0)) ? "black" : "white" ,fontWeight: "bold", color: "black", fontSize: "1.5rem"}}
                       //set text to bold
                         
                     />
