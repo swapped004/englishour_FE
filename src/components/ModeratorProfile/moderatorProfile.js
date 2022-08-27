@@ -80,7 +80,6 @@ const ModeratorProfile = () => {
             
         }
 
-
         const handleProfileInfo = () => {
             setTimeline('profile');
         }
