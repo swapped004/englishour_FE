@@ -29,6 +29,7 @@ import TreeChangeOneLetter from './components/TreeView/TreeChangeOneLetter';
 import TreeSentenceShuffle from './components/TreeView/TreeSentenceShuffle';
 import TreeGroupWords from './components/TreeView/TreeGroupWords';
 import TreeFillGaps from './components/TreeView/TreeFillIntheGaps';
+import TreeReadComplete from './components/TreeView/TreeReadComplete';
 
 
 
@@ -160,6 +161,7 @@ function App() {
           <Route exact path="/treesentenceshuffling" element={< TreeSentenceShuffle />} />
           <Route exact path="/treecategorizewords" element={< TreeGroupWords />} />
           <Route exact path="/treefillgaps" element={< TreeFillGaps />} />
+          <Route exact path="/treereadcomplete" element={< TreeReadComplete />} />
         </Routes>
     </div>
   );
