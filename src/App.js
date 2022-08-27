@@ -14,6 +14,8 @@ import GroupWords from './components/GroupWords/groupWords';
 import FillinTheGaps from './components/FillinTheGaps/fillinthegaps';
 import ModeratorProfile from './components/ModeratorProfile/moderatorProfile'
 import AdminProfile from './components/AdminProfile/adminProfile'
+import ViewGraph from './components/ViewGraph/allGraphs'
+
 
 import Consecutive from './components/Exercise/Consecutive';
 import ForgotPassword from './components/Login/forgotPassword';
@@ -140,6 +142,8 @@ function App() {
           <Route exact path="/fillgaps" element={< FillinTheGaps />} />
           <Route exact path="/profile" element={< ModeratorProfile />} />
           <Route exact path="/adminprofile" element={< AdminProfile />} />
+          <Route exact path="/viewgraph" element={< ViewGraph />} />
+
 
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
           <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter />} />

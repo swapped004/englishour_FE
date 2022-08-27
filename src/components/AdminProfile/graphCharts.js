@@ -11,33 +11,36 @@ import {Chart as ChartJS} from 'chart.js/auto';
 
 
 
+import "../ViewGraph/graphCss.css";   
+
+
 const UserData = [
     {
-      id: 1,
+    //   id: 1,
       name: "Towhid",
       userGain: 10,
       userLost: 823,
     },
     {
-      id: 2,
+    //   id: 2,
       name: "Sizvy",
       userGain: 15,
       userLost: 345,
     },
     {
-      id: 3,
+    //   id: 3,
       name: "Swapnil",
       userGain: 25,
       userLost: 555,
     },
     {
-      id: 4,
+    //   id: 4,
       name: "Saiful",
       userGain: 17,
       userLost: 4555,
     },
     {
-      id: 5,
+    //   id: 5,
       name: "Shakil",
       userGain: 18,
       userLost: 234,
@@ -57,52 +60,90 @@ const GraphCharts = () => {
     const token = query.get('token');
     console.log("token in graph: ", token);
 
+    // const [modExGraph, setModExGraph] = useState({});
+
+    const [moderatorEx, setModeratorEx] = React.useState([{exercise_id:"", exercise_type:"", added_ex_count:"", moderator_name:"", moderator_id:"" }]);
+
+
     
-      const [moderatorEx, setModeratorEx] = React.useState([{exercise_id:"", exercise_type:"", added_ex_count:"", moderator_name:"", moderator_id:"" }]);
+
+    const [modExGraph, setModExGraph] = useState({
+        labels: moderatorEx.map( (data) => data.moderator_name), 
+        datasets: [{
+          label: "Exercise added by Moderators", 
+          data: moderatorEx.map( (data) => data.added_ex_count),
+          backgroundColor: [],
+          borderColor: "black",
+          borderWidth: 2,
+        },
+        // {
+        //   label: 'Quantity',
+        //   data: [85000, 70000, 67000, 90000, 30400],
+        //   backgroundColor: 'orange'
+        // }
+      ]
+      });
+    
+    
+    // const [modExGraph, setModExGraph] = React.useState([]);
+
+    const changeToGraph = (graphData) => {
+
+        let colorList = []
+    
+        for(let i = 0; i < graphData.length; i++)
+        {
+            colorList.push("rgba(" + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + "," + Math.floor(Math.random()*255) + ", 0.6)");
+        }
+        const obj = {
+        labels: graphData.map( (data) => data.moderator_name), 
+        datasets: [{
+        label: "Exercise added by Moderators", 
+        data: graphData.map( (data) => data.added_ex_count),
+        backgroundColor: colorList,
+        borderColor: "black",
+        borderWidth: 2,
+        },
+        // {
+        //   label: 'Quantity',
+        //   data: [85000, 70000, 67000, 90000, 30400],
+        //   backgroundColor: 'orange'
+        // }
+        ]
+        };
+        return obj;
+
+    }
 
 
-
-      
       React.useEffect(() => {
-        console.log("graph charts useEffec");
+        console.log("graph charts useEffect");
         const getInfo = async () => {
             const response = await fetch("http://localhost:8248/moderator/graphChart?token="+token);
             const data = await response.json();
             setModeratorEx(data);
+            
+            setModExGraph(changeToGraph(data));
+
         }
-        getInfo();            
+        getInfo(); 
+ 
     }, []);
     
 
-    console.log("graph charts: after userData", moderatorEx);
+    console.log("after useEffect: graph charts: ", moderatorEx);
+    console.log("after useEffect: user data: ", UserData);
 
-    // const [userData, setUserData] = useState({
-    //     labels: moderatorEx.map( (data) => data.moderator_name), 
-    //     datasets: [{
-    //       label: "Modererator Joined", 
-    //       data: UserData.map( (data) => data.added_ex_count),
-    //       backgroundColor: [
-    //         "rgba(75,192,192,1)",
-    //         //   "#ecf0f1",
-    //         //   "#50AF95",
-    //         //   "#f3ba2f",
-    //         //   "#2a71d0",
-    //       ],
-    //       borderColor: "black",
-    //       borderWidth: 2,
-    //     },
-    //     // {
-    //     //   label: 'Quantity',
-    //     //   data: [85000, 70000, 67000, 90000, 30400],
-    //     //   backgroundColor: 'orange'
-    //     // }
-    //   ]
-    //   });
+   
+
+
+
+    
 
       const [userData, setUserData] = useState({
         labels: UserData.map( (data) => data.name), 
         datasets: [{
-          label: "Modererator Joined", 
+          label: "", 
           data: UserData.map( (data) => data.userGain),
           backgroundColor: [
             "rgba(75,192,192,1)",
@@ -124,37 +165,39 @@ const GraphCharts = () => {
 
 
 
+    //   console.log("")
+
     return (
         <React.Fragment>
 
             <div className="row">
                 <div className="col-md-12" style={{"margin": "10rem"}}>
-                    <h2 style={{"margin":"0 20rem", "width": "100%"}}>Moderator Join last month</h2>
+                    <h2 style={{"margin":"0 20rem", "width": "100%"}}>Exercise Added by Moderators</h2>
                     <div style={{width: 700, "margin": "5rem 15rem"}}>
 
-                        <Bar data={userData} 
+                        <Bar data={modExGraph} 
                         // height={400}
                         // width={1000}
-                        options={{
-                            maintainAspectRatio: true,
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                }
-                            },
-                            legend:{
-                                labels:{
-                                    fontSize: 20,
-                                }
-                            }
-                        }}
+                        // options={{
+                        //     maintainAspectRatio: true,
+                        //     scales: {
+                        //         y: {
+                        //             beginAtZero: true,
+                        //         }
+                        //     },
+                        //     legend:{
+                        //         labels:{
+                        //             fontSize: 20,
+                        //         }
+                        //     }
+                        // }}
                         />
                         {/* <BarChart charData={userData}/> */}
                     </div>
                 </div>
 
                     <div className="col-md-12" style={{"margin": "10rem"}}>
-                        <h2 style={{"margin":"0 20rem", "width": "100%"}}>Moderator Join last month</h2>
+                        <h2 style={{"margin":"0 20rem", "width": "100%"}}>Rating of Moderators</h2>
 
                         <div style={{width: 700, "margin": "5rem 15rem"}}>
                             <Line data={userData} />
@@ -172,6 +215,19 @@ const GraphCharts = () => {
                         </div>
                     </div>
 
+                    <form class="form">
+  
+                        <h2>Checkboxes</h2>
+                        <div class="inputGroup">
+                            <input id="option1" name="option1" type="checkbox"/>
+                            <label for="option1">Option One</label>
+                        </div>
+                        
+                        <div class="inputGroup">
+                            <input id="option2" name="option2" type="checkbox"/>
+                            <label for="option2">Option Two</label>
+                        </div>
+                    </form>
                 {/* </div> */}
                     
                     {/* <canvas id="myChart" width="400" height="400"></canvas> */}

@@ -6,6 +6,13 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
     
     console.log("Navbar isAdmin: ", isAdmin);
 
+    // const viewGraphFunc = () => {
+    //     if(isAdmin)
+    //     {
+    //         return 
+    //     }
+    // }
+
     return (
 
     <div className="navbar-container">
@@ -23,6 +30,10 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
 
         <div className="navbar-menu">
             <ul>
+
+                <li>
+                    <Link to={"/viewgraph?token="+token} className={(logged_in && isAdmin) ? "navbar-link" : "hidden"}>View Stat</Link>
+                </li>
 
                 <li>
                     <Link to={isAdmin?"/adminprofile?token="+token:"/profile?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Profile</Link>
