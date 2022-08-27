@@ -25,11 +25,10 @@ function useQuery() {
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const PreviewReadComplete = ({setOpen}) => {
+const TreeReadComplete = () => {
     const navigate = useNavigate();
     let query = useQuery();
     const classes = useStyles();
-    setOpen(false);
 
     const token = query.get('token');
     const exercise_id = query.get('exercise_id');
@@ -147,25 +146,6 @@ const PreviewReadComplete = ({setOpen}) => {
             return tab;
           };
 
-          const handleApprove = async (e) => {
-            e.preventDefault();
-            const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=approved");
-            console.log(response.data)
-            alert("Aproved Successfully");
-            if(response.data === "Status Updated") {
-              navigate('/profile?token='+token);
-            }
-          }
-          const handleDecline = async (e) => {
-            e.preventDefault();
-            const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=declined");
-            console.log(response.data);
-            alert("Declined Successfully");
-            if(response.data === "Status Updated") {
-              navigate('/profile?token='+token);
-            }
-          }
-
   return (
     <div>
         <div className='readComplete_desc'>
@@ -222,11 +202,9 @@ const PreviewReadComplete = ({setOpen}) => {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="button-85" onClick={handleApprove}>Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="button-85"onClick={handleDecline}>Decline</button>
 
     </div>
   )
 }
 
-export default PreviewReadComplete
+export default TreeReadComplete

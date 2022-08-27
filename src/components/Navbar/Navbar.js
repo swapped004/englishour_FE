@@ -1,6 +1,6 @@
 import React from 'react';
 import "./Navbar.css";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Notification from "./notification5.png";
 import "./notification.css";
 import "./Popup.css";
@@ -8,56 +8,66 @@ import jwt_decode from "jwt-decode";
 import "./moderatorTimelineCss.css"
 import axios from 'axios';
 
-const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
+const NavBar = ({logged_in, Logout_func, token, isAdmin, setOpen, open, setIsClicked, isClicked}) => {
     
-    console.log("Navbar isAdmin: ", isAdmin);
-    const [open, setOpen] = React.useState(true);
+    console.log("Navbar isAdmin: ", isAdmin, open);
+    const navigate = useNavigate();
+    
     const [notification, setNotification] = React.useState([{notification_id:"",content:"",date:""}]);
     const [Exercise, setExercise] = React.useState("");
+    
 
     const getNotification = async (id) => {
         const response = await fetch("http://localhost:8248/moderator/notification/moderator_id?moderator_id="+id+"&token="+token);
         const data = await response.json();
+        console.log("Notification in navbar first call",data);
         setNotification(data);
+        // await delay(5000);
+        // handleExerciseInfo(token);
     }
-    const handleExerciseInfo = async () => {
+    
+    const handleExerciseInfo = async (token1) => {
         var exId="";
+        // console.log("Notification in navbar",notification);
         for(let i=0;i<notification.length;i++){
           exId += notification[i].content.split("#")[1]+"x";
         }
+        console.log("combined exid",exId);
         if(exId!=="undefinedx"){
             const data = await axios.get(
-                "http://localhost:8248/moderator/exerciseDetails?token="+window.location.href.split("=")[1]+"&exercise_id="+exId
+                "http://localhost:8248/moderator/exerciseDetails?token="+token1+"&exercise_id="+exId
             );
             setExercise(data.data);
         }
     }
-
+    
     React.useEffect(() => {
-        // console.log("Navbar logged_in: ", logged_in);
         if(logged_in){
             var decode = jwt_decode(token);
+            console.log("I am getting called continuously");
             getNotification(decode.moderator_id);
+        }
+        if(logged_in && notification.length !== 0){
+            console.log("I too am getting called continuously");
+            handleExerciseInfo(token);
+            // handleExerciseInfo(token);
+            // window.location.reload(true);
+            //handleExerciseInfo();
         }             
     }, [logged_in]);
 
-    const Caller = (boolData) => {
+    const Caller = (boolData1, boolData2) => {
         // e.preventDefault();
-        setOpen(boolData);
-        if(boolData){
+        setOpen(boolData1);
+        setIsClicked(boolData2);
+        if(boolData1){
             var decode = jwt_decode(token);
             getNotification(decode.moderator_id);
-            handleExerciseInfo();
+            handleExerciseInfo(token);
         }
         console.log("Notification in navbar ", notification);
         console.log("Exercise in navbar ", Exercise);
     }
-
-    const displayNotification = (singleNotification) => {
-        return (
-          <span className="notificationNot">{singleNotification}</span>
-        );
-    };
 
     const generateMonth = (TotalTimeStamp) => {
         const m = parseInt(TotalTimeStamp.split("T")[0].split("-")[1]);
@@ -121,9 +131,9 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
                     <Link to={"/tutorial?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Tutorial</Link>
                 </li>
                 <li>
-                    <div className={logged_in ? "iconNot" :"hidden" } onClick={() => Caller(!open)}>
+                    <div className={logged_in ? "iconNot" :"hidden" } onClick={() => Caller(!open, !isClicked)}>
                         <img src={Notification} className="iconImgNot" alt="" />
-                        {notification.length >0 && <div className="counterNot">{notification.length}</div>}
+                        {notification.length > 0 && <div className="counterNot">{notification.length}</div>}
                     </div>
                 </li>
                 <li>
@@ -131,11 +141,11 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
                 </li>
             </ul>
         </div>
-        {open && logged_in ?
+        {open && logged_in && (notification.length > 0) ?
             <div className="mainNot">
                 <div className="popupNot">
                     <div className="popupNot-header">
-                        <h1>popup</h1>
+                        <h1>Notifications!</h1>
                         <h1 onClick={() => setOpen(!open)}>X</h1>
                     </div>
                 {/* <div>
@@ -146,9 +156,9 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
                             <span>{generateMonth(item.date)}</span>
                             <div class="content">
                                 <p>
-                                    <Link to={"/preview"+Exercise.split("#")[index]+"?token="+token+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link>
+                                    {/* <Link to={"/preview"+Exercise.split("#")[index]+"?token="+token+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link> */}
+                                    {isClicked ? <Link to={"/preview"+Exercise.split("#")[index]+"?token="+token+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link> : item.content.split("#")[0]}
                                 </p>
-                                {/* <span style={{fontSize: "15px",fontWeight: 700,color: "#747474",float: "right"}}>{item.date.split("T")[1].split(".")[0]}</span> */}
                             </div>
                         </li>
                 ))}

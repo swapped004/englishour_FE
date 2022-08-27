@@ -29,6 +29,7 @@ import TreeChangeOneLetter from './components/TreeView/TreeChangeOneLetter';
 import TreeSentenceShuffle from './components/TreeView/TreeSentenceShuffle';
 import TreeGroupWords from './components/TreeView/TreeGroupWords';
 import TreeFillGaps from './components/TreeView/TreeFillIntheGaps';
+import TreeReadComplete from './components/TreeView/TreeReadComplete';
 
 
 
@@ -56,7 +57,9 @@ function App() {
 
   const [user, setUser] = useState({token:"", logged_in: false, isAdmin: false});
   const [error, setError] = useState("");
-  const [notification, setNotification] = React.useState([{notification_id:"",content:"",date:""}]);
+  const [open, setOpen] = React.useState(true);
+  const [isClicked, setIsClicked] = React.useState(false);
+  
 
 
   let tkn = "0";
@@ -77,6 +80,7 @@ function App() {
         tkn = response.data;
         console.log(tkn);
         setError("");
+        setOpen(true);
     })
     .catch((err) => {
       alert("Invalid Credentials");
@@ -84,8 +88,8 @@ function App() {
   if(tkn !== "0"){
 
     var decode = jwt_decode(tkn);
-    console.log("calling get notifications ", tkn);
-
+    // console.log("calling get notifications ", tkn);
+    // getNotification(decode.moderator_id);
     const response = await fetch("http://localhost:8248/moderator/profileInfo/moderator_id?moderator_id="+decode.moderator_id+"&token="+tkn);
     const data = await response.json();
     // setInfo(data);
@@ -104,8 +108,12 @@ function App() {
 
 
   const Logout = () => {   
+    // window.location.reload(true);
     setUser({token:"", logged_in: false, isAdmin: false});
+    setOpen(false);
+    setIsClicked(false);
     console.log("Logout");
+    
   }
 
   //everytime page reloads, check if user is logged in
@@ -127,7 +135,7 @@ function App() {
 
   return (
     <div>
-        <NavBar logged_in={user.logged_in} Logout_func={Logout} token={user.token} isAdmin={user.isAdmin}/>
+        <NavBar logged_in={user.logged_in} Logout_func={Logout} token={user.token} isAdmin={user.isAdmin} setOpen={setOpen} open={open} setIsClicked={setIsClicked} isClicked={isClicked}/>
         <Routes>
           <Route path="/" element={< LandingPage />} />
           <Route path="/homepage" element={< Home />} />
@@ -148,11 +156,11 @@ function App() {
           <Route exact path="/adminprofile" element={< AdminProfile />} />
 
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
-          <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter />} />
-          <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle />} />
-          <Route exact path="/previewcategorizewords" element={< PreviewGroupWords />} />
-          <Route exact path="/previewfillgaps" element={< PreviewFillGaps />} />
-          <Route exact path="/previewreadcomplete" element={< PreviewReadComplete />} />
+          <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter setOpen={setOpen}/>} />
+          <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle setOpen={setOpen}/>} />
+          <Route exact path="/previewcategorizewords" element={< PreviewGroupWords setOpen={setOpen} />} />
+          <Route exact path="/previewfillgaps" element={< PreviewFillGaps setOpen={setOpen} />} />
+          <Route exact path="/previewreadcomplete" element={< PreviewReadComplete setOpen={setOpen}/>} />
           <Route exact path="/preview" element={< Preview />} />
           <Route exact path="/stats" element={< StatTabs />} />
 
@@ -160,6 +168,7 @@ function App() {
           <Route exact path="/treesentenceshuffling" element={< TreeSentenceShuffle />} />
           <Route exact path="/treecategorizewords" element={< TreeGroupWords />} />
           <Route exact path="/treefillgaps" element={< TreeFillGaps />} />
+          <Route exact path="/treetablecompletion" element={< TreeReadComplete />} />
         </Routes>
     </div>
   );

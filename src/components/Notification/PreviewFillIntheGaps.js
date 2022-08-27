@@ -12,9 +12,10 @@ function useQuery() {
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const PreviewFillinTheGaps = () => {
+const PreviewFillinTheGaps = ({setOpen}) => {
     const classes = useStyles()
     const navigate = useNavigate();
+    setOpen(false);
 
     const [formData, setFormData] = useState({passage:""});
     const [DescData, setDescData] = useState({description:""});
@@ -43,7 +44,8 @@ const PreviewFillinTheGaps = () => {
       }
       getPassageData(exercise_id);
       getDescriptionData(exercise_id);  
-      getAnswerData(exercise_id);           
+      getAnswerData(exercise_id);  
+      // window.location.reload(true);         
     }, []);
 
     console.log(formData.passage);

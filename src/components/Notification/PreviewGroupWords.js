@@ -12,9 +12,10 @@ function useQuery() {
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const PreviewGroupWords = () => {
+const PreviewGroupWords = ({setOpen}) => {
     const classes = useStyles()
     const navigate = useNavigate();
+    setOpen(false);
 
     const [formData, setFormData] = useState({whole:""});
     let query = useQuery();
