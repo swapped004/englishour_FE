@@ -58,7 +58,7 @@ function App() {
   const [user, setUser] = useState({token:"", logged_in: false, isAdmin: false});
   const [error, setError] = useState("");
   const [open, setOpen] = React.useState(true);
-  const [isClicked, setIsClicked] = React.useState(false);
+  const [isClicked, setIsClicked] = React.useState(0);
   
 
 
@@ -111,7 +111,7 @@ function App() {
     // window.location.reload(true);
     setUser({token:"", logged_in: false, isAdmin: false});
     setOpen(false);
-    setIsClicked(false);
+    setIsClicked(0);
     console.log("Logout");
     
   }

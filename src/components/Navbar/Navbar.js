@@ -56,10 +56,11 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin, setOpen, open, setIsCli
         }             
     }, [logged_in]);
 
-    const Caller = (boolData1, boolData2) => {
+    const Caller = (boolData1) => {
         // e.preventDefault();
         setOpen(boolData1);
-        setIsClicked(boolData2);
+        isClicked = isClicked + 1;
+        setIsClicked(isClicked);
         if(boolData1){
             var decode = jwt_decode(token);
             getNotification(decode.moderator_id);
@@ -131,7 +132,7 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin, setOpen, open, setIsCli
                     <Link to={"/tutorial?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Tutorial</Link>
                 </li>
                 <li>
-                    <div className={logged_in ? "iconNot" :"hidden" } onClick={() => Caller(!open, !isClicked)}>
+                    <div className={logged_in ? "iconNot" :"hidden" } onClick={() => Caller(!open)}>
                         <img src={Notification} className="iconImgNot" alt="" />
                         {notification.length > 0 && <div className="counterNot">{notification.length}</div>}
                     </div>
@@ -157,7 +158,7 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin, setOpen, open, setIsCli
                             <div class="content">
                                 <p>
                                     {/* <Link to={"/preview"+Exercise.split("#")[index]+"?token="+token+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link> */}
-                                    {isClicked ? <Link to={"/preview"+Exercise.split("#")[index]+"?token="+token+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link> : item.content.split("#")[0]}
+                                    {isClicked > 0 ? <Link to={"/preview"+Exercise.split("#")[index]+"?token="+token+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link> : item.content.split("#")[0]}
                                 </p>
                             </div>
                         </li>
