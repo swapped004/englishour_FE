@@ -107,3 +107,105 @@
     transition: opacity 0.3s ease-in-out;
     border-radius: 10px;
   }
+
+  .Tab_label_container
+  {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        width: 70%;
+        padding: 5px;
+        margin-left: 270px;
+        margin-top: 5px;
+        margin-bottom: 3px ;
+        border: 1px solid purple;
+        background-color: #fff;
+        border-radius: 5px;
+        
+  }
+
+
+.topic_stat_container
+{
+    display: flex;
+    flex-direction:column;
+    justify-content: space-around;
+    align-items: center;
+    width: 70%;
+    padding: 5px;
+    margin-left: 270px;
+    margin-top: 5px;
+    margin-bottom: 3px ;
+    border: 1px solid purple;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.legends_container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 1000px;
+    width: 20%;
+    border: 3px dotted grey;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.legends_container_exercise
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    margin-left: 1400px;
+    width: 20%;
+    border: 3px dotted grey;
+    background-color: #fff;
+    border-radius: 5px;
+    margin-bottom: 5px;
+}
+
+.legends
+{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 50%;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.exercise-stat-content-right
+{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    width: 90%;
+    padding: 5px;
+    margin-left: 50px;
+    margin-bottom: 5px ;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+.exercise-stat-content-right-box
+{
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    /* align-items: center; */
+    width: 70%;
+    padding: 5px;
+    margin-left: 150px;
+    margin-bottom: 20px ;
+    border: 3px dashed grey ;
+    background-color: #fff;
+    border-radius: 5px;
+}

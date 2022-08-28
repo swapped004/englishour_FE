@@ -23,9 +23,21 @@ import PreviewChangeOneLetter from './components/Notification/PreviewChangeOneLe
 import PreviewSentenceShuffle from './components/Notification/PreviewSentenceShuffle';
 import PreviewGroupWords from './components/Notification/PreviewGroupWords';
 import Preview from './components/FillinTheGaps/preview';
-import Stat from './components/Statistics/Stat';
+import StatTabs from './components/Statistics/StatTabs';
 import PreviewFillGaps from './components/Notification/PreviewFillIntheGaps';
+import PreviewReadComplete from './components/Notification/PreviewReadComplete';
 import ContentTree from './components/Exercise/ContentTree';
+
+import TreeChangeOneLetter from './components/TreeView/TreeChangeOneLetter';
+import TreeSentenceShuffle from './components/TreeView/TreeSentenceShuffle';
+import TreeGroupWords from './components/TreeView/TreeGroupWords';
+import TreeFillGaps from './components/TreeView/TreeFillIntheGaps';
+import TreeReadComplete from './components/TreeView/TreeReadComplete';
+
+import AddCategory from './components/AdminProfile/addCategory'
+
+
+
 
 
 import React from 'react';
@@ -52,6 +64,10 @@ function App() {
 
   const [user, setUser] = useState({token:"", logged_in: false, isAdmin: false});
   const [error, setError] = useState("");
+  const [open, setOpen] = React.useState(true);
+  const [isClicked, setIsClicked] = React.useState(0);
+  
+
 
   let tkn = "0";
 
@@ -71,6 +87,7 @@ function App() {
         tkn = response.data;
         console.log(tkn);
         setError("");
+        setOpen(true);
     })
     .catch((err) => {
       alert("Invalid Credentials");
@@ -78,12 +95,10 @@ function App() {
   if(tkn !== "0"){
 
     var decode = jwt_decode(tkn);
-
-    console.log("moderator id: ", decode.moderator_id);
-
+    // console.log("calling get notifications ", tkn);
+    // getNotification(decode.moderator_id);
     const response = await fetch("http://localhost:8248/moderator/profileInfo/moderator_id?moderator_id="+decode.moderator_id+"&token="+tkn);
     const data = await response.json();
-    console.log("this is data.isAdmin: ", data.isAdmin);
     // setInfo(data);
     globalIsAdmin = data.isAdmin;
 
@@ -100,8 +115,12 @@ function App() {
 
 
   const Logout = () => {   
+    // window.location.reload(true);
     setUser({token:"", logged_in: false, isAdmin: false});
+    setOpen(false);
+    setIsClicked(0);
     console.log("Logout");
+    
   }
 
   //everytime page reloads, check if user is logged in
@@ -109,7 +128,7 @@ function App() {
     //check jwt token
     if(token !== null){
       const decoded = jwt_decode(token);
-      console.log(decoded);
+      // console.log(decoded);
       const moderator_id = decoded.moderator_id;
 
       //if cant decode token, user is not logged in
@@ -123,7 +142,7 @@ function App() {
 
   return (
     <div>
-        <NavBar logged_in={user.logged_in} Logout_func={Logout} token={user.token} isAdmin={user.isAdmin}/>
+        <NavBar logged_in={user.logged_in} Logout_func={Logout} token={user.token} isAdmin={user.isAdmin} setOpen={setOpen} open={open} setIsClicked={setIsClicked} isClicked={isClicked}/>
         <Routes>
           <Route path="/" element={< LandingPage />} />
           <Route path="/homepage" element={< Home />} />
@@ -144,14 +163,24 @@ function App() {
           <Route exact path="/adminprofile" element={< AdminProfile />} />
           <Route exact path="/viewgraph" element={< ViewGraph />} />
 
+          <Route exact path="/addcategory" element={< AddCategory />} />
+
+
 
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
-          <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter />} />
-          <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle />} />
-          <Route exact path="/previewcategorizewords" element={< PreviewGroupWords />} />
-          <Route exact path="/previewfillgaps" element={< PreviewFillGaps />} />
+          <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter setOpen={setOpen}/>} />
+          <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle setOpen={setOpen}/>} />
+          <Route exact path="/previewcategorizewords" element={< PreviewGroupWords setOpen={setOpen} />} />
+          <Route exact path="/previewfillgaps" element={< PreviewFillGaps setOpen={setOpen} />} />
+          <Route exact path="/previewreadcomplete" element={< PreviewReadComplete setOpen={setOpen}/>} />
           <Route exact path="/preview" element={< Preview />} />
-          <Route exact path="/stats" element={< Stat />} />
+          <Route exact path="/stats" element={< StatTabs />} />
+
+          <Route exact path="/treechangeletter" element={< TreeChangeOneLetter />} />
+          <Route exact path="/treesentenceshuffling" element={< TreeSentenceShuffle />} />
+          <Route exact path="/treecategorizewords" element={< TreeGroupWords />} />
+          <Route exact path="/treefillgaps" element={< TreeFillGaps />} />
+          <Route exact path="/treetablecompletion" element={< TreeReadComplete />} />
         </Routes>
     </div>
   );

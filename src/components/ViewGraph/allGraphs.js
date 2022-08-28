@@ -58,7 +58,7 @@ const AllGraphs = () => {
     const [studentSuccess, setStudentSuccess] = React.useState([{level:"", count:""}]);
     const [studentActivity, setStudentActivity] = React.useState([{active:"", count:""}]);
 
-    const [selectedGraphs, setSelectedGraphs] = React.useState({"modEx":false, "modRating":false, "stdJoined":false, "stdActivity":false, "stdSuccess":false});
+    const [selectedGraphs, setSelectedGraphs] = React.useState({"modEx":true, "modRating":true, "stdJoined":true, "stdActivity":true, "stdSuccess":true});
 
 
 

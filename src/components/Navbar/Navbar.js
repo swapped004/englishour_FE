@@ -2,13 +2,77 @@ import React from 'react';
 import "./Navbar.css";
 import "../ModeratorProfile/editProfileCss.css"
 
-import axios from 'axios'
+import { Link, useNavigate } from 'react-router-dom';
+import Notification from "./notification5.png";
+import "./notification.css";
+import "./Popup.css";
+import jwt_decode from "jwt-decode";
+import "./moderatorTimelineCss.css"
+import axios from 'axios';
 
 
-import { Link } from 'react-router-dom';
 
+const NavBar = ({logged_in, Logout_func, token, isAdmin, setOpen, open, setIsClicked, isClicked}) => {
+    
+    console.log("Navbar isAdmin: ", isAdmin, open);
+    const navigate = useNavigate();
+    
+    const [notification, setNotification] = React.useState([{notification_id:"",content:"",date:""}]);
+    const [Exercise, setExercise] = React.useState("");
+    
 
-const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
+    const getNotification = async (id) => {
+        const response = await fetch("http://localhost:8248/moderator/notification/moderator_id?moderator_id="+id+"&token="+token);
+        const data = await response.json();
+        console.log("Notification in navbar first call",data);
+        setNotification(data);
+        // await delay(5000);
+        // handleExerciseInfo(token);
+    }
+    
+    const handleExerciseInfo = async (token1) => {
+        var exId="";
+        // console.log("Notification in navbar",notification);
+        for(let i=0;i<notification.length;i++){
+          exId += notification[i].content.split("#")[1]+"x";
+        }
+        console.log("combined exid",exId);
+        if(exId!=="undefinedx"){
+            const data = await axios.get(
+                "http://localhost:8248/moderator/exerciseDetails?token="+token1+"&exercise_id="+exId
+            );
+            setExercise(data.data);
+        }
+    }
+    
+    React.useEffect(() => {
+        if(logged_in){
+            var decode = jwt_decode(token);
+            console.log("I am getting called continuously");
+            getNotification(decode.moderator_id);
+        }
+        if(logged_in && notification.length !== 0){
+            console.log("I too am getting called continuously");
+            handleExerciseInfo(token);
+            // handleExerciseInfo(token);
+            // window.location.reload(true);
+            //handleExerciseInfo();
+        }             
+    }, [logged_in]);
+
+    const Caller = (boolData1) => {
+        // e.preventDefault();
+        setOpen(boolData1);
+        isClicked = isClicked + 1;
+        setIsClicked(isClicked);
+        if(boolData1){
+            var decode = jwt_decode(token);
+            getNotification(decode.moderator_id);
+            handleExerciseInfo(token);
+        }
+        console.log("Notification in navbar ", notification);
+        console.log("Exercise in navbar ", Exercise);
+    }
     
 
     const [categories, setCategories] = React.useState([]);
@@ -32,18 +96,7 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
             
     //         setTopics([...topics, {category_name: response}]);
     //     }
-    //     // const getExInfo = async (id) => {
-    //     //     const response = await fetch("http://localhost:8248/moderator/exerciseInfo/moderator_id?moderator_id="+id+"&token="+token);
-    //     //     const data = await response.json();
-    //     //     // console.log(data);
-    //     //     setExInfo(data);
-    //     // }
-    //     // const getTutorialInfo = async (id) => {
-    //     //     const response = await fetch("http://localhost:8248/moderator/TutorialInfo/moderator_id?moderator_id="+id+"&token="+token);
-    //     //     const data = await response.json();
-    //     //     // console.log(data);
-    //     //     setTutorialInfo(data);
-    //     // }
+    //    
     //     getCategories(); 
     //     // getExInfo(id);
     //     // getTutorialInfo(id);
@@ -138,21 +191,8 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
             alert("successful");
           }
 
-
-
-        //     const response = await axios.post("http://localhost:8248/moderator/updatePassword?token="+token, {
-        //         moderator_id: id,
-        //         password: password.NewPassword
-        //     });
-        //     console.log(response);
-        //     alert("Password updated successfully!");
         }
     }
-
-
-    
-    
-    
     
     console.log("Navbar isAdmin: ", isAdmin);
 
@@ -163,12 +203,39 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
     //     }
     // }
 
-    return (
 
+    const generateMonth = (TotalTimeStamp) => {
+        const m = parseInt(TotalTimeStamp.split("T")[0].split("-")[1]);
+        const d = TotalTimeStamp.split("T")[0].split("-")[2]
+        const year = TotalTimeStamp.split("T")[0].split("-")[0]
+        const monthNames = [
+          "JAN",
+          "FEB",
+          "MAR",
+          "APR",
+          "MAY",
+          "JUN",
+          "JUL",
+          "AUG",
+          "SEP",
+          "OCT",
+          "NOV",
+          "DEC"
+        ];
+        return d+" "+monthNames[m-1]+" "+year;
+    }
+    
+    //   const handleRead = () => {
+    //     setNotification([{}]);
+    //     setOpen(false);
+    //   };
+
+
+    return (
     <div className="navbar-container">
 
         <div className="navbar-logo">
-            <Link to={logged_in ? "/homepage" : "/"}>
+            <Link to={logged_in ? "/homepage?token="+token : "/"}>
             <img src={require('../../images/logo2.png')} alt="logo" />
             </Link>
         </div>
@@ -200,10 +267,10 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
                 {isAdmin &&
                 <li>
 
-                    {/* <Link to={"/exercise?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Add</Link> */}
-                    <a className="button" href="#popupPassword" onClick={fetchCategory}> <i className="fa fa-key"></i> Add</a>
+                    <Link to={"/addcategory?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Add</Link>
+                    {/* <a className="button" href="#popupPassword" onClick={fetchCategory}> <i className="fa fa-key"></i> Add</a> */}
 
-                    <div className="popup" id="popupPassword">
+                    {/* <div className="popup" id="popupPassword">
                                     <div className="popup-inner">
                                     <div className="popup__text" style={{width:"100%"}}>
                                     <form onSubmit={handleCategorySubmit}>
@@ -239,14 +306,14 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
                                     <a className="popup__close" href="#">X</a>
                                 </div>
                             </div>
-                
+                 */}
                 
                 </li>
                 }
 
                 {!isAdmin &&
                 <li>
-                    <Link to={"/exercise?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Exercise</Link>
+                    <Link to={"/exercise?token="+token} className={logged_in ? "navbar-link" :"hidden" }>Index</Link>
                 </li>
                 }
                 {!isAdmin &&
@@ -255,10 +322,40 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin}) => {
                 </li>
                 }   
                 <li>
+                    <div className={logged_in ? "iconNot" :"hidden" } onClick={() => Caller(!open)}>
+                        <img src={Notification} className="iconImgNot" alt="" />
+                        {notification.length > 0 && <div className="counterNot">{notification.length}</div>}
+                    </div>
+                </li>
+                <li>
                     <Link to="/" className={logged_in ? "navbar-btn" : "hidden"} onClick={Logout_func}>Logout</Link>
                 </li>
             </ul>
         </div>
+        {open && logged_in && (notification.length > 0) ?
+            <div className="mainNot">
+                <div className="popupNot">
+                    <div className="popupNot-header">
+                        <h1>Notifications!</h1>
+                        <h1 onClick={() => setOpen(!open)}>X</h1>
+                    </div>
+                {/* <div>
+                    <p>This is simple popup in React js</p>
+                </div> */}
+                {notification.map((item, index) => (
+                        <li>
+                            <span>{generateMonth(item.date)}</span>
+                            <div class="content">
+                                <p>
+                                    {/* <Link to={"/preview"+Exercise.split("#")[index]+"?token="+token+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link> */}
+                                    {isClicked > 0 ? <Link to={"/preview"+Exercise.split("#")[index]+"?token="+token+"&exercise_id="+item.content.split("#")[1]+"&notification_id="+item.notification_id} style={{ fontSize: "18px", fontWeight: 700 }}>{item.content.split("#")[0]}</Link> : item.content.split("#")[0]}
+                                </p>
+                            </div>
+                        </li>
+                ))}
+                </div>
+            </div>:""
+        }
     </div>
   );
 };

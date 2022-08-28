@@ -12,10 +12,9 @@ function useQuery() {
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const PreviewFillinTheGaps = ({setOpen}) => {
+const TreeFillinTheGaps = () => {
     const classes = useStyles()
     const navigate = useNavigate();
-    setOpen(false);
 
     const [formData, setFormData] = useState({passage:""});
     const [DescData, setDescData] = useState({description:""});
@@ -44,76 +43,12 @@ const PreviewFillinTheGaps = ({setOpen}) => {
       }
       getPassageData(exercise_id);
       getDescriptionData(exercise_id);  
-      getAnswerData(exercise_id);  
-      // window.location.reload(true);         
+      getAnswerData(exercise_id);           
     }, []);
 
     console.log(formData.passage);
     console.log(DescData.description);
     console.log(answers);
-    // var temp = [];
-
-    // let description = "";
-    // temp = formData.whole.split("###");
-    // description = temp[0];
-    // let givenPassage = temp[1];
-
-    // let givenClues = [];
-    // let finalPassage = givenPassage.split("##")[0];
-    // givenClues = givenPassage.split("##")[1].split("#");
-    // let finalClues = [];
-    // for(let clue of givenClues){
-    //     finalClues.push(clue);
-    // }
-    // console.log(finalClues);
-
-    // let clues = []
-    // const txt = temp[1];
-    // const regExp = /\(([^)]+)\)/g;
-    // const matches = [...txt.match(regExp)];
-    // console.log(matches);
-    // for(let i = 0; i < matches.length; i++){
-    //   clues.push(matches[i].replace(/[()]/g, ''));
-    // }
-    // console.log(clues);
-    // console.log(temp);
-    // for(var i = 1; i < temp.length; i++) {
-    //     let items = temp[i].split("##");
-    //     passage.push(items[0]);
-    //     let item_clues = [];
-    //     if(items.length > 1){
-    //         item_clues = items[1].split("#");
-    //     }
-
-    //     for(let tempclue of item_clues){
-    //         if(tempclue !== ""){
-    //             clues.push(tempclue);
-    //         }
-    //     }        
-    // }
-    //const finalPassage = passage[0].replace(/ *\([^)]*\) */g, " __________ ");
-    //console.log(finalPassage)
-
-    const handleApprove = async (e) => {
-      e.preventDefault();
-      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=approved");
-      console.log(response.data);
-      alert("Aproved Successfully");
-      if(response.data === "Status Updated") {
-        navigate('/profile?token='+token);
-        window.location.reload(true);
-      }
-    }
-    const handleDecline = async (e) => {
-      e.preventDefault();
-      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=declined");
-      console.log(response.data);
-      alert("Declined Successfully");
-      if(response.data === "Status Updated") {
-        navigate('/profile?token='+token);
-        window.location.reload(true);
-      }
-    }
 
     return (
       <div>
@@ -169,11 +104,11 @@ const PreviewFillinTheGaps = ({setOpen}) => {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="button-85" onClick={handleApprove}>Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="button-85"onClick={handleDecline}>Decline</button>
+        {/* <button className="button-85" onClick={handleApprove}>Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="button-85"onClick={handleDecline}>Decline</button> */}
 
         </div>
       )
 }
  
-export default PreviewFillinTheGaps;
+export default TreeFillinTheGaps;

@@ -12,10 +12,9 @@ function useQuery() {
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const PreviewGroupWords = ({setOpen}) => {
+const TreeGroupWords = () => {
     const classes = useStyles()
     const navigate = useNavigate();
-    setOpen(false);
 
     const [formData, setFormData] = useState({whole:""});
     let query = useQuery();
@@ -55,27 +54,6 @@ const PreviewGroupWords = ({setOpen}) => {
         }        
     }
     description = temp[0];
-
-    const handleApprove = async (e) => {
-      e.preventDefault();
-      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=approved");
-      console.log(response.data)
-      alert("Aproved Successfully");
-      if(response.data === "Status Updated") {
-        navigate('/profile?token='+token);
-        window.location.reload(true);
-      }
-    }
-    const handleDecline = async (e) => {
-      e.preventDefault();
-      const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=declined");
-      console.log(response.data);
-      alert("Declined Successfully");
-      if(response.data === "Status Updated") {
-        navigate('/profile?token='+token);
-        window.location.reload(true);
-      }
-    }
 
     return (
       <div>
@@ -171,11 +149,11 @@ const PreviewGroupWords = ({setOpen}) => {
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="button-85" onClick={handleApprove}>Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        <button className="button-85"onClick={handleDecline}>Decline</button>
+        {/* <button className="button-85" onClick={handleApprove}>Approve</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <button className="button-85"onClick={handleDecline}>Decline</button> */}
 
         </div>
       )
 }
  
-export default PreviewGroupWords;
+export default TreeGroupWords;

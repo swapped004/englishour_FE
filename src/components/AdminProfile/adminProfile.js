@@ -283,7 +283,7 @@ const AdminProfile = () => {
 
 
 
-                <GraphCharts/>
+                {/* <GraphCharts/> */}
 
                 {/* <div> */}
           

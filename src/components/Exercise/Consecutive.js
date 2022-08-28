@@ -3,10 +3,14 @@ import React, { useEffect } from 'react'
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import jwt_decode from "jwt-decode";
 import { Dropdown } from 'reactjs-dropdown-component';
-import { TreeView } from '@material-ui/lab';
+import FileUpload from './fileUpload'
+import FileList  from './fileList';
+import Papa from 'papaparse';
+
 
 import "./Consecutive.css"
 import "./button.css"
+import { AspectRatioSharp } from '@material-ui/icons';
 
 
 function useQuery() {
@@ -16,6 +20,14 @@ function useQuery() {
   }
 
 const Consecutive = () => {
+
+  function delay(delayInms) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve(2);
+      }, delayInms);
+    });
+  }
 
   const navigate = useNavigate();
 
@@ -34,8 +46,12 @@ const Consecutive = () => {
   console.log(tutorial_id);
 
   const type = query.get('type');
-
+  const [files, setFiles] = React.useState([])
   const [fromTutorial, setFromTutorial] = React.useState(false);
+
+  const removeFile = (filename) => {
+    setFiles(files.filter(file => file.name !== filename))
+  }
 
 
   const [exercise_type, setExerciseType] = React.useState(type);
@@ -136,7 +152,7 @@ const Consecutive = () => {
     console.log("clicked");
     console.log("value:"+exercise_type);
 
-    if(exercise_type!=""){
+    if(exercise_type!==""){
         navigate("/"+exercise_type+"?token="+token+"&tutorial="+tutorial_id+"&level="+Level);
     }
 
@@ -144,6 +160,66 @@ const Consecutive = () => {
     {
         alert("Please select an exercise type");
     }
+  }
+
+  const [AllExercises, setAllExercises] = React.useState([{type:"",Description:"",CorrectSentences:"",Hints:"",Answers:"",Category:"",CatWords:"",Passage:"", level:"", tutorial_id:"", moderator_id:""}]);
+
+  const handleClickFile = async (e) => {
+    // e.preventDefault();
+    console.log("clicked file add, ", files[0].name);
+    const formData = new FormData();
+    formData.append(
+        "newFile",
+        files[0],
+        files[0].name
+    )
+    
+    Papa.parse(files[0], {
+      header: true,
+      skipEmptyLines: true,
+      complete: function (results) {
+        // setAllExercises(results.data);
+        for(let i=0;i<results.data.length;i++){
+          const tempData = {
+            type: results.data[i].type,
+            Description: results.data[i].Description,
+            CorrectSentences: results.data[i].CorrectSentences,
+            Hints: results.data[i].Hints,
+            Answers: results.data[i].Answers,
+            Category: results.data[i].Category,
+            CatWords: results.data[i].CatWords,
+            Passage: results.data[i].Passage,
+            level: level,
+            tutorial_id: tutorial_id,
+            moderator_id: moderator_id,
+            Sentences: results.data[i].Sentences,
+            Grid: results.data[i].Grid,
+            nrows: results.data[i].nrows,
+            ncols: results.data[i].ncols,
+
+          }
+
+          console.log("Sentences:"+tempData.Sentences);
+          console.log("Grid:"+tempData.Grid);
+          console.log("nrows:"+tempData.nrows);
+          console.log("ncols:"+tempData.ncols);
+
+          AllExercises.push(tempData);
+        }
+        // console.log(results.data);
+        console.log(AllExercises);
+        axios.post("http://localhost:8248/moderator/insertFromFile?token="+token, AllExercises)
+        .then(res => {
+          console.log(res.data);
+          alert("File uploaded successfully");
+        }).catch(err => {
+          console.log(err);
+          alert("File upload failed");
+        });
+      },
+    });
+    alert("Exercise added successfully");
+    //window.location.reload(true);
   }
 
 
@@ -188,15 +264,22 @@ const Consecutive = () => {
         }
       </div>
 
-      <div className='button-54'>
+      <div className='button-85'>
         < button onClick={() => handleClick()}>
-          Next
+          Manual Input
         </button>
       </div>
-      
-
+      <div><h1>OR</h1></div>
+        <div className="titlefile">Upload file</div>
+        <FileUpload files={files} setFiles={setFiles} removeFile={removeFile}/>
+        <FileList files={files} removeFile={removeFile} />
+        <div className='button-85'>
+        < button onClick={() => handleClickFile()}>
+          UPLOAD FILE
+        </button>
+      </div>
     </div>
   )
 }
 
-export default Consecutive
+export default Consecutive;
