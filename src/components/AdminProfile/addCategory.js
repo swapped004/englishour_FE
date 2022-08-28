@@ -89,6 +89,16 @@ const AddCategory = () => {
     const handleCategorySubmit = async (e) => {
         e.preventDefault();
 
+        for(let category of categories)
+        {
+            if(category.category_name === newCategory.category_name)
+            {
+                alert("Category already exists");
+                return;
+            }
+        }
+
+
 
         console.log("categories", categories);
         console.log("topics", topics);
