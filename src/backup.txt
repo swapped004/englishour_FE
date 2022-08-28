@@ -171,3 +171,11 @@
                 </div>
             </div>:""
         }
+
+
+        The person who plays football well plays the piano badly
+        The person who swims quickly sings quietly
+        The person who writes well swims slowly
+        The person who sings loudly writes slowly
+        The person who plays the piano well climbs carefully
+        The person who climbs quickly draws well

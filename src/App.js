@@ -57,7 +57,7 @@ function App() {
 
   const [user, setUser] = useState({token:"", logged_in: false, isAdmin: false});
   const [error, setError] = useState("");
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
   const [isClicked, setIsClicked] = React.useState(0);
   
 
@@ -156,11 +156,11 @@ function App() {
           <Route exact path="/adminprofile" element={< AdminProfile />} />
 
           <Route exact path="/forgotPassword" element={< ForgotPassword />} />
-          <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter setOpen={setOpen}/>} />
-          <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle setOpen={setOpen}/>} />
-          <Route exact path="/previewcategorizewords" element={< PreviewGroupWords setOpen={setOpen} />} />
-          <Route exact path="/previewfillgaps" element={< PreviewFillGaps setOpen={setOpen} />} />
-          <Route exact path="/previewreadcomplete" element={< PreviewReadComplete setOpen={setOpen}/>} />
+          <Route exact path="/previewchangeletter" element={< PreviewChangeOneLetter setOpen={setOpen} setIsClicked={setIsClicked}/>} />
+          <Route exact path="/previewsentenceshuffling" element={< PreviewSentenceShuffle setOpen={setOpen} setIsClicked={setIsClicked}/>} />
+          <Route exact path="/previewcategorizewords" element={< PreviewGroupWords setOpen={setOpen} setIsClicked={setIsClicked}/>} />
+          <Route exact path="/previewfillgaps" element={< PreviewFillGaps setOpen={setOpen} />} setIsClicked={setIsClicked}/>
+          <Route exact path="/previewreadcomplete" element={< PreviewReadComplete setOpen={setOpen} setIsClicked={setIsClicked}/>} />
           <Route exact path="/preview" element={< Preview />} />
           <Route exact path="/stats" element={< StatTabs />} />
 
@@ -168,7 +168,7 @@ function App() {
           <Route exact path="/treesentenceshuffling" element={< TreeSentenceShuffle />} />
           <Route exact path="/treecategorizewords" element={< TreeGroupWords />} />
           <Route exact path="/treefillgaps" element={< TreeFillGaps />} />
-          <Route exact path="/treetablecompletion" element={< TreeReadComplete />} />
+          <Route exact path="/treereadcomplete" element={< TreeReadComplete />} />
         </Routes>
     </div>
   );

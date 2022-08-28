@@ -12,7 +12,7 @@ function useQuery() {
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const PreviewGroupWords = ({setOpen}) => {
+const PreviewGroupWords = ({setOpen, setIsClicked}) => {
     const classes = useStyles()
     const navigate = useNavigate();
     setOpen(false);
@@ -60,7 +60,7 @@ const PreviewGroupWords = ({setOpen}) => {
       e.preventDefault();
       const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=approved");
       console.log(response.data)
-      alert("Aproved Successfully");
+      alert("Approved Successfully");
       if(response.data === "Status Updated") {
         navigate('/profile?token='+token);
         window.location.reload(true);

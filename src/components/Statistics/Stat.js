@@ -302,7 +302,7 @@ const Stat = ({token}) => {
                     label={({ dataEntry }) => `${Math.round(dataEntry.percentage)} %`}
                     labelPosition={80}
                     labelStyle={{
-                        fontSize: "8px",
+                        fontSize: "6px",
                         fontColor: "FFFFFA",
                         fontWeight: "800",
                       }}

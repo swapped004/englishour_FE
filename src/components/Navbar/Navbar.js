@@ -20,7 +20,7 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin, setOpen, open, setIsCli
     const getNotification = async (id) => {
         const response = await fetch("http://localhost:8248/moderator/notification/moderator_id?moderator_id="+id+"&token="+token);
         const data = await response.json();
-        console.log("Notification in navbar first call",data);
+        // console.log("Notification in navbar first call",data);
         setNotification(data);
         // await delay(5000);
         // handleExerciseInfo(token);
@@ -42,6 +42,7 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin, setOpen, open, setIsCli
     }
     
     React.useEffect(() => {
+        setOpen(true);
         if(logged_in){
             var decode = jwt_decode(token);
             console.log("I am getting called continuously");
@@ -50,9 +51,6 @@ const NavBar = ({logged_in, Logout_func, token, isAdmin, setOpen, open, setIsCli
         if(logged_in && notification.length !== 0){
             console.log("I too am getting called continuously");
             handleExerciseInfo(token);
-            // handleExerciseInfo(token);
-            // window.location.reload(true);
-            //handleExerciseInfo();
         }             
     }, [logged_in]);
 

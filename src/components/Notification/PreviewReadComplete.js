@@ -25,7 +25,7 @@ function useQuery() {
     return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-const PreviewReadComplete = ({setOpen}) => {
+const PreviewReadComplete = ({setOpen, setIsClicked}) => {
     const navigate = useNavigate();
     let query = useQuery();
     const classes = useStyles();
@@ -151,7 +151,7 @@ const PreviewReadComplete = ({setOpen}) => {
             e.preventDefault();
             const response = await axios.post("http://localhost:8248/moderator/approveExercise?notification_id="+notification_id+"&token="+token+"&status=approved");
             console.log(response.data)
-            alert("Aproved Successfully");
+            alert("Appproved Successfully");
             if(response.data === "Status Updated") {
               navigate('/profile?token='+token);
             }
